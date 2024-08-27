@@ -63,5 +63,28 @@ namespace ShootingGame
                     break;
             }
         }
+        private void depressedkey(object? sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.W:
+                    isKeyPresseds[0] = false;
+                    break;
+                case Key.A:
+                    isKeyPresseds[1] = false;
+                    break;
+                case Key.S:
+                    isKeyPresseds[2] = false;
+                    break;
+                case Key.D:
+                    isKeyPresseds[3] = false;
+                    break;
+                case Key.Space:
+                    isKeyPresseds[4] = false;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
