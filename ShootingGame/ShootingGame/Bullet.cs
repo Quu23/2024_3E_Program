@@ -18,7 +18,7 @@ namespace ShootingGame
             this.id = id;
         }
         
-         public void Move()
+        public override void Move()
         {
             Y -= (int)(Speed * Math.Cos(degree * Math.PI / 180));//degreeは進行方向に対して時計回りに大きくなる。
             X += (int)(Speed * Math.Sin(degree * Math.PI / 180));
