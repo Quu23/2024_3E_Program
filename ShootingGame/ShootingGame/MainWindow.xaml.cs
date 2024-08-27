@@ -29,9 +29,15 @@ namespace ShootingGame
         public MainWindow()
         {
             InitializeComponent();
+            
+            //タイマーの設定 
             _updateTimer = new DispatcherTimer();
             _updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
             _updateTimer.Tick += GameLoop;
+
+            KeyUp   += PressedKey;
+            KeyDown += DepressedKey;
+
             _updateTimer.Start();
         }
 
@@ -63,7 +69,7 @@ namespace ShootingGame
                     break;
             }
         }
-        private void depressedkey(object? sender, KeyEventArgs e)
+        private void DepressedKey(object? sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
