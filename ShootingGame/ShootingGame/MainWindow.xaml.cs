@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Windows;
+using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -20,6 +21,7 @@ namespace ShootingGame
         const int FPS = 60;
 
         DispatcherTimer _updateTimer;
+        
         
         /// <summary>
         ///                        W      A      S      D    Space
