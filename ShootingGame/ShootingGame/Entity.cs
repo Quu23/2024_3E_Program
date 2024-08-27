@@ -34,7 +34,7 @@
             return HashCode.Combine(x, y , radius , speed);
         }
 
-        public bool isHit(Entity target)
+        public bool IsHit(Entity target)
         {
             if ((x - target.x) * (x - target.x) + (y - target.y) * (y - target.y) < ( radius + target.radius) * (radius + target.radius))
             {
