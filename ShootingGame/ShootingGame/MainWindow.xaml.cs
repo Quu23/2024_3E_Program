@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ShootingGame
 {
@@ -16,9 +17,51 @@ namespace ShootingGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        const int FPS = 60;
+
+        DispatcherTimer _updateTimer;
+        
+        /// <summary>
+        ///                        W      A      S      D    Space
+        /// </summary>
+        bool[] isKeyPresseds = { false, false, false, false, false };
+
         public MainWindow()
         {
             InitializeComponent();
+            _updateTimer = new DispatcherTimer();
+            _updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
+            _updateTimer.Tick += GameLoop;
+            _updateTimer.Start();
+        }
+
+        private void GameLoop(object? sender, EventArgs e)
+        {
+
+        }
+
+        private void PressedKey(object? sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.W:
+                    isKeyPresseds[0] = true; 
+                    break;
+                case Key.A:
+                    isKeyPresseds[1] = true;
+                    break;
+                case Key.S:
+                    isKeyPresseds[2] = true;
+                    break;
+                case Key.D:
+                    isKeyPresseds[3] = true;
+                    break;
+                case Key.Space:
+                    isKeyPresseds[4] = true;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
