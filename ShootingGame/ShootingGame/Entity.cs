@@ -37,7 +37,11 @@
         //todo : 当たり判定処理を実装する。
         public bool isHit(Entity target)
         {
-
+            if ((x - target.x) * (x - target.x) + (y - target.y) * (y - target.y) < ( radius + target.radius) * (radius + target.radius))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
