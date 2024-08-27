@@ -8,11 +8,11 @@ namespace ShootingGame
     public class Entity
     {
 
-        int x;
-        int y;
-        int radius;
-        int speed;
-        Image img;
+        private int x;
+        private int y;
+        private int radius;
+        private int speed;
+        private Image img;
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
