@@ -28,6 +28,8 @@ namespace ShootingGame
         /// </summary>
         public static bool[] isKeyPresseds = { false, false, false, false, false };
 
+        public List<Bullet> bullets = new List<Bullet>();
+
         public MainWindow()
         {
             InitializeComponent();
