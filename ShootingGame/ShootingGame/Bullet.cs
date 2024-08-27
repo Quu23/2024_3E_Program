@@ -8,6 +8,9 @@ namespace ShootingGame
     {
         private int degree;
         private int damage;
+        /// <summary>
+        /// idはプレイヤーか敵かを識別するためのもの
+        /// </summary>
         private Id id;
         
 
