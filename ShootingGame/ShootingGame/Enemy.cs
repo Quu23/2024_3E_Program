@@ -9,7 +9,7 @@ namespace ShootingGame
 {
     abstract public class Enemy : Plane
     {
-        public Enemy(int x, int y, int radius, int speed, Image img, int level) : base(x, y, radius, speed, img, level)
+        public Enemy(int x, int y, int radius, int speed, Image img, int level ,int hp) : base(x, y, radius, speed, img, level ,hp)
         {
         }
     }
