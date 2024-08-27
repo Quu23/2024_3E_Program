@@ -1,11 +1,12 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace ShootingGame
 {
     /// <summary>
     /// 全ての当たり判定を持つオブジェクトの親クラス。当たり判定を簡単にするために、円で近似している。
     /// </summary>
-    public class Entity
+    abstract public class Entity
     {
 
         private int x;
@@ -27,6 +28,11 @@ namespace ShootingGame
             Radius = radius;
             Speed = speed;
             this.img = img;
+
+            MainWindow win = App.window;
+            win.MainCanvas.Children.Add(this.img);
+            Canvas.SetLeft(this.img, X);
+            Canvas.SetTop (this.img, Y);
         }
 
         public override bool Equals(object obj)
@@ -48,11 +54,11 @@ namespace ShootingGame
         public bool IsHit(Entity target)
         {
             if ((X - target.X) * (X - target.X) + (Y - target.Y) * (Y - target.Y) < ( Radius + target.Radius) * (Radius + target.Radius))
-            {
                 return true;
-            }
             return false;
         }
+
+        public abstract void Move();
     }
 }
 

@@ -9,6 +9,17 @@ namespace ShootingGame
     /// </summary>
     public partial class App : Application
     {
+        public static MainWindow window;
+
+        App(){
+            window = new MainWindow();
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            window = new MainWindow();
+            window.Show();
+        }
     }
 
 }

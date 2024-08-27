@@ -26,7 +26,7 @@ namespace ShootingGame
         /// <summary>
         ///                        W      A      S      D    Space
         /// </summary>
-        bool[] isKeyPresseds = { false, false, false, false, false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false };
 
         public MainWindow()
         {
@@ -43,6 +43,7 @@ namespace ShootingGame
             _updateTimer.Start();
         }
 
+        // TODO:ゲームループの実装
         private void GameLoop(object? sender, EventArgs e)
         {
 
