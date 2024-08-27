@@ -43,6 +43,7 @@ namespace ShootingGame
             _updateTimer.Start();
         }
 
+        // TODO:ゲームループの実装
         private void GameLoop(object? sender, EventArgs e)
         {
 
