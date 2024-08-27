@@ -34,7 +34,6 @@
             return HashCode.Combine(x, y , radius , speed);
         }
 
-        //todo : 当たり判定処理を実装する。
         public bool isHit(Entity target)
         {
             if ((x - target.x) * (x - target.x) + (y - target.y) * (y - target.y) < ( radius + target.radius) * (radius + target.radius))
