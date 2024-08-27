@@ -65,6 +65,9 @@ namespace ShootingGame
                 case Key.Space:
                     isKeyPresseds[4] = true;
                     break;
+                case Key.Escape:
+                    Environment.Exit(0);
+                    break;
                 default:
                     break;
             }
