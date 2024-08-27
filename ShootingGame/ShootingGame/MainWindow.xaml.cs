@@ -35,8 +35,8 @@ namespace ShootingGame
             _updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
             _updateTimer.Tick += GameLoop;
 
-            KeyUp   += PressedKey;
-            KeyDown += DepressedKey;
+            KeyUp   += DepressedKey;
+            KeyDown += PressedKey;
 
             _updateTimer.Start();
         }
