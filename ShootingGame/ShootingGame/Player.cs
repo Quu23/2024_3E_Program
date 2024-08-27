@@ -9,8 +9,17 @@ namespace ShootingGame
 {
     internal class Player : Plane
     {
-        public Player(Image img) : base(150, 500, 3, 1, img , 1)
+        private int MAX_HP;
+
+        public Player(Image img) : base(150, 500, 3, 2, img , 1 ,5)
         {
+            //最初は5にする？
+            MAX_HP = 5;
+        }
+
+        public void HeelFullOfHp()
+        {
+            Hp = MAX_HP;
         }
 
         public override void Move()
@@ -42,6 +51,16 @@ namespace ShootingGame
                 Y += Speed;
             }
             if (Y + Img.ActualWidth > canvas.ActualWidth) Y = (int)(canvas.ActualWidth - Img.ActualWidth);
+        }
+
+
+        // TODO:levelに応じた弾の出し方・攻撃力の設定
+        // TODO:弾の画像設定
+        public override List<Bullet> ShotBullet()
+        {
+            var bullets = new List<Bullet>();
+            bullets.Add(new Bullet(X, Y, 2, Speed - 1, 0, new Image(), Level, Id.PLAYER));
+            return bullets;
         }
     }
 }
