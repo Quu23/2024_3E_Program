@@ -9,7 +9,7 @@ namespace ShootingGame
 {
     internal class Player : Plane
     {
-        public Player(Image img) : base(150, 500, 3, 1, img)
+        public Player(Image img) : base(150, 500, 3, 1, img , 1)
         {
         }
 
