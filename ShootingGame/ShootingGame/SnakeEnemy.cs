@@ -7,24 +7,23 @@ using System.Windows.Controls;
 
 namespace ShootingGame
 {
-    class StraightEnemy : Enemy
+    class SnakeEnemy : Enemy
     {
-        public StraightEnemy(int x, int y, Image img, int level) : base(x, y, 3, 1+level, img, level, 5 + level , 10)
+        public SnakeEnemy(int x, int y, Image img, int level, int hp) : base(x, y, 4, 1, img, level, 3, 10)
         {
         }
 
         public override int GetEXP()
         {
-            return 1;
+            return 5;
         }
 
         public override List<Bullet> ShotBullet()
         {
-            var bullets = new List<Bullet>
-            {
-                new(X, Y, 1, 1, 180, new Image(), Level, Id.ENEMY)
-            };
-            return bullets;
+            return
+            [
+                new(X ,Y ,1, 1,180,new Image() , 1 ,Id.ENEMY)
+            ];
         }
     }
 }
