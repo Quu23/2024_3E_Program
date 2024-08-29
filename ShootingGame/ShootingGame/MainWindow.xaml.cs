@@ -33,6 +33,7 @@ namespace ShootingGame
         public Player player;
 
         public List<Bullet> bullets = new List<Bullet>();
+        private List<Bullet> bulletsForDelete = new List<Bullet>();
 
         public MainWindow()
         {
@@ -57,9 +58,34 @@ namespace ShootingGame
 
         // TODO:ゲームループの実装
         private void GameLoop(object? sender, EventArgs e)
-        {
+        { 
+
+            if (player.BulletCoolTime > 0) player.BulletCoolTime--;
+
             player.Move();
-            //todo:いろいろオブジェクトあると重くなるかもしれないからその時は修正。
+
+
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Move();
+                if (bullet.Y < 0 || bullet.Y > drawCanvas.ActualHeight)
+                {
+                    bulletsForDelete.Add(bullet);
+                }
+            }
+            foreach (Bullet bullet in bulletsForDelete)
+            {
+                bullets.Remove(bullet);
+            }
+
+            if (isKeyPresseds[4] && player.BulletCoolTime <= 0)
+            {
+                bullets.AddRange(player.ShotBullet());
+                player.BulletCoolTime = player.MaxBulletCoolTime;
+            }
+
+            //再描画処理
+            //hack:いろいろオブジェクトあると重くなるかもしれないからその時は修正。
             drawCanvas.InvalidateVisual();
         }
 

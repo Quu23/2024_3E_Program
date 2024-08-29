@@ -20,7 +20,7 @@ namespace ShootingGame
             Level = level;
             Hp = hp;
             BulletCoolTime = 0;
-            this.maxBulletCoolTime = maxBulletCoolTime;
+            this.MaxBulletCoolTime = maxBulletCoolTime;
         }
 
 
@@ -33,6 +33,7 @@ namespace ShootingGame
         }
         public int Hp { get => hp; set => hp = value; }
         public int BulletCoolTime { get => bulletCoolTime; set => bulletCoolTime = value; }
+        public int MaxBulletCoolTime { get => maxBulletCoolTime; set => maxBulletCoolTime = value; }
 
         /// <summary>
         /// 自分の飛行機の弾を生成するメソッド。

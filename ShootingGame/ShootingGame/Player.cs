@@ -13,7 +13,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player() : base(150, 500, 3, 2, new BitmapImage(ImageUris.PLAYER), 1, 5, 5)
+        public Player() : base(150, 500, 3, 2, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -65,8 +65,8 @@ namespace ShootingGame
         public override List<Bullet> ShotBullet()
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
-            var bullets = new List<Bullet>();
-            bullets.Add(new Bullet(X, Y, 2, Speed - 1, 0, new Image(), Level, Id.PLAYER));
+            List<Bullet> bullets = new List<Bullet>();
+            bullets.Add(new Bullet(X, Y, 2, Speed + 5, 0, Level, Id.PLAYER));
             return bullets;
         }
     }

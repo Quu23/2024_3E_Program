@@ -23,7 +23,7 @@ namespace ShootingGame
         {
             return
             [
-                new(X ,Y ,1, 1,180,new Image() , 1 ,Id.ENEMY)
+                new(X ,Y ,1, 1,180, 1 ,Id.ENEMY)
             ];
         }
 
