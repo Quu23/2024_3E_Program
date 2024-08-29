@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -14,7 +15,7 @@ namespace ShootingGame
         private int maxBulletCoolTime;
 
 
-        public Plane(int x, int y, int radius, int speed, Image img, int level , int hp ,int maxBulletCoolTime ) : base(x, y, radius, speed, img)
+        public Plane(int x, int y, int radius, int speed, BitmapImage img, int level , int hp ,int maxBulletCoolTime ) : base(x, y, radius, speed, img)
         {
             Level = level;
             Hp = hp;

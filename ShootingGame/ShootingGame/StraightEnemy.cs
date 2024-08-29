@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
     class StraightEnemy : Enemy
     {
-        public StraightEnemy(int x, int y, Image img, int level) : base(x, y, 3, 1+level, img, level, 5 + level , 10)
+        public StraightEnemy(int x, int y, int level) : base(x, y, 3, 1+level, new BitmapImage(), level, 5 + level , 10)
         {
         }
 

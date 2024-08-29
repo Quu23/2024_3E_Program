@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -14,9 +15,10 @@ namespace ShootingGame
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            Pen pen = new Pen(Brushes.Black, 10);
-            Rect rect = new Rect(10, 10, 400, 200);
-            drawingContext.DrawRectangle(Brushes.Red, pen, rect);
+            Uri uri = new Uri("img/Player.png", UriKind.RelativeOrAbsolute);
+            BitmapImage image = new BitmapImage(uri);
+            Rect rect = new Rect(10, 10, image.Width, image.Height);
+            drawingContext.DrawImage(image, rect);
         }
     }
 }

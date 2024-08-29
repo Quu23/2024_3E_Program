@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -11,7 +12,7 @@ namespace ShootingGame
         private Id id;
         
 
-        public Bullet(int x, int y, int radius, int speed, int degree, Image img, int damage, Id id) : base(x, y, radius, speed, img)
+        public Bullet(int x, int y, int radius, int speed, int degree, Image img, int damage, Id id) : base(x, y, radius, speed, new BitmapImage(ImageUris.P_BULLET))
         {
             this.degree = degree;
             this.damage = damage;
