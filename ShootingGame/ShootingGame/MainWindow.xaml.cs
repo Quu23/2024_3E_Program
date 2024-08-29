@@ -21,6 +21,7 @@ namespace ShootingGame
         const int FPS = 60;
 
         DispatcherTimer _updateTimer;
+        public DrawCanvas drawCanvas;
         
         
         /// <summary>
@@ -28,11 +29,19 @@ namespace ShootingGame
         /// </summary>
         public static bool[] isKeyPresseds = { false, false, false, false, false };
 
+        static Player player;
+
         public List<Bullet> bullets = new List<Bullet>();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            drawCanvas = new DrawCanvas();
+
+            Content = drawCanvas;
+
+            //player = new Player(new Image());
             
             //タイマーの設定 
             _updateTimer = new DispatcherTimer();
@@ -48,8 +57,10 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop(object? sender, EventArgs e)
         {
-
+            
         }
+
+
 
         private void PressedKey(object? sender, KeyEventArgs e)
         {
