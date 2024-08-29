@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -13,29 +14,25 @@ namespace ShootingGame
         private int y;
         private int radius;
         private int speed;
-        private Image img;
-
-        static Image THIS_IMG;
+        public static BitmapImage img;
+        private Rect rect;
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public int Radius { get => radius; set => radius = value; }
         public int Speed { get => speed; set => speed = value; }
-        public Image Img { get => img;}
+        public BitmapImage Img { get => img; }
+        public Rect Rect { get => rect; set => rect = value; }
 
-        public Entity(int x, int y, int radius, int speed, Image img)
+        public Entity(int x, int y, int radius, int speed, BitmapImage img)
         {
             X = x;
             Y = y;
             Radius = radius;
             Speed = speed;
-            this.img = img;
-
-            MainWindow win = App.window;
-            win.drawCanvas.Children.Add(this.img);
-            Canvas.SetLeft(this.img, X);
-            Canvas.SetTop (this.img, Y);
+            Rect = new Rect(X, Y, img.Width, img.Height);
         }
+
 
         public override bool Equals(object obj)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -12,7 +13,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player(Image img) : base(150, 500, 3, 2, img, 1, 5, 5)
+        public Player() : base(150, 500, 3, 2, new BitmapImage(ImageUris.PLAYER), 1, 5, 5)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -37,11 +38,11 @@ namespace ShootingGame
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
             // Canvas上で描画しているので、端の限界はMainWindowではなくMainCanvasのWidthにする。
-            if (X + Img.ActualWidth < canvas.ActualWidth && MainWindow.isKeyPresseds[3])
+            if (X + Img.Width < canvas.ActualWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if(X + Img.ActualWidth > canvas.ActualWidth)X=(int)(canvas.ActualWidth - Img.ActualWidth);
+            if(X + Img.Width > canvas.ActualWidth)X=(int)(canvas.ActualWidth - Img.Width);
 
             if (Y > 0 && MainWindow.isKeyPresseds[0]) 
             {
@@ -49,11 +50,11 @@ namespace ShootingGame
             }
             if(Y < 0)Y = 0;
 
-            if (Y + Img.ActualWidth < canvas.ActualWidth && MainWindow.isKeyPresseds[3])
+            if (Y + Img.Height < canvas.ActualHeight && MainWindow.isKeyPresseds[3])
             {
                 Y += Speed;
             }
-            if (Y + Img.ActualWidth > canvas.ActualWidth) Y = (int)(canvas.ActualWidth - Img.ActualWidth);
+            if (Y + Img.Height > canvas.ActualHeight) Y = (int)(canvas.ActualHeight - Img.Height);
         }
 
 
