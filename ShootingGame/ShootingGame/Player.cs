@@ -10,12 +10,15 @@ namespace ShootingGame
     internal class Player : Plane
     {
         private int MAX_HP;
+        private int exp;
 
-        public Player(Image img) : base(150, 500, 3, 2, img , 1 ,5)
+        public Player(Image img) : base(150, 500, 3, 2, img , 1 ,5 ,5)
         {
             //最初は5にする？
             MAX_HP = 5;
         }
+
+        public int Exp { get => exp; set => exp = value; }
 
         public void HeelFullOfHp()
         {
@@ -58,6 +61,7 @@ namespace ShootingGame
         // TODO:弾の画像設定
         public override List<Bullet> ShotBullet()
         {
+            //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             var bullets = new List<Bullet>();
             bullets.Add(new Bullet(X, Y, 2, Speed - 1, 0, new Image(), Level, Id.PLAYER));
             return bullets;
