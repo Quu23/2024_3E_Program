@@ -7,7 +7,7 @@ namespace ShootingGame
     /// </summary>
     internal class ImageUris
     {
-        public static readonly Uri PLAYER = new Uri("img/Player.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri P_BULLET = new Uri("img/Player_Bullet.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri PLAYER = new Uri("../../../ img/Player.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET = new Uri("../../../ img/Player_Bullet.png", UriKind.RelativeOrAbsolute);
     }
 }

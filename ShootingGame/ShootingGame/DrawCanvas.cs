@@ -15,7 +15,7 @@ namespace ShootingGame
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            Uri uri = new Uri("img/Player.png", UriKind.RelativeOrAbsolute);
+            Uri uri = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
             BitmapImage image = new BitmapImage(uri);
             Rect rect = new Rect(10, 10, image.Width, image.Height);
             drawingContext.DrawImage(image, rect);
