@@ -15,6 +15,8 @@ namespace ShootingGame
         private int speed;
         private Image img;
 
+        static Image THIS_IMG;
+
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public int Radius { get => radius; set => radius = value; }
@@ -30,7 +32,7 @@ namespace ShootingGame
             this.img = img;
 
             MainWindow win = App.window;
-            win.MainCanvas.Children.Add(this.img);
+            win.drawCanvas.Children.Add(this.img);
             Canvas.SetLeft(this.img, X);
             Canvas.SetTop (this.img, Y);
         }

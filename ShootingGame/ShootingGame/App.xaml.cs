@@ -9,7 +9,7 @@ namespace ShootingGame
     /// </summary>
     public partial class App : Application
     {
-        public static MainWindow window;
+        public static ShootingGame.MainWindow window;
 
         App(){
             window = new MainWindow();

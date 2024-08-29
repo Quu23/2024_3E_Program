@@ -12,7 +12,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player(Image img) : base(150, 500, 3, 2, img , 1 ,5 ,5)
+        public Player(Image img) : base(150, 500, 3, 2, img, 1, 5, 5)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -27,7 +27,7 @@ namespace ShootingGame
 
         public override void Move()
         {
-            Canvas canvas = App.window.MainCanvas;
+            Canvas canvas = App.window.drawCanvas;
 
             if (X > 0 && MainWindow.isKeyPresseds[1])
             {

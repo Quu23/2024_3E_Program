@@ -8,8 +8,6 @@
         WindowStyle="None" WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas Name="MainCanvas">
-            
-        </Canvas>
+        
     </Grid>
 </Window>
