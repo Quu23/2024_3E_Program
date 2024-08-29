@@ -25,5 +25,11 @@ namespace ShootingGame
                 new(X ,Y ,1, 1,180,new Image() , 1 ,Id.ENEMY)
             ];
         }
+
+        public override void Move()
+        {
+            base.Move();
+            X += (int)(Speed * Math.Sin(Y));
+        }
     }
 }
