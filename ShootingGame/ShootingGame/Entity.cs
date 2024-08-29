@@ -14,14 +14,14 @@ namespace ShootingGame
         private int y;
         private int radius;
         private int speed;
-        public static BitmapImage img;
+        public BitmapImage img;
         private Rect rect;
 
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public int Radius { get => radius; set => radius = value; }
         public int Speed { get => speed; set => speed = value; }
-        public BitmapImage Img { get => img; }
+        public BitmapImage Img { get => img; set => img = value; }
         public Rect Rect { get => rect; set => rect = value; }
 
         public Entity(int x, int y, int radius, int speed, BitmapImage img)
@@ -30,6 +30,7 @@ namespace ShootingGame
             Y = y;
             Radius = radius;
             Speed = speed;
+            Img = img;
             Rect = new Rect(X, Y, img.Width, img.Height);
         }
 
@@ -58,6 +59,16 @@ namespace ShootingGame
         }
 
         public abstract void Move();
+
+        public void ChangeRect(int x, int y)
+        {
+            //構造体の中身をインデクサとかプロパティ経由で変更する際は、一時的に別の変数に移してそれを変更してから再代入しないといけない。
+            //構造体をインデクサとかプロパティで取得した場合は、構造体自身ではなくそのコピー（値）が得られるため。
+            Rect tmp = Rect;
+            tmp.X = x;
+            tmp.Y = y;
+            Rect = tmp;
+        }
     }
 }
 

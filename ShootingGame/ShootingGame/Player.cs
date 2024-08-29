@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
-    internal class Player : Plane
+    public class Player : Plane
     {
         private int MAX_HP;
         private int exp;
@@ -37,7 +37,7 @@ namespace ShootingGame
             if(X < 0)X = 0;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            // Canvas上で描画しているので、端の限界はMainWindowではなくMainCanvasのWidthにする。
+            // Canvas上で描画しているので、端の限界はMainWindowではなくCanvasのWidthにする。
             if (X + Img.Width < canvas.ActualWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
@@ -50,11 +50,13 @@ namespace ShootingGame
             }
             if(Y < 0)Y = 0;
 
-            if (Y + Img.Height < canvas.ActualHeight && MainWindow.isKeyPresseds[3])
+            if (Y + Img.Height < canvas.ActualHeight && MainWindow.isKeyPresseds[2])
             {
                 Y += Speed;
             }
             if (Y + Img.Height > canvas.ActualHeight) Y = (int)(canvas.ActualHeight - Img.Height);
+
+            ChangeRect(X, Y);
         }
 
 

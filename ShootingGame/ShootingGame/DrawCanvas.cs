@@ -12,13 +12,12 @@ namespace ShootingGame
 {
     public class DrawCanvas : Canvas
     {
+        DrawingGroup backingStore = new DrawingGroup();
+
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            Uri uri = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
-            BitmapImage image = new BitmapImage(uri);
-            Rect rect = new Rect(10, 10, image.Width, image.Height);
-            drawingContext.DrawImage(image, rect);
+            drawingContext.DrawImage(App.window.player.img, App.window.player.Rect);
         }
     }
 }
