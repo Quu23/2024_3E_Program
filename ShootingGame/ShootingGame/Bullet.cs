@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
@@ -23,6 +24,7 @@ namespace ShootingGame
         {
             Y -= (int)(Speed * Math.Cos(degree * Math.PI / 180));//degreeは進行方向に対して時計回りに大きくなる。
             X += (int)(Speed * Math.Sin(degree * Math.PI / 180));
+            ChangeRect(X, Y);
         }
     }
 

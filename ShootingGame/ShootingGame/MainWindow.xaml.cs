@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Automation.Text;
 using System.Windows.Controls;
@@ -29,7 +30,7 @@ namespace ShootingGame
         /// </summary>
         public static bool[] isKeyPresseds = { false, false, false, false, false };
 
-        static Player player;
+        public Player player;
 
         public List<Bullet> bullets = new List<Bullet>();
 
@@ -41,8 +42,8 @@ namespace ShootingGame
 
             Content = drawCanvas;
 
-            //player = new Player(new Image());
-            
+            player = new Player();
+
             //タイマーの設定 
             _updateTimer = new DispatcherTimer();
             _updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
@@ -57,7 +58,8 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop(object? sender, EventArgs e)
         {
-            
+            player.Move();
+            drawCanvas.InvalidateVisual();
         }
 
 
