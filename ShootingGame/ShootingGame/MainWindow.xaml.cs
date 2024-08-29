@@ -59,6 +59,7 @@ namespace ShootingGame
         private void GameLoop(object? sender, EventArgs e)
         {
             player.Move();
+            //todo:いろいろオブジェクトあると重くなるかもしれないからその時は修正。
             drawCanvas.InvalidateVisual();
         }
 
