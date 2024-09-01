@@ -13,7 +13,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player() : base(150, 500, 3, 2, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
+        public Player() : base(150, 500, 3, 5, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -28,7 +28,7 @@ namespace ShootingGame
 
         public override void Move()
         {
-            Canvas canvas = App.window.drawCanvas;
+            //Canvas canvas = App.window.drawCanvas;
 
             if (X > 0 && MainWindow.isKeyPresseds[1])
             {
@@ -38,11 +38,11 @@ namespace ShootingGame
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
             // Canvas上で描画しているので、端の限界はMainWindowではなくCanvasのWidthにする。
-            if (X + Img.Width < canvas.ActualWidth && MainWindow.isKeyPresseds[3])
+            if (X + Img.Width < App.window.ActualWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if(X + Img.Width > canvas.ActualWidth)X=(int)(canvas.ActualWidth - Img.Width);
+            if(X + Img.Width > App.window.ActualWidth)X=(int)(App.window.ActualWidth - Img.Width);
 
             if (Y > 0 && MainWindow.isKeyPresseds[0]) 
             {
@@ -50,11 +50,11 @@ namespace ShootingGame
             }
             if(Y < 0)Y = 0;
 
-            if (Y + Img.Height < canvas.ActualHeight && MainWindow.isKeyPresseds[2])
+            if (Y + Img.Height < App.window.ActualHeight && MainWindow.isKeyPresseds[2])
             {
                 Y += Speed;
             }
-            if (Y + Img.Height > canvas.ActualHeight) Y = (int)(canvas.ActualHeight - Img.Height);
+            if (Y + Img.Height > App.window.ActualHeight) Y = (int)(App.window.ActualHeight - Img.Height);
 
             ChangeRect(X, Y);
         }
