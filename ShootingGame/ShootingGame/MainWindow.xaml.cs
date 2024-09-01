@@ -36,7 +36,10 @@ namespace ShootingGame
         public List<Bullet> bullets = new List<Bullet>();
         private List<Bullet> bulletsForDelete = new List<Bullet>();
 
-        int t = 0;
+        //背景のアニメーション関係
+        int backgroundAnimationCounter = 0;
+        private readonly BitmapImage backgroundImage;
+        private Rect backgroundRect;
 
         public MainWindow()
         {
@@ -54,13 +57,17 @@ namespace ShootingGame
             KeyUp   += DepressedKey;
             KeyDown += PressedKey;
 
+            backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
+            backgroundRect  = new Rect(0, 0 , backgroundImage.Width, backgroundImage.Height);
+
             _updateTimer.Start();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            t += 5;
-            if (t > 1080) t = 0;
+            // 5がちょうどいい。
+            backgroundAnimationCounter += player.Speed - 1;
+            if (backgroundAnimationCounter > 1080) backgroundAnimationCounter = 0;
 
             GameLoop();
 
@@ -74,13 +81,11 @@ namespace ShootingGame
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext drawingContext = dv.RenderOpen())
             {
-                BitmapImage bitmapimage = new BitmapImage(ImageUris.BACKGROUND);
-
-                Rect rect = new Rect(0, t, 1920, 1080);
-
-                drawingContext.DrawImage(bitmapimage, rect);
-                rect.Y = t - 1080;
-                drawingContext.DrawImage(bitmapimage, rect);
+                
+                backgroundRect.Y = backgroundAnimationCounter;
+                drawingContext.DrawImage(backgroundImage, backgroundRect);
+                backgroundRect.Y = backgroundAnimationCounter - 1080;
+                drawingContext.DrawImage(backgroundImage, backgroundRect);
 
                 drawingContext.DrawImage(App.window.player.img, App.window.player.Rect);
 
@@ -90,7 +95,7 @@ namespace ShootingGame
                 }
 
                 //hack:FormattedTextを使うのは非推奨？調べたほうがいい（とりあえず動く）
-                drawingContext.DrawText(new FormattedText($"bullets.Count = {bullets.Count}\nt={t}"
+                drawingContext.DrawText(new FormattedText($"bullets.Count = {bullets.Count}\nt={backgroundAnimationCounter}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
@@ -140,10 +145,6 @@ namespace ShootingGame
                 bullets.AddRange(player.ShotBullet());
                 player.BulletCoolTime = player.MaxBulletCoolTime;
             }
-
-            //再描画処理
-            //hack:いろいろオブジェクトあると重くなるかもしれないからその時は修正。
-            //drawCanvas.InvalidateVisual();
         }
 
 
@@ -169,6 +170,11 @@ namespace ShootingGame
                     break;
                 case Key.Escape:
                     Environment.Exit(0);
+                    break;
+
+                //デバック用
+                case Key.L:
+                    player.Speed++;
                     break;
                 default:
                     break;
