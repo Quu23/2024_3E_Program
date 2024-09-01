@@ -74,8 +74,13 @@ namespace ShootingGame
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext drawingContext = dv.RenderOpen())
             {
-                drawingContext.DrawImage(new BitmapImage(ImageUris.BACKGROUND), new Rect(0 , t ,1920,1080));
-                drawingContext.DrawImage(new BitmapImage(ImageUris.BACKGROUND), new Rect(0 , t-1080, 1920,1080));
+                BitmapImage bitmapimage = new BitmapImage(ImageUris.BACKGROUND);
+
+                Rect rect = new Rect(0, t, 1920, 1080);
+
+                drawingContext.DrawImage(bitmapimage, rect);
+                rect.Y = t - 1080;
+                drawingContext.DrawImage(bitmapimage, rect);
 
                 drawingContext.DrawImage(App.window.player.img, App.window.player.Rect);
 
