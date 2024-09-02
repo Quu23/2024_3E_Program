@@ -1,16 +1,8 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.Text;
+﻿using System.Globalization;
 using System.Windows;
-using System.Windows.Automation.Text;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace ShootingGame
@@ -27,7 +19,7 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                        W      A      S      D    Space
+        ///                                     W      A      S      D    Space
         /// </summary>
         public static bool[] isKeyPresseds = { false, false, false, false, false };
 
