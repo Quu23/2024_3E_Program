@@ -25,6 +25,9 @@ namespace ShootingGame
 
         public Player player;
 
+        public List<Enemy> enemies = new List<Enemy>();
+        private List<Enemy> enemiesForDelete = new List<Enemy>();
+
         public List<Bullet> bullets = new List<Bullet>();
         private List<Bullet> bulletsForDelete = new List<Bullet>();
 
@@ -32,6 +35,9 @@ namespace ShootingGame
         int backgroundAnimationCounter = 0;
         private readonly BitmapImage backgroundImage;
         private Rect backgroundRect;
+
+
+        protected override int VisualChildrenCount => visuals.Count;
 
         public MainWindow()
         {
@@ -71,6 +77,8 @@ namespace ShootingGame
         private DrawingVisual CreateDrawingVisual()
         {
             DrawingVisual dv = new DrawingVisual();
+
+            //描画処理。JavaでいうGraphics
             using (DrawingContext drawingContext = dv.RenderOpen())
             {
                 
@@ -79,11 +87,16 @@ namespace ShootingGame
                 backgroundRect.Y = backgroundAnimationCounter - 1080;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
 
-                drawingContext.DrawImage(App.window.player.img, App.window.player.Rect);
+                drawingContext.DrawImage(player.img, player.Rect);
 
-                foreach (var bl in App.window.bullets)
+                foreach (var bl in bullets)
                 {
                     drawingContext.DrawImage(bl.img, bl.Rect);
+                }
+
+                foreach (var en in enemies)
+                {
+                    drawingContext.DrawImage(en.img, en.Rect);
                 }
 
                 //hack:FormattedTextを使うのは非推奨？調べたほうがいい（とりあえず動く）
@@ -93,14 +106,12 @@ namespace ShootingGame
                                         , new Typeface("Verdana")
                                         , 36
                                         , Brushes.White
-                                        , 12.5)
-                                        , new Point(10, 10));
+                                        , 12.5), new Point(10, 10));
             }
             return dv;
         }
 
-        protected override int VisualChildrenCount => visuals.Count;
-
+        //VisualCollection用にoverrideした。多分使うのかな？
         protected override Visual GetVisualChild(int index)
         {
             if (index < 0 || index >= visuals.Count)
@@ -117,6 +128,28 @@ namespace ShootingGame
             if (player.BulletCoolTime > 0) player.BulletCoolTime--;
 
             player.Move();
+
+            if (enemies.Count <= 0)
+            {
+                enemies.Add(new StraightEnemy(300 , 10, 1));
+                enemies.Add(new StraightEnemy(600 , 10, 1));
+                enemies.Add(new StraightEnemy(900 , 10, 1));
+                enemies.Add(new StraightEnemy(1200, 10, 1));
+                enemies.Add(new StraightEnemy(1500, 10, 1));
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Move();
+                if(enemy.Y > 1100)
+                {
+                    enemiesForDelete.Add(enemy);
+                }
+            }
+            foreach (Enemy enemy in enemiesForDelete)
+            {
+                enemies.Remove(enemy);
+            }
 
 
             foreach (Bullet bullet in bullets)

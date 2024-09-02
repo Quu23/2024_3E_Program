@@ -11,7 +11,8 @@ namespace ShootingGame
 
         public override void Move()
         {
-            Y -= Speed;
+            Y += Speed;
+            ChangeRect(X, Y);
         }
 
         /// <summary>
