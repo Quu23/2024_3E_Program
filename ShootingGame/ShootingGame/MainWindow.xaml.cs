@@ -56,7 +56,7 @@ namespace ShootingGame
             KeyDown += PressedKey;
 
             backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
-            backgroundRect  = new Rect(0, 0 , backgroundImage.Width, backgroundImage.Height);
+            backgroundRect  = new Rect(0, 0 , 1920, 1080);
 
             _updateTimer.Start();
         }
@@ -131,7 +131,7 @@ namespace ShootingGame
 
             if (enemies.Count <= 0)
             {
-                enemies.Add(new StraightEnemy(300 , 10, 1));
+                enemies.Add(new SnakeEnemy(300 , 10, 1));
                 enemies.Add(new StraightEnemy(600 , 10, 1));
                 enemies.Add(new StraightEnemy(900 , 10, 1));
                 enemies.Add(new StraightEnemy(1200, 10, 1));
