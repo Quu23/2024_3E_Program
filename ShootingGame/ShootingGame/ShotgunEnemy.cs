@@ -4,13 +4,13 @@ namespace ShootingGame
 {
     class ShotgunEnemy : Enemy
     {
-        public ShotgunEnemy(int x, int y, int level) : base(x, y, 8, level, new BitmapImage(), level, 3, 10)
+        public ShotgunEnemy(int x, int y, int level) : base(x, y, 8, level+5, new BitmapImage(ImageUris.SHOTGUN_ENEMY), level, 3, 70)
         {
         }
 
         public override int GetEXP()
         {
-            return 3;
+            return Level * 2;
         }
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace ShootingGame
         {
             var bullets = new List<Bullet>()
             {
-                new(X ,Y , 2 , 1 , 120 , 1,Id.ENEMY),
-                new(X ,Y , 2 , 1 , 180 , 1,Id.ENEMY),
-                new(X ,Y , 2 , 1 ,-120 , 1,Id.ENEMY),
+                new(X ,Y , 2 , 8 , 150 , 1,Id.ENEMY),
+                new(X ,Y , 2 , 8 , 180 , 1,Id.ENEMY),
+                new(X ,Y , 2 , 8 ,-150 , 1,Id.ENEMY),
             };
 
             return bullets;

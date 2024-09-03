@@ -4,27 +4,27 @@ namespace ShootingGame
 {
     class SnakeEnemy : Enemy
     {
-        public SnakeEnemy(int x, int y, int level) : base(x, y, 8, 10, new BitmapImage(ImageUris.SNAKE_ENEMY), level, 3, 10)
+        public SnakeEnemy(int x, int y, int level) : base(x, y, 8, 5, new BitmapImage(ImageUris.SNAKE_ENEMY), level, 3, 50)
         {
         }
 
         public override int GetEXP()
         {
-            return 5;
+            return Level + 5;
         }
 
         public override List<Bullet> ShotBullet()
         {
             return
             [
-                new(X ,Y ,1, 1,180, 1 ,Id.ENEMY)
+                new(X ,Y ,8, 10,180, 1 ,Id.ENEMY)
             ];
         }
 
         public override void Move()
         {
             base.Move();
-            X = (int)(100.0 * Math.Sin(2000*3.14 * Y))+50;
+            X = (int)(10 * Speed * Math.Sin(Math.PI / 216 * Y))+60;
         }
     }
 }

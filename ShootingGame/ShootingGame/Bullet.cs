@@ -13,7 +13,7 @@ namespace ShootingGame
         private Id id;
         
 
-        public Bullet(int x, int y, int radius, int speed, int degree, int damage, Id id) : base(x, y, radius, speed, new BitmapImage(ImageUris.P_BULLET))
+        public Bullet(int x, int y, int radius, int speed, int degree, int damage, Id id) : base(x, y, radius, speed, new BitmapImage(id == Id.PLAYER ? ImageUris.P_BULLET : ImageUris.E_BULLET))
         {
             this.degree = degree;
             this.damage = damage;

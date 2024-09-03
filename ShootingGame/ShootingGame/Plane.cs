@@ -25,7 +25,7 @@ namespace ShootingGame
 
         public int Level
         {
-            get => level; private set
+            get => level; protected set
             {
                 level = value;
             }

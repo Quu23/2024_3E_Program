@@ -14,5 +14,8 @@ namespace ShootingGame
 
         public static readonly Uri STRAIGHT_ENEMY = new Uri("../../../img/StraightEnemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SNAKE_ENEMY = new Uri("../../../img/SnakeEnemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOTGUN_ENEMY = new Uri("../../../img/ShotgunEnemy.png", UriKind.RelativeOrAbsolute);
+
+        public static readonly Uri E_BULLET = new Uri("../../../img/Enemy_Bullet.png", UriKind.RelativeOrAbsolute);
     }
 }

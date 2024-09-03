@@ -20,9 +20,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Tab
+        ///                                     W      A      S      D    Space    Enter  Tab
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false,};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false};
 
         public Player player;
 
@@ -36,6 +36,9 @@ namespace ShootingGame
         int backgroundAnimationCounter = 0;
         private readonly BitmapImage backgroundImage;
         private Rect backgroundRect;
+
+        private readonly Pen hpBarPen;
+        private Rect hpBarRect;
 
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
@@ -64,6 +67,9 @@ namespace ShootingGame
             backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
             backgroundRect  = new Rect(0, 0 , 1920, 1080);
 
+            hpBarPen  = new Pen(Brushes.Black, 1);
+            hpBarRect = new Rect(1600, 1030, player.GetMaxHp * 5, 10);
+
             _updateTimer.Start();
         }
 
@@ -90,69 +96,13 @@ namespace ShootingGame
             
         }
 
-        private DrawingVisual CreateDrawingVisual()
-        {
-            DrawingVisual dv = new DrawingVisual();
-
-            //描画処理。JavaでいうGraphics
-            using (DrawingContext drawingContext = dv.RenderOpen())
-            {
-                
-                backgroundRect.Y = backgroundAnimationCounter;
-                drawingContext.DrawImage(backgroundImage, backgroundRect);
-                backgroundRect.Y = backgroundAnimationCounter - 1080;
-                drawingContext.DrawImage(backgroundImage, backgroundRect);
-
-                drawingContext.DrawImage(player.img, player.Rect);
-                if (isKeyPresseds[5]) DrawHitRange(drawingContext, player);
-
-                foreach (var bl in bullets)
-                {
-                    drawingContext.DrawImage(bl.img, bl.Rect);
-                    if (isKeyPresseds[5])DrawHitRange(drawingContext, bl);
-                }
-
-                foreach (var en in enemies)
-                {
-                    drawingContext.DrawImage(en.img, en.Rect);
-                    if (isKeyPresseds[5])DrawHitRange(drawingContext, en);
-                }
-
-                
-                if (isKeyPresseds[5])
-                {
-                    //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
-                    drawingContext.DrawText(new FormattedText(
-                                        $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                        $"bullets.Count  = {bullets.Count}\n" +
-                                        $"enemies.Count  = {enemies.Count}\n" +
-                                        $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0/spf.TotalSeconds}"
-                                        , CultureInfo.GetCultureInfo("en")
-                                        , FlowDirection.LeftToRight
-                                        , new Typeface("Verdana")
-                                        , 12
-                                        , Brushes.White
-                                        , 12.5), new Point(10, 10));
-                }
-
-            }
-            return dv;
-        }
-
-        //VisualCollection用にoverrideした。多分使うのかな？
-        protected override Visual GetVisualChild(int index)
-        {
-            if (index < 0 || index >= visuals.Count)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-            return visuals[index];
-        }
-
         // TODO:ゲームループの実装
         private void GameLoop()
-        { 
+        {
+
+            if (player.Exp >= player.Level * player.Level + 5 || isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
+
+            if(player.Hp <= 0) Environment.Exit(0);
 
             if (player.BulletCoolTime > 0) player.BulletCoolTime--;
 
@@ -160,11 +110,11 @@ namespace ShootingGame
 
             if (enemies.Count <= 0)
             {
-                enemies.Add(new SnakeEnemy(300 , 10, 1));
-                enemies.Add(new StraightEnemy(600 , 10, 1));
-                enemies.Add(new StraightEnemy(900 , 10, 1));
+                enemies.Add(new SnakeEnemy(300, 10, 1));
+                enemies.Add(new StraightEnemy(600, 10, 1));
+                enemies.Add(new StraightEnemy(900, 10, 1));
                 enemies.Add(new StraightEnemy(1200, 10, 1));
-                enemies.Add(new StraightEnemy(1500, 10, 1));
+                enemies.Add(new ShotgunEnemy(1500, 10, 1));
             }
 
 
@@ -185,24 +135,49 @@ namespace ShootingGame
                     continue;
                 }
 
-                foreach (Enemy enemy in enemies) 
+                foreach (Enemy enemy in enemies)
                 {
-                    if (bullet.IsHit(enemy))
+                    if (bullet.Id == Id.PLAYER && bullet.IsHit(enemy))
                     {
                         enemy.Hp -= bullet.Damage;
                         bulletsForDelete.Add(bullet);
+
+                        if(enemy.Hp <= 0)
+                        {
+                            player.Exp += enemy.GetEXP();
+                            enemy.isDead = true;
+                            enemiesForDelete.Add(enemy);
+                        }
                     }
                 }
+            }
 
 
+            foreach (Bullet bullet in bulletsForDelete)
+            {
+                bullets.Remove(bullet);
             }
 
             foreach (Enemy enemy in enemies)
             {
+                if(enemy.isDead)continue;
+
+                if (enemy.BulletCoolTime > 0) enemy.BulletCoolTime--;
                 enemy.Move();
-                if (enemy.Y > 1100 || enemy.Hp <= 0)
+
+                if (player.IsHit(enemy))
+                {
+                    player.Hp = 0;
+                }
+                if (enemy.Y > 1100)
                 {
                     enemiesForDelete.Add(enemy);
+                    continue;
+                }
+                if (enemy.BulletCoolTime <= 0)
+                {
+                    bullets.AddRange(enemy.ShotBullet());
+                    enemy.BulletCoolTime = enemy.MaxBulletCoolTime;
                 }
             }
             foreach (Enemy enemy in enemiesForDelete)
@@ -210,16 +185,84 @@ namespace ShootingGame
                 enemies.Remove(enemy);
             }
 
-            foreach (Bullet bullet in bulletsForDelete)
-            {
-                bullets.Remove(bullet);
-            }
-
             if (isKeyPresseds[4] && player.BulletCoolTime <= 0)
             {
                 bullets.AddRange(player.ShotBullet());
                 player.BulletCoolTime = player.MaxBulletCoolTime;
             }
+        }
+
+        private DrawingVisual CreateDrawingVisual()
+        {
+            DrawingVisual dv = new DrawingVisual();
+
+            //描画処理。JavaでいうGraphics
+            using (DrawingContext drawingContext = dv.RenderOpen())
+            {
+                
+                backgroundRect.Y = backgroundAnimationCounter;
+                drawingContext.DrawImage(backgroundImage, backgroundRect);
+                backgroundRect.Y = backgroundAnimationCounter - 1080;
+                drawingContext.DrawImage(backgroundImage, backgroundRect);
+
+                drawingContext.DrawImage(player.img, player.Rect);
+                if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
+
+                foreach (var bl in bullets)
+                {
+                    drawingContext.DrawImage(bl.img, bl.Rect);
+                    if (isKeyPresseds[6])DrawHitRange(drawingContext, bl);
+                }
+
+                foreach (var en in enemies)
+                {
+                    drawingContext.DrawImage(en.img, en.Rect);
+                    if (isKeyPresseds[6])DrawHitRange(drawingContext, en);
+                }
+
+
+                drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV:{player.Level}"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , new Typeface("Verdana")
+                                        , 10
+                                        , Brushes.White
+                                        , 12.5), new Point(hpBarRect.X-50, hpBarRect.Y-10));
+                hpBarRect.Width = player.GetMaxHp * 10;
+                drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
+                hpBarRect.Width = player.Hp * 10;
+                drawingContext.DrawRectangle(Brushes.Red  , hpBarPen, hpBarRect);
+
+
+                if (isKeyPresseds[6])
+                {
+                    //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
+                    drawingContext.DrawText(new FormattedText(
+                                        $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                        $"bullets.Count  = {bullets.Count}\n" +
+                                        $"enemies.Count  = {enemies.Count}\n" +
+                                        $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
+                                        $"fps = {1.0/spf.TotalSeconds}\n"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , new Typeface("Verdana")
+                                        , 12
+                                        , Brushes.White
+                                        , 12.5), new Point(10, 10));
+                }
+
+            }
+            return dv;
+        }
+
+        //VisualCollection用にoverrideした。多分使うのかな？
+        protected override Visual GetVisualChild(int index)
+        {
+            if (index < 0 || index >= visuals.Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            return visuals[index];
         }
 
         private void DrawHitRange(DrawingContext dc, Entity target)
@@ -251,13 +294,16 @@ namespace ShootingGame
                 case Key.Escape:
                     Environment.Exit(0);
                     break;
+                case Key.Enter:
+                    isKeyPresseds[5] = true;
+                    break;
 
                 //デバック用
                 case Key.L:
                     player.Speed++;
                     break;
                 case Key.Tab:
-                    isKeyPresseds[5] = true;
+                    isKeyPresseds[6] = true;
                     break;
                 default:
                     break;
@@ -282,9 +328,12 @@ namespace ShootingGame
                 case Key.Space:
                     isKeyPresseds[4] = false;
                     break;
+                case Key.Enter:
+                    isKeyPresseds[5] = false;
+                    break;
 
                 case Key.Tab:
-                    isKeyPresseds[5] = false;
+                    isKeyPresseds[6] = false;
                     break;
                 default:
                     break;
