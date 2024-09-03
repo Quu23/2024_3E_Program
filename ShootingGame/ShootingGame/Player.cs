@@ -7,7 +7,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player() : base(150, 500, 3, 5, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
+        public Player() : base(150, 500, 8, 5, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -31,7 +31,6 @@ namespace ShootingGame
             if(X < 0)X = 0;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            // Canvas上で描画しているので、端の限界はMainWindowではなくCanvasのWidthにする。
             if (X + Img.Width < App.window.ActualWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
@@ -60,7 +59,7 @@ namespace ShootingGame
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();
-            bullets.Add(new Bullet(X, Y, 2, Speed + 5, 0, Level, Id.PLAYER));
+            bullets.Add(new Bullet(X, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
             return bullets;
         }
     }

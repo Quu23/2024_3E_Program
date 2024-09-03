@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class ShotgunEnemy : Enemy
     {
-        public ShotgunEnemy(int x, int y, int level) : base(x, y, 3, level, new BitmapImage(), level, 3, 10)
+        public ShotgunEnemy(int x, int y, int level) : base(x, y, 8, level, new BitmapImage(), level, 3, 10)
         {
         }
 

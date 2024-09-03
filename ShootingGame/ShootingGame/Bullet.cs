@@ -19,7 +19,10 @@ namespace ShootingGame
             this.damage = damage;
             this.id = id;
         }
-        
+
+        public Id Id { get => id;}
+        public int Damage { get => damage;}
+
         public override void Move()
         {
             Y -= (int)(Speed * Math.Cos(degree * Math.PI / 180));//degreeは進行方向に対して時計回りに大きくなる。

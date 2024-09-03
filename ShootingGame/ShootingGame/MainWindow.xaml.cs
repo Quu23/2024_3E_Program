@@ -19,9 +19,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space
+        ///                                     W      A      S      D    Space    Tab
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false,};
 
         public Player player;
 
@@ -88,25 +88,32 @@ namespace ShootingGame
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
 
                 drawingContext.DrawImage(player.img, player.Rect);
+                if (isKeyPresseds[5]) DrawHitRange(drawingContext, player);
 
                 foreach (var bl in bullets)
                 {
                     drawingContext.DrawImage(bl.img, bl.Rect);
+                    if (isKeyPresseds[5])DrawHitRange(drawingContext, bl);
                 }
 
                 foreach (var en in enemies)
                 {
                     drawingContext.DrawImage(en.img, en.Rect);
+                    if (isKeyPresseds[5])DrawHitRange(drawingContext, en);
                 }
 
-                //hack:FormattedTextを使うのは非推奨？調べたほうがいい（とりあえず動く）
-                drawingContext.DrawText(new FormattedText($"bullets.Count = {bullets.Count}\nt={backgroundAnimationCounter}"
+                //hack:FormattedTextを使うのは非推奨？調べたほうがいい（とりあえず動く）<-誰かこれ何とかして～。
+                if (isKeyPresseds[5])
+                {
+                    drawingContext.DrawText(new FormattedText($"t={backgroundAnimationCounter}\nbullets.Count = {bullets.Count}\nenemies.Count = {enemies.Count}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
-                                        , 36
+                                        , 12
                                         , Brushes.White
                                         , 12.5), new Point(10, 10));
+                }
+
             }
             return dv;
         }
@@ -138,10 +145,40 @@ namespace ShootingGame
                 enemies.Add(new StraightEnemy(1500, 10, 1));
             }
 
+
+            foreach (Bullet bullet in bullets)
+            {
+                bullet.Move();
+
+                if (bullet.Y < 0 || bullet.Y > ActualHeight)
+                {
+                    bulletsForDelete.Add(bullet);
+                    continue;
+                }
+
+                if (bullet.Id == Id.ENEMY && bullet.IsHit(player))
+                {
+                    player.Hp -= bullet.Damage;
+                    bulletsForDelete.Add(bullet);
+                    continue;
+                }
+
+                foreach (Enemy enemy in enemies) 
+                {
+                    if (bullet.IsHit(enemy))
+                    {
+                        enemy.Hp -= bullet.Damage;
+                        bulletsForDelete.Add(bullet);
+                    }
+                }
+
+
+            }
+
             foreach (Enemy enemy in enemies)
             {
                 enemy.Move();
-                if(enemy.Y > 1100)
+                if (enemy.Y > 1100 || enemy.Hp <= 0)
                 {
                     enemiesForDelete.Add(enemy);
                 }
@@ -151,15 +188,6 @@ namespace ShootingGame
                 enemies.Remove(enemy);
             }
 
-
-            foreach (Bullet bullet in bullets)
-            {
-                bullet.Move();
-                if (bullet.Y < 0 || bullet.Y > ActualHeight)
-                {
-                    bulletsForDelete.Add(bullet);
-                }
-            }
             foreach (Bullet bullet in bulletsForDelete)
             {
                 bullets.Remove(bullet);
@@ -172,7 +200,12 @@ namespace ShootingGame
             }
         }
 
-
+        private void DrawHitRange(DrawingContext dc, Entity target)
+        {
+            SolidColorBrush colorBrush = Brushes.ForestGreen.Clone();
+            colorBrush.Opacity = 0.25;
+            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.X+target.Radius,target.Y+target.Radius),target.Radius,target.Radius);
+        }
 
         private void PressedKey(object? sender, KeyEventArgs e)
         {
@@ -201,6 +234,9 @@ namespace ShootingGame
                 case Key.L:
                     player.Speed++;
                     break;
+                case Key.Tab:
+                    isKeyPresseds[5] = true;
+                    break;
                 default:
                     break;
             }
@@ -223,6 +259,10 @@ namespace ShootingGame
                     break;
                 case Key.Space:
                     isKeyPresseds[4] = false;
+                    break;
+
+                case Key.Tab:
+                    isKeyPresseds[5] = false;
                     break;
                 default:
                     break;
