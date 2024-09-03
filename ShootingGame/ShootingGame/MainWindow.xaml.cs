@@ -66,6 +66,7 @@ namespace ShootingGame
             KeyUp   += DepressedKey;
             KeyDown += PressedKey;
 
+            // https://qiita.com/tera1707/items/15fd23cab641c75945b9
             backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
