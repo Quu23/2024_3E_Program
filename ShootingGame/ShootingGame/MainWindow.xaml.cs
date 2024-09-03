@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -36,11 +37,16 @@ namespace ShootingGame
         private readonly BitmapImage backgroundImage;
         private Rect backgroundRect;
 
+        readonly DateTime GAME_START_TIME;
+        TimeSpan spf;
+
 
         protected override int VisualChildrenCount => visuals.Count;
 
         public MainWindow()
         {
+            GAME_START_TIME = DateTime.Now;
+
             visuals = new VisualCollection(this);
 
             InitializeComponent();
@@ -61,17 +67,27 @@ namespace ShootingGame
             _updateTimer.Start();
         }
 
+        private DateTime start;
+        private DateTime end;
+
         private void Timer_Tick(object? sender, EventArgs e)
         {
+            end = DateTime.Now;
+            spf = end - start;
+            start = DateTime.Now;
+
             // 5がちょうどいい。
             backgroundAnimationCounter += player.Speed - 1;
             if (backgroundAnimationCounter > 1080) backgroundAnimationCounter = 0;
 
             GameLoop();
-
+            
             // 画面の再描画
             visuals.Clear();
             visuals.Add(CreateDrawingVisual());
+
+            //Debug.WriteLine(1.0 / spf.TotalSeconds);
+            
         }
 
         private DrawingVisual CreateDrawingVisual()
@@ -102,10 +118,16 @@ namespace ShootingGame
                     if (isKeyPresseds[5])DrawHitRange(drawingContext, en);
                 }
 
-                //hack:FormattedTextを使うのは非推奨？調べたほうがいい（とりあえず動く）<-誰かこれ何とかして～。
+                
                 if (isKeyPresseds[5])
                 {
-                    drawingContext.DrawText(new FormattedText($"t={backgroundAnimationCounter}\nbullets.Count = {bullets.Count}\nenemies.Count = {enemies.Count}"
+                    //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
+                    drawingContext.DrawText(new FormattedText(
+                                        $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                        $"bullets.Count  = {bullets.Count}\n" +
+                                        $"enemies.Count  = {enemies.Count}\n" +
+                                        $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
+                                        $"fps = {1.0/spf.TotalSeconds}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
