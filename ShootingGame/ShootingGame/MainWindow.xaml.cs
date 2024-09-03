@@ -89,7 +89,7 @@ namespace ShootingGame
 
             // 5がちょうどいい。
             backgroundAnimationCounter += player.Speed - 1;
-            if (backgroundAnimationCounter > 1080) backgroundAnimationCounter = 0;
+            if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
 
             GameLoop();
             
