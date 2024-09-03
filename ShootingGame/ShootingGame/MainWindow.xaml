@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ShootingGame"
         mc:Ignorable="d"
         WindowStyle="None" WindowState="Maximized"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow">
     <Grid>
 
     </Grid>

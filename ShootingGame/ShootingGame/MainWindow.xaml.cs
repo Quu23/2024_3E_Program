@@ -40,6 +40,8 @@ namespace ShootingGame
         private readonly Pen hpBarPen;
         private Rect hpBarRect;
 
+        private readonly Point statusPoint;
+
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
 
@@ -65,13 +67,16 @@ namespace ShootingGame
             KeyDown += PressedKey;
 
             backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
-            backgroundRect  = new Rect(0, 0 , 1920, 1080);
+            backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
-            hpBarRect = new Rect(1600, 1030, player.GetMaxHp * 5, 10);
+            hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
+
+            statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
             _updateTimer.Start();
         }
+
 
         private DateTime start;
         private DateTime end;
@@ -110,11 +115,12 @@ namespace ShootingGame
 
             if (enemies.Count <= 0)
             {
-                enemies.Add(new SnakeEnemy(300, 10, 1));
-                enemies.Add(new StraightEnemy(600, 10, 1));
-                enemies.Add(new StraightEnemy(900, 10, 1));
-                enemies.Add(new StraightEnemy(1200, 10, 1));
-                enemies.Add(new ShotgunEnemy(1500, 10, 1));
+                int dw = (int)((Width-200) / 5.0);
+                enemies.Add(new SnakeEnemy(dw, 10, 1));
+                enemies.Add(new StraightEnemy(2*dw, 10, 1));
+                enemies.Add(new StraightEnemy(3*dw, 10, 1));
+                enemies.Add(new StraightEnemy(4*dw, 10, 1));
+                enemies.Add(new ShotgunEnemy(5*dw, 10, 1));
             }
 
 
@@ -122,7 +128,7 @@ namespace ShootingGame
             {
                 bullet.Move();
 
-                if (bullet.Y < 0 || bullet.Y > ActualHeight)
+                if (bullet.Y < 0 || bullet.Y > Height)
                 {
                     bulletsForDelete.Add(bullet);
                     continue;
@@ -169,7 +175,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                if (enemy.Y > 1100)
+                if (enemy.Y > Height)
                 {
                     enemiesForDelete.Add(enemy);
                     continue;
@@ -221,13 +227,13 @@ namespace ShootingGame
                 }
 
 
-                drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV:{player.Level}"
+                drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
                                         , 10
                                         , Brushes.White
-                                        , 12.5), new Point(hpBarRect.X-50, hpBarRect.Y-10));
+                                        , 12.5), statusPoint);
                 hpBarRect.Width = player.GetMaxHp * 10;
                 drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
                 hpBarRect.Width = player.Hp * 10;
@@ -238,6 +244,7 @@ namespace ShootingGame
                 {
                     //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
                     drawingContext.DrawText(new FormattedText(
+                                        $"Width = {Width} / Height = {Height}\n" +
                                         $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
                                         $"bullets.Count  = {bullets.Count}\n" +
                                         $"enemies.Count  = {enemies.Count}\n" +
