@@ -176,7 +176,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                if (enemy.Y > Height)
+                if (enemy.Y > SystemParameters.PrimaryScreenHeight)
                 {
                     enemiesForDelete.Add(enemy);
                     continue;
@@ -209,7 +209,7 @@ namespace ShootingGame
                 
                 backgroundRect.Y = backgroundAnimationCounter;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
-                backgroundRect.Y = backgroundAnimationCounter - 1080;
+                backgroundRect.Y = backgroundAnimationCounter - SystemParameters.PrimaryScreenHeight;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
 
                 drawingContext.DrawImage(player.img, player.Rect);

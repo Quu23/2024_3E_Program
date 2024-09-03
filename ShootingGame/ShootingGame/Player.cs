@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Imaging;
+﻿using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
@@ -40,11 +41,11 @@ namespace ShootingGame
             if(X < 0)X = 0;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            if (X + Img.Width < App.window.ActualWidth && MainWindow.isKeyPresseds[3])
+            if (X + Img.Width < SystemParameters.PrimaryScreenWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if(X + Img.Width > App.window.ActualWidth)X=(int)(App.window.ActualWidth - Img.Width);
+            if(X + Img.Width > SystemParameters.PrimaryScreenWidth) X=(int)(SystemParameters.PrimaryScreenWidth - Img.Width);
 
             if (Y > 0 && MainWindow.isKeyPresseds[0]) 
             {
@@ -52,11 +53,11 @@ namespace ShootingGame
             }
             if(Y < 0)Y = 0;
 
-            if (Y + Img.Height < App.window.ActualHeight && MainWindow.isKeyPresseds[2])
+            if (Y + Img.Height < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
             {
                 Y += Speed;
             }
-            if (Y + Img.Height > App.window.ActualHeight) Y = (int)(App.window.ActualHeight - Img.Height);
+            if (Y + Img.Height > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Img.Height);
 
             ChangeRect(X, Y);
         }
