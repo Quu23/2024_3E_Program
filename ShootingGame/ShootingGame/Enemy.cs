@@ -2,6 +2,9 @@
 
 namespace ShootingGame
 {
+    /// <summary>
+    /// すべての敵クラスの基底クラス。
+    /// </summary>
     abstract public class Enemy : Plane
     {
         public bool isDead;

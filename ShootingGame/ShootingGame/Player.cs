@@ -8,7 +8,7 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
-        public Player() : base(150, 500, 8, 5, new BitmapImage(ImageUris.PLAYER), 1, 5, 20)
+        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, new BitmapImage(ImageUris.PLAYER), /*LV=*/1, /*hp=*/5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;

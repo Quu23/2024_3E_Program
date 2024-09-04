@@ -15,7 +15,7 @@ namespace ShootingGame
     {
         const int FPS = 60;
 
-        DispatcherTimer _updateTimer;
+        DispatcherTimer updateTimer;
         private VisualCollection visuals;
         
         
@@ -59,9 +59,9 @@ namespace ShootingGame
             player = new Player();
 
             //タイマーの設定 
-            _updateTimer = new DispatcherTimer();
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
-            _updateTimer.Tick += Timer_Tick;
+            updateTimer = new DispatcherTimer();
+            updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
+            updateTimer.Tick += Timer_Tick;
 
             KeyUp   += DepressedKey;
             KeyDown += PressedKey;
@@ -75,7 +75,7 @@ namespace ShootingGame
 
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            _updateTimer.Start();
+            updateTimer.Start();
         }
 
 
@@ -105,15 +105,17 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop()
         {
-
-            if (player.Exp >= player.Level * player.Level + 5 || isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
-
+            //とりあえず必要経験経験値=現在のレベル^2 + 5　にしている。
+            if (player.Exp >= player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
+            
+            //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
             if(player.Hp <= 0) Environment.Exit(0);
 
             if (player.BulletCoolTime > 0) player.BulletCoolTime--;
 
             player.Move();
 
+            //todo:敵の配置とか種類をいじるならここを修正。
             if (enemies.Count <= 0)
             {
                 int dw = (int)((Width-200) / 5.0);

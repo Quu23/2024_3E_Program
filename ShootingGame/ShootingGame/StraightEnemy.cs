@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class StraightEnemy : Enemy
     {
-        public StraightEnemy(int x, int y, int level) : base(x, y, 8, 1+level, new BitmapImage(ImageUris.STRAIGHT_ENEMY), level, 5 + level , 50)
+        public StraightEnemy(int x, int y, int level) : base(x, y, /*r=*/8, /*speed=*/1 + level, new BitmapImage(ImageUris.STRAIGHT_ENEMY), /*LV=*/level, /*hp=*/5 + level , 50)
         {
         }
 
