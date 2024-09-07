@@ -88,7 +88,7 @@ namespace ShootingGame
             spf = end - start;
             start = DateTime.Now;
 
-            // 5がちょうどいい。
+            // プレイヤーの移動速度とともに早くなる
             backgroundAnimationCounter += player.Speed - 1;
             if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
 

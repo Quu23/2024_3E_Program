@@ -32,8 +32,6 @@ namespace ShootingGame
 
         public override void Move()
         {
-            //Canvas canvas = App.window.drawCanvas;
-
             if (X > 0 && MainWindow.isKeyPresseds[1])
             {
                 X -= Speed;
