@@ -59,7 +59,7 @@ namespace ShootingGame
 
         public abstract void Move();
 
-        public void ChangeRect(int x, int y)
+        protected void ChangeRect(int x, int y)
         {
             //構造体の中身をインデクサとかプロパティ経由で変更する際は、一時的に別の変数に移してそれを変更してから再代入しないといけない。
             //構造体をインデクサとかプロパティで取得した場合は、構造体自身ではなくそのコピー（値）が得られるため。
