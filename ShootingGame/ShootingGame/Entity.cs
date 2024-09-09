@@ -8,7 +8,6 @@ namespace ShootingGame
     /// </summary>
     abstract public class Entity
     {
-
         private int x;
         private int y;
         private int radius;
@@ -29,8 +28,8 @@ namespace ShootingGame
             Y = y;
             Radius = radius;
             Speed = speed;
-            Img = img;
             Rect = new Rect(X, Y, img.Width, img.Height);
+            Img = img;
         }
 
 

@@ -14,7 +14,7 @@ namespace ShootingGame
 
         /// <param name="degree">弾の進行方向を表す。プレイヤーの進行方向（画面の下から上）を0度として時計回りが正。一般角θとの関係は、degree = -θ + 90° </param>
         /// <param name="id">Id列挙型の要素を用いる。</param>
-        public Bullet(int x, int y, int radius, int speed, int degree, int damage, Id id) : base(x, y, radius, speed, new BitmapImage(id == Id.PLAYER ? ImageUris.P_BULLET : ImageUris.E_BULLET))
+        public Bullet(int x, int y, int radius, int speed, int degree, int damage, Id id) : base(x, y, radius, speed, id == Id.PLAYER ? Images.PLAYER_BULLET_IMAGE : Images.ENEMY_BULLET_IMAGE)
         {
             this.degree = degree;
             this.damage = damage;

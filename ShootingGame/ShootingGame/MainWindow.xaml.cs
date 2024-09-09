@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   shift
+        ///                                     W      A      S      D    Space    Enter  Tab    Shift
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false , false };
 
         public Player player;
 
@@ -66,7 +66,7 @@ namespace ShootingGame
             KeyDown += PressedKey;
 
             // https://qiita.com/tera1707/items/15fd23cab641c75945b9
-            backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
+            backgroundImage = Images.BACKGROUND_IMAGE;
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
@@ -307,6 +307,9 @@ namespace ShootingGame
                     break;
                 default:
                     break;
+                case Key.RightShift:
+                    isKeyPresseds[7] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -334,6 +337,9 @@ namespace ShootingGame
 
                 case Key.Tab:
                     isKeyPresseds[6] = false;
+                    break;
+                case Key.RightShift:
+                    isKeyPresseds[7] = false;
                     break;
                 default:
                     break;
