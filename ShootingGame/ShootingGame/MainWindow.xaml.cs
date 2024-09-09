@@ -272,10 +272,8 @@ namespace ShootingGame
             colorBrush.Opacity = 0.25;
             dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.X+target.Radius,target.Y+target.Radius),target.Radius,target.Radius);
         }
-        int dfspeed;
         private void PressedKey(object? sender, KeyEventArgs e)
         {
-             dfspeed = player.Speed;
             switch (e.Key)
             {
                 case Key.W:
@@ -310,7 +308,7 @@ namespace ShootingGame
                 default:
                     break;
                 case Key.RightShift:
-                    if (player.Speed != dfspeed * 2)
+                    if (player.Speed != player.defaultSpeed * 2)
                     {
                         player.Speed *= 2;
                     }
