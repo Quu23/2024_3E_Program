@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab    Shift
+        ///                                     W      A      S      D    Space    Enter  Tab  
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false , false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false };
 
         public Player player;
 
@@ -242,7 +242,8 @@ namespace ShootingGame
                                         $"bullets.Count  = {bullets.Count}\n" +
                                         $"enemies.Count  = {enemies.Count}\n" +
                                         $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0 / spf.TotalSeconds}\n"
+                                        $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                        $"Speed = {player.Speed}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
@@ -308,7 +309,7 @@ namespace ShootingGame
                 default:
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = true;
+                    player.Speed *= 2;
                     break;
             }
         }
@@ -339,7 +340,7 @@ namespace ShootingGame
                     isKeyPresseds[6] = false;
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = false;
+                    player.Speed /= 2;
                     break;
                 default:
                     break;
