@@ -4,9 +4,9 @@ using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
-    internal class FastReat : Item
+    internal class FastRate : Item
     {
-        public FastReat(int x, int y,  BitmapImage img) : base(x, y, 3, 6, null)
+        public FastRate(int x, int y,  BitmapImage img) : base(x, y, 4, 6, null)
         {
         }
 
