@@ -106,7 +106,7 @@ namespace ShootingGame
         private void GameLoop()
         {
             //とりあえず必要経験経験値=現在のレベル^2 + 5　にしている。
-            if (player.Exp >= player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
+            if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
             
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
             if(player.Hp <= 0) Environment.Exit(0);

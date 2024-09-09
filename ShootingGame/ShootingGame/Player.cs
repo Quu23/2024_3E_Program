@@ -22,7 +22,7 @@ namespace ShootingGame
         {
             Level++;
 
-            MAX_HP += 2;
+            MAX_HP += 1;
             HeelFullOfHp();
             
         }
