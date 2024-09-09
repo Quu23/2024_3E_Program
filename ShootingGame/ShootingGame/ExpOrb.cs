@@ -4,8 +4,13 @@ namespace ShootingGame
 {
     class ExpOrb : Item
     {
-        public ExpOrb(int x, int y) : base(x, y, 2, 15, new BitmapImage(ImageUris.EXP_ORB))
+        public ExpOrb(int x, int y) : base(x, y, 2, 15, Images.EXP_ORB_IMAGE)
         {
+        }
+
+        public override void CancelEffect(Player player)
+        {
+            ;
         }
 
         public override void MakeEffect(Player player)
