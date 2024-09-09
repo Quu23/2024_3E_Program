@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab    Shift
+        ///                                     W      A      S      D    Space    Enter  Tab  
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false , false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false };
 
         public Player player;
 
@@ -308,7 +308,7 @@ namespace ShootingGame
                 default:
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = true;
+                    player.Speed *= 2;
                     break;
             }
         }
@@ -339,7 +339,7 @@ namespace ShootingGame
                     isKeyPresseds[6] = false;
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = false;
+                    player.Speed /= 2;
                     break;
                 default:
                     break;
