@@ -27,7 +27,7 @@ namespace ShootingGame
             
         }
 
-        private void HeelFullOfHp()
+        public void HeelFullOfHp()
         {
             Hp = MAX_HP;
         }
