@@ -23,10 +23,9 @@ namespace ShootingGame
             Level++;
             Speed++;
             MAX_HP += 2; 
-            HeelFullOfHp();
         }
 
-        private void HeelFullOfHp()
+        public void HeelFullOfHp()
         {
             Hp = MAX_HP;
         }
