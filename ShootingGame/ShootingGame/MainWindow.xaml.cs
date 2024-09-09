@@ -111,7 +111,7 @@ namespace ShootingGame
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
             if(player.Hp <= 0) Environment.Exit(0);
 
-            if (player.BulletCoolTime > 0) player.BulletCoolTime--;
+            if (player.BulletCoolTime > 0) player.BulletCoolTime-=player.DecreaceBulletCoolTime;
 
             player.Move();
 
@@ -165,7 +165,7 @@ namespace ShootingGame
             for (int ei = enemies.Count; ei > 0; ei--)
             {
                 Enemy tmp_enemy = enemies[ei - 1];
-                if (tmp_enemy.BulletCoolTime > 0) tmp_enemy.BulletCoolTime--;
+                if (tmp_enemy.BulletCoolTime > 0) tmp_enemy.BulletCoolTime-=tmp_enemy.DecreaceBulletCoolTime;
                 tmp_enemy.Move();
 
                 if (player.IsHit(tmp_enemy))

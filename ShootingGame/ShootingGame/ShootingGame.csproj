@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\net8.0-windows\" />
-    <Folder Include="img\" />
   </ItemGroup>
 
 </Project>
