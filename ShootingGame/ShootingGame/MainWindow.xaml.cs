@@ -242,7 +242,8 @@ namespace ShootingGame
                                         $"bullets.Count  = {bullets.Count}\n" +
                                         $"enemies.Count  = {enemies.Count}\n" +
                                         $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0 / spf.TotalSeconds}\n"
+                                        $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                        $"Speed = {player.Speed}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
