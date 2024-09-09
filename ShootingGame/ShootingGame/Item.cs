@@ -10,7 +10,7 @@ namespace ShootingGame
         protected Item(int x, int y, int radius, int speed, BitmapImage img) : base(x, y, radius, speed, img)
         {
         }
-
+        
         /// <summary>
         /// そのアイテムの効果。
         /// </summary>
