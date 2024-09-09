@@ -341,24 +341,3 @@ namespace ShootingGame
         }
     }
 }
-
-public class DrawingVisualHost : FrameworkElement
-{
-    private VisualCollection visuals;
-
-    public DrawingVisualHost(VisualCollection visuals)
-    {
-        this.visuals = visuals;
-    }
-
-    protected override int VisualChildrenCount => this.visuals.Count;
-
-    protected override Visual GetVisualChild(int index)
-    {
-        if (index < 0 || index >= this.visuals.Count)
-        {
-            throw new ArgumentOutOfRangeException();
-        }
-        return this.visuals[index];
-    }
-}
