@@ -66,7 +66,7 @@ namespace ShootingGame
             KeyDown += PressedKey;
 
             // https://qiita.com/tera1707/items/15fd23cab641c75945b9
-            backgroundImage = new BitmapImage(ImageUris.BACKGROUND);
+            backgroundImage = Images.BACKGROUND_IMAGE;
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
