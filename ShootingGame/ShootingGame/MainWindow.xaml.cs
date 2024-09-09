@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab
+        ///                                     W      A      S      D    Space    Enter  Tab    Shift
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false , false };
 
         public Player player;
 
@@ -307,6 +307,9 @@ namespace ShootingGame
                     break;
                 default:
                     break;
+                case Key.RightShift:
+                    isKeyPresseds[7] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -334,6 +337,9 @@ namespace ShootingGame
 
                 case Key.Tab:
                     isKeyPresseds[6] = false;
+                    break;
+                case Key.RightShift:
+                    isKeyPresseds[7] = false;
                     break;
                 default:
                     break;
