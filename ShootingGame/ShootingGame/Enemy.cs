@@ -7,11 +7,8 @@ namespace ShootingGame
     /// </summary>
     abstract public class Enemy : Plane
     {
-        public bool isDead;
-
         public Enemy(int x, int y, int radius, int speed, BitmapImage img, int level ,int hp ,int maxBulletCoolTime) : base(x, y, radius, speed, img, level ,hp ,maxBulletCoolTime)
         {
-            isDead = false;
         }
 
         public override void Move()

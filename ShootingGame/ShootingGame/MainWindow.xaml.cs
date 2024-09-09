@@ -27,10 +27,8 @@ namespace ShootingGame
         public Player player;
 
         public List<Enemy> enemies = new List<Enemy>();
-        private List<Enemy> enemiesForDelete = new List<Enemy>();
 
         public List<Bullet> bullets = new List<Bullet>();
-        private List<Bullet> bulletsForDelete = new List<Bullet>();
 
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
@@ -127,71 +125,61 @@ namespace ShootingGame
             }
 
 
-            foreach (Bullet bullet in bullets)
+            for (int bi = bullets.Count; bi > 0; bi--)
             {
-                bullet.Move();
+                Bullet tmp_bullet = bullets[bi - 1];
+                tmp_bullet.Move();
 
-                if (bullet.Y < 0 || bullet.Y > Height)
+                if (tmp_bullet.Y < 0 || tmp_bullet.Y > Height)
                 {
-                    bulletsForDelete.Add(bullet);
+                    bullets.Remove(tmp_bullet);
                     continue;
                 }
 
-                if (bullet.Id == Id.ENEMY && bullet.IsHit(player))
+                if (tmp_bullet.Id == Id.ENEMY && tmp_bullet.IsHit(player))
                 {
-                    player.Hp -= bullet.Damage;
-                    bulletsForDelete.Add(bullet);
+                    player.Hp -= tmp_bullet.Damage;
+                    bullets.Remove(tmp_bullet);
                     continue;
                 }
 
-                foreach (Enemy enemy in enemies)
+                for (int ei = enemies.Count; ei > 0; ei--)
                 {
-                    if (bullet.Id == Id.PLAYER && bullet.IsHit(enemy))
+                    Enemy tmp_enemy = enemies[ei - 1];
+                    if (tmp_bullet.Id == Id.PLAYER && tmp_bullet.IsHit(tmp_enemy))
                     {
-                        enemy.Hp -= bullet.Damage;
-                        bulletsForDelete.Add(bullet);
+                        tmp_enemy.Hp -= tmp_bullet.Damage;
+                        bullets.Remove(tmp_bullet);
 
-                        if(enemy.Hp <= 0)
+                        if(tmp_enemy.Hp <= 0)
                         {
-                            player.Exp += enemy.GetEXP();
-                            enemy.isDead = true;
-                            enemiesForDelete.Add(enemy);
+                            player.Exp += tmp_enemy.GetEXP();
+                            enemies.Remove(tmp_enemy);
                         }
                     }
                 }
             }
 
-
-            foreach (Bullet bullet in bulletsForDelete)
+            for (int ei = enemies.Count; ei > 0; ei--)
             {
-                bullets.Remove(bullet);
-            }
+                Enemy tmp_enemy = enemies[ei - 1];
+                if (tmp_enemy.BulletCoolTime > 0) tmp_enemy.BulletCoolTime--;
+                tmp_enemy.Move();
 
-            foreach (Enemy enemy in enemies)
-            {
-                if(enemy.isDead)continue;
-
-                if (enemy.BulletCoolTime > 0) enemy.BulletCoolTime--;
-                enemy.Move();
-
-                if (player.IsHit(enemy))
+                if (player.IsHit(tmp_enemy))
                 {
                     player.Hp = 0;
                 }
-                if (enemy.Y > SystemParameters.PrimaryScreenHeight)
+                if (tmp_enemy.Y > SystemParameters.PrimaryScreenHeight)
                 {
-                    enemiesForDelete.Add(enemy);
+                    enemies.Remove(tmp_enemy);
                     continue;
                 }
-                if (enemy.BulletCoolTime <= 0)
+                if (tmp_enemy.BulletCoolTime <= 0)
                 {
-                    bullets.AddRange(enemy.ShotBullet());
-                    enemy.BulletCoolTime = enemy.MaxBulletCoolTime;
+                    bullets.AddRange(tmp_enemy.ShotBullet());
+                    tmp_enemy.BulletCoolTime = tmp_enemy.MaxBulletCoolTime;
                 }
-            }
-            foreach (Enemy enemy in enemiesForDelete)
-            {
-                enemies.Remove(enemy);
             }
 
             if (isKeyPresseds[4] && player.BulletCoolTime <= 0)
@@ -217,16 +205,16 @@ namespace ShootingGame
                 drawingContext.DrawImage(player.img, player.Rect);
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
 
-                foreach (var bl in bullets)
+                foreach (var bullet in bullets)
                 {
-                    drawingContext.DrawImage(bl.img, bl.Rect);
-                    if (isKeyPresseds[6])DrawHitRange(drawingContext, bl);
+                    drawingContext.DrawImage(bullet.img, bullet.Rect);
+                    if (isKeyPresseds[6])DrawHitRange(drawingContext, bullet);
                 }
 
-                foreach (var en in enemies)
+                foreach (var enemy in enemies)
                 {
-                    drawingContext.DrawImage(en.img, en.Rect);
-                    if (isKeyPresseds[6])DrawHitRange(drawingContext, en);
+                    drawingContext.DrawImage(enemy.img, enemy.Rect);
+                    if (isKeyPresseds[6])DrawHitRange(drawingContext, enemy);
                 }
 
 
