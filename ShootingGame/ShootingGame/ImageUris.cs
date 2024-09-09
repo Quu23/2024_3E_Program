@@ -9,6 +9,8 @@ namespace ShootingGame
     {
         public static readonly Uri BACKGROUND = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
 
+        public static readonly Uri EXP_ORB = new Uri("../../../img/Exp_Orb.png", UriKind.RelativeOrAbsolute);
+
         public static readonly Uri PLAYER = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri P_BULLET = new Uri("../../../img/Player_Bullet.png", UriKind.RelativeOrAbsolute);
 
