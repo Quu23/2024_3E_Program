@@ -34,7 +34,7 @@ namespace ShootingGame
         }
         public int Hp { get => hp; set => hp = value; }
         public int BulletCoolTime { get => bulletCoolTime; set => bulletCoolTime = value; }
-        public int MaxBulletCoolTime { get => maxBulletCoolTime; protected set => maxBulletCoolTime = value; }
+        public int MaxBulletCoolTime { get => maxBulletCoolTime;  set => maxBulletCoolTime = value; }
         public int DecreaceBulletCoolTime { get => decreaceBulletCoolTime; set => decreaceBulletCoolTime = value; }
 
         /// <summary>
