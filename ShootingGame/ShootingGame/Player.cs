@@ -15,15 +15,16 @@ namespace ShootingGame
         }
 
         public int Exp { get => exp; set => exp = value; }
-        public int GetMaxHp { get => MAX_HP; }
+        public double GetMaxHp { get => MAX_HP; }
 
         //TODO:レベルアップした時の処理を考える
         public void LevelUp()
         {
             Level++;
-            Speed++;
-            MAX_HP += 2; 
+
+            MAX_HP += 2;
             HeelFullOfHp();
+            
         }
 
         private void HeelFullOfHp()

@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab
+        ///                                     W      A      S      D    Space    Enter  Tab   shift
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false};
 
         public Player player;
 
