@@ -21,6 +21,7 @@ namespace ShootingGame
         public void LevelUp()
         {
             Level++;
+            Speed++;
             MAX_HP += 2; 
             HeelFullOfHp();
         }

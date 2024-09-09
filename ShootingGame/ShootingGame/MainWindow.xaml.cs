@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -74,6 +75,7 @@ namespace ShootingGame
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
             updateTimer.Start();
+
         }
 
 
@@ -97,7 +99,7 @@ namespace ShootingGame
             visuals.Add(CreateDrawingVisual());
 
             //Debug.WriteLine(1.0 / spf.TotalSeconds);
-            
+
         }
 
         // TODO:ゲームループの実装
@@ -196,7 +198,7 @@ namespace ShootingGame
             //描画処理。JavaでいうGraphics
             using (DrawingContext drawingContext = dv.RenderOpen())
             {
-                
+
                 backgroundRect.Y = backgroundAnimationCounter;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
                 backgroundRect.Y = backgroundAnimationCounter - SystemParameters.PrimaryScreenHeight;
@@ -228,7 +230,7 @@ namespace ShootingGame
                 hpBarRect.Width = player.GetMaxHp * 10;
                 drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
                 hpBarRect.Width = player.Hp * 10;
-                drawingContext.DrawRectangle(Brushes.Red  , hpBarPen, hpBarRect);
+                drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
 
 
                 if (isKeyPresseds[6])
@@ -240,7 +242,7 @@ namespace ShootingGame
                                         $"bullets.Count  = {bullets.Count}\n" +
                                         $"enemies.Count  = {enemies.Count}\n" +
                                         $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0/spf.TotalSeconds}\n"
+                                        $"fps = {1.0 / spf.TotalSeconds}\n"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
@@ -337,5 +339,26 @@ namespace ShootingGame
                     break;
             }
         }
+    }
+}
+
+public class DrawingVisualHost : FrameworkElement
+{
+    private VisualCollection visuals;
+
+    public DrawingVisualHost(VisualCollection visuals)
+    {
+        this.visuals = visuals;
+    }
+
+    protected override int VisualChildrenCount => this.visuals.Count;
+
+    protected override Visual GetVisualChild(int index)
+    {
+        if (index < 0 || index >= this.visuals.Count)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+        return this.visuals[index];
     }
 }
