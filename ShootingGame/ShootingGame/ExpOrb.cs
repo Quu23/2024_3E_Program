@@ -8,11 +8,6 @@ namespace ShootingGame
         {
         }
 
-        public override void CancelEffect(Player player)
-        {
-            ;
-        }
-
         public override void MakeEffect(Player player)
         {
             player.Exp += 50;

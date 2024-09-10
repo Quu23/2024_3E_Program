@@ -9,18 +9,13 @@ namespace ShootingGame
     {
         public HealingItem(int x, int y, BitmapImage img) : base(x, y, 3, 6, null)
         {
+            throw new NotImplementedException("HealingItem's Image is null");
         }
 
         public override void MakeEffect(Player player)
         {
             player.HeelFullOfHp();
         }
-
-        public override void CancelEffect(Player player)
-        {
-            ;
-        }
-
 
         public override void Move()
         {
