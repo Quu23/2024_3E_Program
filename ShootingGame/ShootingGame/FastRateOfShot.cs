@@ -1,12 +1,8 @@
-﻿
-
-using System.Windows.Media.Imaging;
-
-namespace ShootingGame
+﻿namespace ShootingGame
 {
-    internal class FastRate : Item
+    internal class FastRateOfShot : TransientItem
     {
-        public FastRate(int x, int y,  BitmapImage img) : base(x, y, 4, 6, null)
+        public FastRateOfShot(int x, int y) : base(x, y, 4, 6, Images.FAST_RATE_OF_SHOT_IMAGE,10)
         {
         }
 

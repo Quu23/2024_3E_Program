@@ -16,6 +16,5 @@ namespace ShootingGame
         /// </summary>
         /// <param name="target">アイテムが作用する機体</param>
         public abstract void MakeEffect(Player player);
-        public abstract void CancelEffect(Player player);
     }
 }
