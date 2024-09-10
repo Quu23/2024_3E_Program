@@ -8,20 +8,22 @@ namespace ShootingGame
         private int MAX_HP;
         private int exp;
 
+        public int defaultSpeed;
+
         public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;
-        }
+            defaultSpeed = Speed;
 
+        }
         public int Exp { get => exp; set => exp = value; }
-        public int GetMaxHp { get => MAX_HP; }
+        public double GetMaxHp { get => MAX_HP; }
 
         //TODO:レベルアップした時の処理を考える
         public void LevelUp()
         {
             Level++;
-            Speed++;
             MAX_HP += 2;
             Hp += 2;
         }

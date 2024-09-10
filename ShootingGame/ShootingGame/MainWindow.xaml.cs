@@ -21,9 +21,9 @@ namespace ShootingGame
         
         
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab    Shift
+        ///                                     W      A      S      D    Space    Enter  Tab  
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false , false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false };
 
         public Player player;
 
@@ -106,7 +106,7 @@ namespace ShootingGame
         private void GameLoop()
         {
             //とりあえず必要経験経験値=現在のレベル^2 + 5　にしている。
-            if (player.Exp >= player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
+            if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
             
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
             if(player.Hp <= 0) Environment.Exit(0);
@@ -242,7 +242,8 @@ namespace ShootingGame
                                         $"bullets.Count  = {bullets.Count}\n" +
                                         $"enemies.Count  = {enemies.Count}\n" +
                                         $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0 / spf.TotalSeconds}\n"
+                                        $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                        $"Speed = {player.Speed}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
@@ -271,7 +272,6 @@ namespace ShootingGame
             colorBrush.Opacity = 0.25;
             dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.X+target.Radius,target.Y+target.Radius),target.Radius,target.Radius);
         }
-
         private void PressedKey(object? sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -308,7 +308,10 @@ namespace ShootingGame
                 default:
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = true;
+                    if (player.Speed != player.defaultSpeed * 3)
+                    {
+                        player.Speed *= 3;
+                    }
                     break;
             }
         }
@@ -339,7 +342,7 @@ namespace ShootingGame
                     isKeyPresseds[6] = false;
                     break;
                 case Key.RightShift:
-                    isKeyPresseds[7] = false;
+                    player.Speed /= 3;
                     break;
                 default:
                     break;
