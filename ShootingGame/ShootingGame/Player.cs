@@ -9,6 +9,7 @@ namespace ShootingGame
         private int exp;
 
         public int defaultSpeed;
+        public bool isinvincible = false;
 
         public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 20)
         {
@@ -33,6 +34,10 @@ namespace ShootingGame
             Hp = MAX_HP;
         }
 
+        public override bool IsHit(Entity entity)
+        {
+            
+        }
         public override void Move()
         {
             if (X > 0 && MainWindow.isKeyPresseds[1])
