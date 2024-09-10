@@ -1,8 +1,4 @@
-﻿
-
-using System.Windows.Media.Imaging;
-
-namespace ShootingGame
+﻿namespace ShootingGame
 {
     internal class FastRateOfShot : TransientItem
     {

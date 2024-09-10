@@ -1,13 +1,10 @@
-﻿
-
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 
 namespace ShootingGame
 {
     internal class HealingItem : Item
     {
-        public HealingItem(int x, int y, BitmapImage img) : base(x, y, 3, 6, null)
+        public HealingItem(int x, int y, BitmapImage img) : base(x, y, 4, 6, null)
         {
             throw new NotImplementedException("HealingItem's Image is null");
         }
