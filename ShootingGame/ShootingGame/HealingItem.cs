@@ -11,7 +11,7 @@ namespace ShootingGame
 
         public override void MakeEffect(Player player)
         {
-            player.HeelFullOfHp();
+            player.Hp += 5;
         }
 
         public override void Move()
