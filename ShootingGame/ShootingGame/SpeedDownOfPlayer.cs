@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     internal class SpeedDownOfPlayer : TransientItem
     {
-        public SpeedDownOfPlayer(int x, int y, BitmapImage img, int EFFECT_IIME) : base(x, y, 4, 6, img, EFFECT_IIME)
+        public SpeedDownOfPlayer(int x, int y, BitmapImage img) : base(x, y, 4, 6, img,5)
         {
         }
 
