@@ -11,7 +11,11 @@ namespace ShootingGame
 
         public override void MakeEffect(Player player)
         {
-            if (player.Hp < (player.MAX_HP - 5)){player.Hp += 5;}else {player.HeelFullOfHp() };
+            if (player.Hp < player.MAX_HP - 5){
+                player.Hp += 5;
+            }else { 
+                player.HeelFullOfHp(); 
+            }
         }
 
         public override void Move()
