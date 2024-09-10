@@ -5,7 +5,7 @@ namespace ShootingGame
 {
     public class Player : Plane
     {
-        private int MAX_HP;
+        public int MAX_HP;
         private int exp;
 
         public int defaultSpeed;
