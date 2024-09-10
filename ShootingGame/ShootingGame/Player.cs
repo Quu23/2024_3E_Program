@@ -9,13 +9,14 @@ namespace ShootingGame
         private int exp;
 
         public int defaultSpeed;
-        public bool isinvincible = false;
+        public bool isInvincible;
 
         public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 20)
         {
             //最初は5にする？
             MAX_HP = 5;
             defaultSpeed = Speed;
+            isInvincible = false;
 
         }
         public int Exp { get => exp; set => exp = value; }
@@ -34,9 +35,10 @@ namespace ShootingGame
             Hp = MAX_HP;
         }
 
-        public override bool IsHit(Entity entity)
+        public override bool IsHit(Entity target)
         {
-            
+            if(!isInvincible && base.IsHit(target))return true;
+            return false;
         }
         public override void Move()
         {
