@@ -12,6 +12,7 @@ namespace ShootingGame
         public static readonly BitmapImage EXP_ORB_IMAGE           = new BitmapImage(ImageUris.EXP_ORB_URI);
         public static readonly BitmapImage FAST_RATE_OF_SHOT_IMAGE = new BitmapImage(ImageUris.FAST_RATE_OF_SHOT_URI);
         public static readonly BitmapImage HEALING_ITEM_IMAGE      = new BitmapImage(ImageUris.HEALIING_ITEM_URI);
+        public static readonly BitmapImage INVINCIBLE_ITEM_IMAGE   = new BitmapImage(ImageUris.INVINCIBLE_URI);
 
         public static readonly BitmapImage PLAYER_IMAGE            = new BitmapImage(ImageUris.PLAYER_URI);
         public static readonly BitmapImage PLAYER_BULLET_IMAGE     = new BitmapImage(ImageUris.P_BULLET_URI);
