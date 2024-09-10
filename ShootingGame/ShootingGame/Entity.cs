@@ -49,7 +49,7 @@ namespace ShootingGame
             return HashCode.Combine(X, Y , Radius , Speed);
         }
 
-        public bool IsHit(Entity target)
+        public virtual bool IsHit(Entity target)
         {
             if ((X - target.X) * (X - target.X) + (Y - target.Y) * (Y - target.Y) < ( Radius + target.Radius) * (Radius + target.Radius))
                 return true;
