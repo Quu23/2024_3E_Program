@@ -25,6 +25,7 @@ namespace ShootingGame
         {
             Level++;
             MAX_HP += 2;
+            Hp += 2;
         }
 
         public void HeelFullOfHp()

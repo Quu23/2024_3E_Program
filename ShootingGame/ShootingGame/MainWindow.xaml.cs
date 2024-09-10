@@ -308,9 +308,9 @@ namespace ShootingGame
                 default:
                     break;
                 case Key.RightShift:
-                    if (player.Speed != player.defaultSpeed * 2)
+                    if (player.Speed != player.defaultSpeed * 3)
                     {
-                        player.Speed *= 2;
+                        player.Speed *= 3;
                     }
                     break;
             }
@@ -342,7 +342,7 @@ namespace ShootingGame
                     isKeyPresseds[6] = false;
                     break;
                 case Key.RightShift:
-                    player.Speed /= 2;
+                    player.Speed /= 3;
                     break;
                 default:
                     break;
