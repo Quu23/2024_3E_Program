@@ -4,9 +4,8 @@ namespace ShootingGame
 {
     class HexagonEnemy : Enemy
     {
-        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=8*/8, /*speed=*/level + 5, null, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM,70)
+        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level, Images.HEXAGON_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM,70)
         {
-            throw new NotImplementedException("Image is null!!");
         }
 
         public override int GetEXP()
@@ -23,12 +22,12 @@ namespace ShootingGame
             var bullets = new List<Bullet>()
             {
                 // todo:X,Yの微調整
-                new(X, Y, 2, bulletRadius,   0, 1, Id.ENEMY),
-                new(X, Y, 2, bulletRadius,  60, 1, Id.ENEMY),
-                new(X, Y, 2, bulletRadius, 120, 1, Id.ENEMY),
-                new(X, Y, 2, bulletRadius, 180, 1, Id.ENEMY),
-                new(X, Y, 2, bulletRadius, 240, 1, Id.ENEMY),
-                new(X, Y, 2, bulletRadius, 300, 1, Id.ENEMY)
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,   0, 1, Id.ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,  60, 1, Id.ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 120, 1, Id.ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 180, 1, Id.ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 240, 1, Id.ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 300, 1, Id.ENEMY)
             };
 
             return bullets;
