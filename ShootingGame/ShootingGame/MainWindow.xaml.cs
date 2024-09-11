@@ -89,7 +89,7 @@ namespace ShootingGame
             start = DateTime.Now;
 
             // プレイヤーの移動速度とともに早くなる
-            backgroundAnimationCounter += player.Speed - 1;
+            backgroundAnimationCounter += 5;
             if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
 
             GameLoop();
