@@ -1,4 +1,6 @@
-﻿namespace ShootingGame.Entities.Planes.Enemies
+﻿using System.Windows;
+
+namespace ShootingGame.Entities.Planes.Enemies
 {
     class TurnBackEnemy : Enemy
     {
@@ -23,12 +25,17 @@
         public override void Move()
         {
             base.Move();
-            if (Y > 820) { Speed = -5; }
-            if (Y > 750 && Speed > 2)
+            
+            double displayHeight = SystemParameters.PrimaryScreenHeight;
+
+            if (Y > displayHeight * 0.7 && Speed > 2)
             {
                 Speed = 2;
-
             }
+            else if (Y > displayHeight * 0.8)
+            { 
+                Speed = -5; 
+            } 
         }
     }
 }

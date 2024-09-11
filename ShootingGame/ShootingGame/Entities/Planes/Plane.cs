@@ -33,7 +33,7 @@ namespace ShootingGame.Entities.Planes
         /// </summary>
         public int CenterXForShotBullet
         {
-            get => X + Radius - bulletRadius;
+            get => CenterX - bulletRadius;
         }
 
 
