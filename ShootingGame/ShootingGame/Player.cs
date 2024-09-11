@@ -11,7 +11,7 @@ namespace ShootingGame
         public int defaultSpeed;
         public bool isInvincible;
 
-        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 20)
+        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 10)
         {
             //最初は5にする？
             MAX_HP = 5;
