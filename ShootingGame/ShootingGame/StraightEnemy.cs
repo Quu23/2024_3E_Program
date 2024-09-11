@@ -17,7 +17,7 @@ namespace ShootingGame
         {
             var bullets = new List<Bullet>
             {
-                new(X, Y, 8, Level+15, 180, Level, Id.ENEMY)
+                new(X + Radius, Y, 8, Level+15, 180, Level, Id.ENEMY)
             };
             return bullets;
         }

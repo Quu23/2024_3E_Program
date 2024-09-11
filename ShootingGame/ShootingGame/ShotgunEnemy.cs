@@ -20,9 +20,9 @@ namespace ShootingGame
         {
             var bullets = new List<Bullet>()
             {
-                new(X ,Y , 2 , 8 , 150 , 1,Id.ENEMY),
-                new(X ,Y , 2 , 8 , 180 , 1,Id.ENEMY),
-                new(X ,Y , 2 , 8 ,-150 , 1,Id.ENEMY),
+                new(X + Radius ,Y , 2 , 8 , 150 , 1,Id.ENEMY),
+                new(X + Radius ,Y , 2 , 8 , 180 , 1,Id.ENEMY),
+                new(X + Radius ,Y , 2 , 8 ,-150 , 1,Id.ENEMY),
             };
 
             return bullets;

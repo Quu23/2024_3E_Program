@@ -20,6 +20,7 @@ namespace ShootingGame
         public static readonly BitmapImage STRAIGHT_ENEMY_IMAGE    = new BitmapImage(ImageUris.STRAIGHT_ENEMY_URI);
         public static readonly BitmapImage SNAKE_ENEMY_IMAGE       = new BitmapImage(ImageUris.SNAKE_ENEMY_URI);
         public static readonly BitmapImage SHOTGUN_ENEMY_IMAGE     = new BitmapImage(ImageUris.SHOTGUN_ENEMY_URI);
+        public static readonly BitmapImage TRUCKBACK_ENEMY_IMAGE = new BitmapImage(ImageUris.TRUNBACK_ENEMY_URI);
 
         public static readonly BitmapImage ENEMY_BULLET_IMAGE      = new BitmapImage(ImageUris.E_BULLET_URI);
     }
