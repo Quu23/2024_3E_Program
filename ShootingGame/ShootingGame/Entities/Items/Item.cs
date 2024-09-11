@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media.Imaging;
+using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
     /// <summary>
     /// ゲーム中の全てのアイテムの基底クラス。
@@ -10,7 +11,7 @@ namespace ShootingGame
         protected Item(int x, int y, int radius, int speed, BitmapImage img) : base(x, y, radius, speed, img)
         {
         }
-        
+
         /// <summary>
         /// そのアイテムの効果。
         /// </summary>

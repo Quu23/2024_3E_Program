@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media.Imaging;
+using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
     internal class HealingItem : Item
     {
@@ -11,10 +12,13 @@ namespace ShootingGame
 
         public override void MakeEffect(Player player)
         {
-            if (player.Hp < player.MAX_HP - 5){
+            if (player.Hp < player.MAX_HP - 5)
+            {
                 player.Hp += 5;
-            }else { 
-                player.HeelFullOfHp(); 
+            }
+            else
+            {
+                player.HeelFullOfHp();
             }
         }
 

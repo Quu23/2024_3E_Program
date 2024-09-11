@@ -1,6 +1,6 @@
-﻿using System.Windows.Media.Imaging;
+﻿using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
     internal class ClearEnemiesItem : Item
     {

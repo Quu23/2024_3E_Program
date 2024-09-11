@@ -1,6 +1,7 @@
 ﻿using System.Windows.Media.Imaging;
+using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
     /// <summary>
     /// 効果時間がある、効果が一時的であるアイテムの基底クラス
@@ -10,7 +11,7 @@ namespace ShootingGame
         /// <summary>
         /// アイテムの効果時間
         /// </summary>
-        public readonly int EFFECT_IIME; 
+        public readonly int EFFECT_IIME;
 
         protected TransientItem(int x, int y, int radius, int speed, BitmapImage img, int EFFECT_IIME) : base(x, y, radius, speed, img)
         {

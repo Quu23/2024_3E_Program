@@ -1,6 +1,4 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace ShootingGame
+﻿namespace ShootingGame.Entities.Planes.Enemies
 {
     class ShotgunEnemy : Enemy
     {

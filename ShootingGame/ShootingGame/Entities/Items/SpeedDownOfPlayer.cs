@@ -1,21 +1,22 @@
 ﻿using System.Windows.Media.Imaging;
+using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
-    internal class InvincibleItem : TransientItem
+    internal class SpeedDownOfPlayer : TransientItem
     {
-        public InvincibleItem(int x, int y, int EFFECT_IIME) : base(x, y, 2, 6, null, 5)
+        public SpeedDownOfPlayer(int x, int y, BitmapImage img) : base(x, y, 4, 6, img, 5)
         {
         }
 
         public override void CancelEffect(Player player)
         {
-            player.isInvincible = false;
+            player.Speed += 2;
         }
 
         public override void MakeEffect(Player player)
         {
-            player.isInvincible = true;
+            player.Speed -= 2;
         }
 
         public override void Move()
@@ -24,6 +25,3 @@ namespace ShootingGame
         }
     }
 }
-       
-   
-

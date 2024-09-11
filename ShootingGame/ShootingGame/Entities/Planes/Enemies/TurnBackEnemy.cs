@@ -1,10 +1,8 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace ShootingGame
+﻿namespace ShootingGame.Entities.Planes.Enemies
 {
     class TurnBackEnemy : Enemy
     {
-        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUN_BACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM,50)
+        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUN_BACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 50)
         {
         }
 
@@ -26,10 +24,10 @@ namespace ShootingGame
         {
             base.Move();
             if (Y > 820) { Speed = -5; }
-            if (Y > 750 && Speed > 2) 
-            {   
+            if (Y > 750 && Speed > 2)
+            {
                 Speed = 2;
-                
+
             }
         }
     }

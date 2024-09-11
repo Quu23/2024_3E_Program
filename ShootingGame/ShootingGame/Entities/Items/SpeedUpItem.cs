@@ -1,6 +1,7 @@
 using System.Windows.Media.Imaging;
+using ShootingGame.Entities.Planes;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Items
 {
 
     class SpeedUpItem : Item

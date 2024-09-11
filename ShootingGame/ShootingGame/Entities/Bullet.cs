@@ -1,7 +1,7 @@
-﻿namespace ShootingGame
+﻿namespace ShootingGame.Entities
 {
-    public enum Id { PLAYER , ENEMY }
-    public class Bullet :Entity
+    public enum Id { PLAYER, ENEMY }
+    public class Bullet : Entity
     {
         private int degree;
         private int damage;
@@ -10,9 +10,9 @@
         /// </summary>
         private Id id;
 
-        public static readonly int RADIUS_FOR_SMALL  = 4;
+        public static readonly int RADIUS_FOR_SMALL = 4;
         public static readonly int RADIUS_FOR_MEDIUM = 8;
-        public static readonly int RADIUS_FOR_BIG    = 16;
+        public static readonly int RADIUS_FOR_BIG = 16;
 
         /// <param name="degree">弾の進行方向を表す。プレイヤーの進行方向（画面の下から上）を0度として時計回りが正。一般角θとの関係は、degree = -θ + 90° </param>
         /// <param name="id">Id列挙型の要素を用いる。</param>
@@ -22,7 +22,7 @@
             this.damage = damage;
             this.id = id;
 
-            if(id == Id.ENEMY)
+            if (id == Id.ENEMY)
             {
                 if (radius == RADIUS_FOR_SMALL)
                 {
@@ -37,8 +37,8 @@
         /// <summary>
         /// プレイヤーか敵かを識別する用。enumのIdを用いる。
         /// </summary>
-        public Id Id { get => id;}
-        public int Damage { get => damage;}
+        public Id Id { get => id; }
+        public int Damage { get => damage; }
 
         public override void Move()
         {

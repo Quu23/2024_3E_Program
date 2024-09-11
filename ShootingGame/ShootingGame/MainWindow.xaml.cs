@@ -6,6 +6,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using ShootingGame.Entities;
+using ShootingGame.Entities.Planes;
+using ShootingGame.Entities.Planes.Enemies;
 
 namespace ShootingGame
 {

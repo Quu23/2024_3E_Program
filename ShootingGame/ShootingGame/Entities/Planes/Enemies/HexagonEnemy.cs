@@ -1,10 +1,8 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace ShootingGame
+﻿namespace ShootingGame.Entities.Planes.Enemies
 {
     class HexagonEnemy : Enemy
     {
-        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level, Images.HEXAGON_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM,70)
+        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level, Images.HEXAGON_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 70)
         {
         }
 

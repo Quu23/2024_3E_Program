@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Media.Imaging;
 
-namespace ShootingGame
+namespace ShootingGame.Entities.Planes
 {
     public class Player : Plane
     {
@@ -11,7 +10,7 @@ namespace ShootingGame
         public int defaultSpeed;
         public bool isInvincible;//無敵状態かどうか判定する変数（無敵＝true,Not無敵＝false）
 
-        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM,10)
+        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 10)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -37,7 +36,7 @@ namespace ShootingGame
 
         public override bool IsHit(Entity target)
         {
-            if(!isInvincible && base.IsHit(target))return true;
+            if (!isInvincible && base.IsHit(target)) return true;
             return false;
         }
         public override void Move()
@@ -46,20 +45,20 @@ namespace ShootingGame
             {
                 X -= Speed;
             }
-            if(X < 0)X = 0;
+            if (X < 0) X = 0;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
             if (X + Img.Width < SystemParameters.PrimaryScreenWidth && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if(X + Img.Width > SystemParameters.PrimaryScreenWidth) X=(int)(SystemParameters.PrimaryScreenWidth - Img.Width);
+            if (X + Img.Width > SystemParameters.PrimaryScreenWidth) X = (int)(SystemParameters.PrimaryScreenWidth - Img.Width);
 
-            if (Y > 0 && MainWindow.isKeyPresseds[0]) 
+            if (Y > 0 && MainWindow.isKeyPresseds[0])
             {
                 Y -= Speed;
             }
-            if(Y < 0)Y = 0;
+            if (Y < 0) Y = 0;
 
             if (Y + Img.Height < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
             {
@@ -77,7 +76,7 @@ namespace ShootingGame
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();
-            bullets.Add(new Bullet(X+Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
+            bullets.Add(new Bullet(X + Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
             return bullets;
         }
     }
