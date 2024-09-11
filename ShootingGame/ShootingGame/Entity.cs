@@ -18,6 +18,8 @@ namespace ShootingGame
         public int X { get => x; set => x = value; }
         public int Y { get => y; set => y = value; }
         public int Radius { get => radius; set => radius = value; }
+        public int CenterX { get => (X + Radius); }
+        public int CenterY { get => (Y + Radius); }
         public int Speed { get => speed; set => speed = value; }
         public BitmapImage Img { get => img; set => img = value; }
         public Rect Rect { get => rect; set => rect = value; }
@@ -51,7 +53,7 @@ namespace ShootingGame
 
         public virtual bool IsHit(Entity target)
         {
-            if ((X - target.X) * (X - target.X) + (Y - target.Y) * (Y - target.Y) < ( Radius + target.Radius) * (Radius + target.Radius))
+            if ((CenterX - target.CenterX) * (CenterX - target.CenterX) + (CenterY - target.CenterY) * (CenterY - target.CenterY) < ( Radius + target.Radius) * (Radius + target.Radius))
                 return true;
             return false;
         }
