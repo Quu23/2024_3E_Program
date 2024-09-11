@@ -18,7 +18,7 @@ namespace ShootingGame
         public override void Move()
         {
             X = 5;
-            Y += 10;
+            Y += Speed;
         }
     }
 }
