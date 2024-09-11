@@ -122,7 +122,7 @@ namespace ShootingGame
                 enemies.Add(new SnakeEnemy(dw, 10, 1));
                 enemies.Add(new StraightEnemy(2*dw, 10, 1));
                 enemies.Add(new StraightEnemy(3*dw, 10, 1));
-                enemies.Add(new StraightEnemy(4*dw, 10, 1));
+                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
                 enemies.Add(new ShotgunEnemy(5*dw, 10, 1));
             }
 

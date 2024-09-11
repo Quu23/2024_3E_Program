@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class TurnBackEnemy : Enemy
     {
-        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/20, null, /*LV=*/level, /*hp=*/3, 50)
+        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUCKBACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, 50)
         {
         }
 
@@ -25,11 +25,11 @@ namespace ShootingGame
         public override void Move()
         {
             base.Move();
-           Y =  (Y - 1 / Y * Y);
-            if (Y < 3)
-            {
-                Y = -20;
-                Y = -(Y - 1 / Y * Y);
+            if (Y > 820) { Speed = -5; }
+            if (Y > 750 && Speed > 2) 
+            {   
+                Speed = 2;
+                
             }
         }
     }
