@@ -18,8 +18,11 @@
         public static readonly Uri STRAIGHT_ENEMY_URI    = new Uri("../../../img/StraightEnemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SNAKE_ENEMY_URI       = new Uri("../../../img/SnakeEnemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SHOTGUN_ENEMY_URI     = new Uri("../../../img/ShotgunEnemy.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri TRUNBACK_ENEMY_URI    = new Uri("../../../img/Trunback_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri TRUN_BACK_ENEMY_URI   = new Uri("../../../img/Trunback_Enemy.png", UriKind.RelativeOrAbsolute);
 
+        public static readonly Uri E_BULLET_SMALL_URI    = new Uri("../../../img/Enemy_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri E_BULLET_URI          = new Uri("../../../img/Enemy_Bullet.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri E_BULLET_BIG_URI      = new Uri("../../../img/Enemy_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
+
     }
 }

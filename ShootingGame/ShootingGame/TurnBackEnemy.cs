@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class TurnBackEnemy : Enemy
     {
-        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUCKBACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, 50)
+        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUN_BACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUS,50)
         {
         }
 
@@ -17,8 +17,8 @@ namespace ShootingGame
         {
             return
             [
-                new(X ,Y ,8, 10,90, 1 ,Id.ENEMY),
-                new(X ,Y ,8, 10,270, 1 ,Id.ENEMY)
+                new(X ,Y ,bulletRadius, 10, 90, 1,Id.ENEMY),
+                new(X ,Y ,bulletRadius, 10,270, 1,Id.ENEMY)
             ];
         }
 

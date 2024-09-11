@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class SnakeEnemy : Enemy
     {
-        public SnakeEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.SNAKE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, 50)
+        public SnakeEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.SNAKE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUS , 50)
         {
         }
 
@@ -17,7 +17,7 @@ namespace ShootingGame
         {
             return
             [
-                new(X + Radius ,Y ,8, 10,180, 1 ,Id.ENEMY)
+                new(CenterXForShotBullet ,Y ,8, 10,180, 1 ,Id.ENEMY)
             ];
         }
 

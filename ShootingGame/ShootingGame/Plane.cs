@@ -10,18 +10,30 @@ namespace ShootingGame
 
         private int level;
         private int hp;
+
+        protected int bulletRadius;
+
         private int bulletCoolTime;
         private int decreaceBulletCoolTime;
         private int maxBulletCoolTime;
 
 
-        public Plane(int x, int y, int radius, int speed, BitmapImage img, int level , int hp ,int maxBulletCoolTime ) : base(x, y, radius, speed, img)
+        public Plane(int x, int y, int radius, int speed, BitmapImage img, int level , int hp , int bulletRadius , int maxBulletCoolTime) : base(x, y, radius, speed, img)
         {
             Level = level;
             Hp = hp;
             BulletCoolTime = 0;
             DecreaceBulletCoolTime = 1;
-            this.MaxBulletCoolTime = maxBulletCoolTime;
+            this.bulletRadius = bulletRadius;
+            MaxBulletCoolTime = maxBulletCoolTime;
+        }
+
+        /// <summary>
+        /// 弾を出すとき用に、弾の画像のサイズとかを考慮した真ん中のX座標を返す。
+        /// </summary>
+        public int CenterXForShotBullet
+        {
+            get => X + Radius - bulletRadius;
         }
 
 

@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class HexagonEnemy : Enemy
     {
-        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=8*/8, /*speed=*/level + 5, null, /*LV=*/level, /*hp=*/3, 70)
+        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=8*/8, /*speed=*/level + 5, null, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUS,70)
         {
         }
 
@@ -21,12 +21,12 @@ namespace ShootingGame
         {
             var bullets = new List<Bullet>()
             {
-                new(X, Y, 2, 8,   0, 1, Id.ENEMY),
-                new(X, Y, 2, 8,  60, 1, Id.ENEMY),
-                new(X, Y, 2, 8, 120, 1, Id.ENEMY),
-                new(X, Y, 2, 8, 180, 1, Id.ENEMY),
-                new(X, Y, 2, 8, 240, 1, Id.ENEMY),
-                new(X, Y, 2, 8, 300, 1, Id.ENEMY)
+                new(X, Y, 2, bulletRadius,   0, 1, Id.ENEMY),
+                new(X, Y, 2, bulletRadius,  60, 1, Id.ENEMY),
+                new(X, Y, 2, bulletRadius, 120, 1, Id.ENEMY),
+                new(X, Y, 2, bulletRadius, 180, 1, Id.ENEMY),
+                new(X, Y, 2, bulletRadius, 240, 1, Id.ENEMY),
+                new(X, Y, 2, bulletRadius, 300, 1, Id.ENEMY)
             };
 
             return bullets;
