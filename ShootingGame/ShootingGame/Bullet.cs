@@ -24,8 +24,14 @@
 
             if(id == Id.ENEMY)
             {
-                if (radius == RADIUS_FOR_SMALL) Img = Images.ENEMY_BULLET_SMALL_IMAGE;
-                if (radius == RADIUS_FOR_BIG)   Img = Images.ENEMY_BULLET_BIG_IMAGE;
+                if (radius == RADIUS_FOR_SMALL)
+                {
+                    Img = Images.ENEMY_BULLET_SMALL_IMAGE;
+                }
+                if (radius == RADIUS_FOR_BIG)
+                {
+                    Img = Images.ENEMY_BULLET_BIG_IMAGE;
+                }
             }
         }
         /// <summary>

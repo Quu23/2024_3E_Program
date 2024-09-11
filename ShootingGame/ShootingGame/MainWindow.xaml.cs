@@ -172,7 +172,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                if (tmp_enemy.Y > SystemParameters.PrimaryScreenHeight)
+                if (tmp_enemy.Y > SystemParameters.PrimaryScreenHeight || tmp_enemy.Y < -tmp_enemy.Radius)
                 {
                     enemies.Remove(tmp_enemy);
                     continue;

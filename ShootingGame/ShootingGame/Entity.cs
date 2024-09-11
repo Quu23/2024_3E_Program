@@ -28,7 +28,7 @@ namespace ShootingGame
             Y = y;
             Radius = radius;
             Speed = speed;
-            Rect = new Rect(X, Y, img.Width, img.Height);
+            Rect = new Rect(X, Y, 2*Radius , 2*Radius);
             Img = img;
         }
 

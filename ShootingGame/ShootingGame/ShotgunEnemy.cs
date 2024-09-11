@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     class ShotgunEnemy : Enemy
     {
-        public ShotgunEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level + 5, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 70)
+        public ShotgunEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level + 5, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, 70)
         {
         }
 
@@ -20,9 +20,9 @@ namespace ShootingGame
         {
             var bullets = new List<Bullet>()
             {
-                new(CenterXForShotBullet ,Y , 2 , 8 , 150 , 1,Id.ENEMY),
-                new(CenterXForShotBullet ,Y , 2 , 8 , 180 , 1,Id.ENEMY),
-                new(CenterXForShotBullet ,Y , 2 , 8 ,-150 , 1,Id.ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 150 , 1,Id.ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 180 , 1,Id.ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 ,-150 , 1,Id.ENEMY),
             };
 
             return bullets;
