@@ -9,7 +9,7 @@ namespace ShootingGame
         private int exp;
 
         public int defaultSpeed;
-        public bool isInvincible;
+        public bool isInvincible;//無敵状態かどうか判定する変数（無敵＝true,Not無敵＝false）
 
         public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, 20)
         {
