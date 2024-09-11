@@ -89,7 +89,7 @@ namespace ShootingGame
             start = DateTime.Now;
 
             // プレイヤーの移動速度とともに早くなる
-            backgroundAnimationCounter += player.Speed - 1;
+            backgroundAnimationCounter += 5;
             if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
 
             GameLoop();
@@ -120,7 +120,7 @@ namespace ShootingGame
             {
                 int dw = (int)((Width-200) / 5.0);
                 enemies.Add(new SnakeEnemy(dw, 10, 1));
-                enemies.Add(new StraightEnemy(2*dw, 10, 1));
+                enemies.Add(new HexagonEnemy(2*dw, 10, 1));
                 enemies.Add(new StraightEnemy(3*dw, 10, 1));
                 enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
                 enemies.Add(new ShotgunEnemy(5*dw, 10, 1));

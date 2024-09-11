@@ -21,6 +21,7 @@ namespace ShootingGame
         public static readonly BitmapImage SNAKE_ENEMY_IMAGE        = new BitmapImage(ImageUris.SNAKE_ENEMY_URI);
         public static readonly BitmapImage SHOTGUN_ENEMY_IMAGE      = new BitmapImage(ImageUris.SHOTGUN_ENEMY_URI);
         public static readonly BitmapImage TRUN_BACK_ENEMY_IMAGE    = new BitmapImage(ImageUris.TRUN_BACK_ENEMY_URI);
+        public static readonly BitmapImage HEXAGON_ENEMY_IMAGE      = new BitmapImage(ImageUris.HEXAGON_ENEMY_URI);
 
         /// <summary>
         /// 敵の弾 Sサイズ :  8x 8 (r=4)
