@@ -77,7 +77,7 @@ namespace ShootingGame
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();
-            bullets.Add(new Bullet(X, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
+            bullets.Add(new Bullet(X+Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
             return bullets;
         }
     }
