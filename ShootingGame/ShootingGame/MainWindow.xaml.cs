@@ -205,18 +205,18 @@ namespace ShootingGame
                 backgroundRect.Y = backgroundAnimationCounter - SystemParameters.PrimaryScreenHeight;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
 
-                drawingContext.DrawImage(player.img, player.Rect);
+                drawingContext.DrawImage(player.Img, player.Rect);
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
 
                 foreach (var bullet in bullets)
                 {
-                    drawingContext.DrawImage(bullet.img, bullet.Rect);
+                    drawingContext.DrawImage(bullet.Img, bullet.Rect);
                     if (isKeyPresseds[6])DrawHitRange(drawingContext, bullet);
                 }
 
                 foreach (var enemy in enemies)
                 {
-                    drawingContext.DrawImage(enemy.img, enemy.Rect);
+                    drawingContext.DrawImage(enemy.Img, enemy.Rect);
                     if (isKeyPresseds[6])DrawHitRange(drawingContext, enemy);
                 }
 
@@ -271,7 +271,7 @@ namespace ShootingGame
         {
             SolidColorBrush colorBrush = Brushes.ForestGreen.Clone();
             colorBrush.Opacity = 0.25;
-            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.X+target.Radius,target.Y+target.Radius),target.Radius,target.Radius);
+            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.CenterX,target.CenterY),target.Radius,target.Radius);
         }
         private void PressedKey(object? sender, KeyEventArgs e)
         {

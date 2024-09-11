@@ -12,7 +12,7 @@ namespace ShootingGame.Entities
         private int y;
         private int radius;
         private int speed;
-        public BitmapImage img;
+        private BitmapImage img;
         private Rect rect;
 
         public int X { get => x; set => x = value; }
