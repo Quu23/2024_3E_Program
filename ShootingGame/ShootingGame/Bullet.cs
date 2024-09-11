@@ -11,7 +11,7 @@
         private Id id;
 
         public static readonly int RADIUS_FOR_SMALL  = 4;
-        public static readonly int RADIUS_FOR_MEDIUS = 8;
+        public static readonly int RADIUS_FOR_MEDIUM = 8;
         public static readonly int RADIUS_FOR_BIG    = 16;
 
         /// <param name="degree">弾の進行方向を表す。プレイヤーの進行方向（画面の下から上）を0度として時計回りが正。一般角θとの関係は、degree = -θ + 90° </param>
