@@ -4,7 +4,7 @@ namespace ShootingGame
 {
     internal class InvincibleItem : TransientItem
     {
-        public InvincibleItem(int x, int y, int radius, int speed, BitmapImage img, int EFFECT_IIME) : base(x, y, radius, speed, img, EFFECT_IIME)
+        public InvincibleItem(int x, int y,  int EFFECT_IIME) : base(x, y, 2, 6,null, 5)
         {
         }
 
@@ -20,7 +20,6 @@ namespace ShootingGame
 
         public override void Move()
         {
-            throw new NotImplementedException();
-        }
-    }
+            Y += Speed;
+   }
 }
