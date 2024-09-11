@@ -17,8 +17,8 @@ namespace ShootingGame
         {
             return
             [
-                new(X ,Y ,8, 10,90, 1 ,Id.ENEMY),
-                new(X ,Y ,8, 10,270, 1 ,Id.ENEMY)
+                new(X ,Y ,8, 10,  90, 1 , Id.ENEMY),
+                new(X ,Y ,8, 10, 270, 1 , Id.ENEMY)
             ];
         }
 
