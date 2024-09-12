@@ -35,7 +35,7 @@
 
         //音楽のURI
 
-        public static readonly Uri BGM_URI               = new Uri("../../../music/bgm/temporary_bgm.mp3", UriKind.Relative);
+        public static readonly Uri BGM_URI               = new Uri("../../../music/bgm/temporary_bgm.mp3", UriKind.RelativeOrAbsolute);
 
     }
 }
