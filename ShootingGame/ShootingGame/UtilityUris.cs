@@ -3,8 +3,11 @@
     /// <summary>
     /// 使用する画像全てのURIを管理するクラス。
     /// </summary>
-    static class ImageUris
+    static class UtilityUris
     {
+        //画像のURI
+
+
         public static readonly Uri BACKGROUND_URI        = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
 
         //アイテム
@@ -28,6 +31,11 @@
         public static readonly Uri E_BULLET_SMALL_URI    = new Uri("../../../img/Enemy_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri E_BULLET_URI          = new Uri("../../../img/Enemy_Bullet.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri E_BULLET_BIG_URI      = new Uri("../../../img/Enemy_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
+
+
+        //音楽のURI
+
+        public static readonly Uri BGM_URI               = new Uri("../../../music/bgm/temporary_bgm.mp3", UriKind.Relative);
 
     }
 }

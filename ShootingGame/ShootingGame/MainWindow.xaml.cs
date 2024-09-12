@@ -32,6 +32,8 @@ namespace ShootingGame
 
         public List<Bullet> bullets = new List<Bullet>();
 
+        private MediaPlayer musicPlayer;
+
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
         private readonly BitmapImage backgroundImage;
@@ -66,6 +68,13 @@ namespace ShootingGame
             KeyUp   += DepressedKey;
             KeyDown += PressedKey;
 
+            // BGM再生の設定
+            musicPlayer = new MediaPlayer();
+            musicPlayer.Open(UtilityUris.BGM_URI);
+            //musicPlayer.Position = new TimeSpan(0,1,40);
+            musicPlayer.Play();
+
+            //背景アニメーション設定
             // https://qiita.com/tera1707/items/15fd23cab641c75945b9
             backgroundImage = Images.BACKGROUND_IMAGE;
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
@@ -88,6 +97,12 @@ namespace ShootingGame
             end = DateTime.Now;
             spf = end - start;
             start = DateTime.Now;
+
+            if (musicPlayer.Position.TotalSeconds >= musicPlayer.NaturalDuration.TimeSpan.TotalSeconds)
+            {
+                musicPlayer.Position = TimeSpan.Zero;
+                musicPlayer.Play();
+            }
 
             // プレイヤーの移動速度とともに早くなる
             backgroundAnimationCounter += 5;
@@ -133,7 +148,7 @@ namespace ShootingGame
                 Bullet tmp_bullet = bullets[bi - 1];
                 tmp_bullet.Move();
 
-                if (tmp_bullet.Y < 0 || tmp_bullet.Y > Height)
+                if (tmp_bullet.X < 0 || tmp_bullet.X > SystemParameters.PrimaryScreenWidth || tmp_bullet.Y < 0 || tmp_bullet.Y > SystemParameters.PrimaryScreenHeight)
                 {
                     bullets.Remove(tmp_bullet);
                     continue;
@@ -244,7 +259,8 @@ namespace ShootingGame
                                         $"enemies.Count  = {enemies.Count}\n" +
                                         $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
                                         $"fps = {1.0 / spf.TotalSeconds}\n" +
-                                        $"Speed = {player.Speed}"
+                                        $"Speed = {player.Speed}\n" +
+                                        $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , new Typeface("Verdana")
@@ -273,6 +289,7 @@ namespace ShootingGame
             colorBrush.Opacity = 0.25;
             dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.CenterX,target.CenterY),target.Radius,target.Radius);
         }
+
         private void PressedKey(object? sender, KeyEventArgs e)
         {
             switch (e.Key)
