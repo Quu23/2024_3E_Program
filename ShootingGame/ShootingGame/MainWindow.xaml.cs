@@ -71,7 +71,11 @@ namespace ShootingGame
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
             musicPlayer.Open(UtilityUris.BGM_URI);
-            //musicPlayer.Position = new TimeSpan(0,1,40);
+            musicPlayer.Position = new TimeSpan(0,1,40);
+            musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+            {
+                musicPlayer.Position = TimeSpan.Zero;
+            };
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -88,7 +92,6 @@ namespace ShootingGame
 
         }
 
-
         private DateTime start;
         private DateTime end;
 
@@ -97,12 +100,6 @@ namespace ShootingGame
             end = DateTime.Now;
             spf = end - start;
             start = DateTime.Now;
-
-            if (musicPlayer.Position.TotalSeconds >= musicPlayer.NaturalDuration.TimeSpan.TotalSeconds)
-            {
-                musicPlayer.Position = TimeSpan.Zero;
-                musicPlayer.Play();
-            }
 
             // プレイヤーの移動速度とともに早くなる
             backgroundAnimationCounter += 5;
