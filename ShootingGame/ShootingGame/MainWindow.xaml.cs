@@ -15,10 +15,14 @@ namespace ShootingGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static WindowMode windowMode;
+
         const int FPS = 60;
 
         DispatcherTimer updateTimer;
         private VisualCollection visuals;
+
+        private int selectForStartWindow = 0;
         
         
         /// <summary>
@@ -39,6 +43,10 @@ namespace ShootingGame
         private readonly BitmapImage backgroundImage;
         private Rect backgroundRect;
 
+        //タイトルなどのロゴ関係
+        private Rect titleRect;
+        private Rect modeSelectionTextRect;
+
         private readonly Pen hpBarPen;
         private Rect hpBarRect;
 
@@ -57,6 +65,8 @@ namespace ShootingGame
             visuals = new VisualCollection(this);
 
             InitializeComponent();
+
+            windowMode = WindowMode.START;
 
             player = new Player();
 
@@ -83,6 +93,10 @@ namespace ShootingGame
             backgroundImage = Images.BACKGROUND_IMAGE;
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
+            //タイトルロゴ等の設定
+            titleRect = new Rect(SystemParameters.PrimaryScreenWidth / 4,250, 700,100);//割る4ぐらいがちょうどいい（適当）
+            modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, 500, 700, 300);
+
             hpBarPen  = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
@@ -105,13 +119,55 @@ namespace ShootingGame
             backgroundAnimationCounter += 5;
             if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
 
-            GameLoop();
+            switch (windowMode)
+            {
+                case WindowMode.START:
+                    StartLoop();
+                    break;
+                case WindowMode.STAGE1:
+                case WindowMode.STAGE1_BOSS:
+                    GameLoop();
+                    break;
+                case WindowMode.STAGE2:
+                case WindowMode.STAGE2_BOSS:
+                    break;
+                case WindowMode.STAGE3:
+                case WindowMode.STAGE3_BOSS:
+                    break;
+                case WindowMode.GAMEOVER:
+                    GameoverLoop();
+                    break;
+                case WindowMode.GAMECLEAR:
+                    GameclearLoop();
+                    break;
+                case WindowMode.LANKING:
+                    break;
+            }
             
             // 画面の再描画
             visuals.Clear();
             visuals.Add(CreateDrawingVisual());
 
             //Debug.WriteLine(1.0 / spf.TotalSeconds);
+
+        }
+
+        private void StartLoop()
+        {
+            if (isKeyPresseds[4]) windowMode = WindowMode.STAGE1;
+            if (isKeyPresseds[0] && selectForStartWindow > 0) selectForStartWindow--;
+            if (isKeyPresseds[2] && selectForStartWindow < 2) selectForStartWindow++;
+
+            if ((isKeyPresseds[0] || isKeyPresseds[2]) && isKeyPresseds[1]) selectForStartWindow = 1;
+        }
+
+        private void GameoverLoop()
+        {
+
+        }
+
+        private void GameclearLoop()
+        {
 
         }
 
@@ -217,57 +273,102 @@ namespace ShootingGame
                 backgroundRect.Y = backgroundAnimationCounter - SystemParameters.PrimaryScreenHeight;
                 drawingContext.DrawImage(backgroundImage, backgroundRect);
 
-                drawingContext.DrawImage(player.Img, player.Rect);
-                if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
-
-                foreach (var bullet in bullets)
+                switch (windowMode)
                 {
-                    drawingContext.DrawImage(bullet.Img, bullet.Rect);
-                    if (isKeyPresseds[6])DrawHitRange(drawingContext, bullet);
+                    case WindowMode.START:
+                        DrawStartWindow(drawingContext);
+                        break;
+                    case WindowMode.STAGE1:
+                    case WindowMode.STAGE1_BOSS:
+                        DrawGameWindow(drawingContext);
+                        break;
+                    case WindowMode.STAGE2:
+                    case WindowMode.STAGE2_BOSS:
+                        break;
+                    case WindowMode.STAGE3:
+                    case WindowMode.STAGE3_BOSS:
+                        break;
+                    case WindowMode.GAMEOVER:
+                        DrawGameoverWindow(drawingContext);
+                        break;
+                    case WindowMode.GAMECLEAR:
+                        DrawGameclearWindow(drawingContext);
+                        break;
+                    case WindowMode.LANKING:
+                        break;
                 }
-
-                foreach (var enemy in enemies)
-                {
-                    drawingContext.DrawImage(enemy.Img, enemy.Rect);
-                    if (isKeyPresseds[6])DrawHitRange(drawingContext, enemy);
-                }
-
-
-                drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
-                                        , CultureInfo.GetCultureInfo("en")
-                                        , FlowDirection.LeftToRight
-                                        , new Typeface("Verdana")
-                                        , 10
-                                        , Brushes.White
-                                        , 12.5), statusPoint);
-                hpBarRect.Width = player.GetMaxHp * 10;
-                drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
-                hpBarRect.Width = player.Hp * 10;
-                drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
-
-
-                if (isKeyPresseds[6])
-                {
-                    //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
-                    drawingContext.DrawText(new FormattedText(
-                                        $"Width = {Width} / Height = {Height}\n" +
-                                        $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                        $"bullets.Count  = {bullets.Count}\n" +
-                                        $"enemies.Count  = {enemies.Count}\n" +
-                                        $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                        $"fps = {1.0 / spf.TotalSeconds}\n" +
-                                        $"Speed = {player.Speed}\n" +
-                                        $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
-                                        , CultureInfo.GetCultureInfo("en")
-                                        , FlowDirection.LeftToRight
-                                        , new Typeface("Verdana")
-                                        , 12
-                                        , Brushes.White
-                                        , 12.5), new Point(10, 10));
-                }
-
             }
             return dv;
+        }
+
+        private void DrawStartWindow(DrawingContext drawingContext)
+        {
+            drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
+            drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
+            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(500,selectForStartWindow*70+560 , 40 ,40));
+        }
+
+        private void DrawGameWindow(DrawingContext drawingContext)
+        {
+
+            drawingContext.DrawImage(player.Img, player.Rect);
+            if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
+
+            foreach (var bullet in bullets)
+            {
+                drawingContext.DrawImage(bullet.Img, bullet.Rect);
+                if (isKeyPresseds[6]) DrawHitRange(drawingContext, bullet);
+            }
+
+            foreach (var enemy in enemies)
+            {
+                drawingContext.DrawImage(enemy.Img, enemy.Rect);
+                if (isKeyPresseds[6]) DrawHitRange(drawingContext, enemy);
+            }
+
+
+            drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 10
+                                    , Brushes.White
+                                    , 12.5), statusPoint);
+            hpBarRect.Width = player.GetMaxHp * 10;
+            drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
+            hpBarRect.Width = player.Hp * 10;
+            drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
+
+
+            if (isKeyPresseds[6])
+            {
+                //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
+                drawingContext.DrawText(new FormattedText(
+                                    $"Width = {Width} / Height = {Height}\n" +
+                                    $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                    $"bullets.Count  = {bullets.Count}\n" +
+                                    $"enemies.Count  = {enemies.Count}\n" +
+                                    $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
+                                    $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                    $"Speed = {player.Speed}\n" +
+                                    $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 12
+                                    , Brushes.White
+                                    , 12.5), new Point(10, 10));
+            }
+        }
+
+        private void DrawGameoverWindow(DrawingContext drawingVisual)
+        {
+
+        }
+
+        private void DrawGameclearWindow(DrawingContext drawingContext)
+        {
+
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？

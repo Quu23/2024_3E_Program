@@ -1,4 +1,6 @@
-﻿namespace ShootingGame
+﻿using System.Windows.Media.Imaging;
+
+namespace ShootingGame
 {
     /// <summary>
     /// 使用する画像全てのURIを管理するクラス。
@@ -9,6 +11,8 @@
 
 
         public static readonly Uri BACKGROUND_URI        = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
+        public static readonly Uri TITLE_URI             = new Uri("../../../img/Title.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri MODE_SELECT_TEXT_IMAGE= new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
 
         //アイテム
         public static readonly Uri EXP_ORB_URI           = new Uri("../../../img/Exp_Orb.png", UriKind.RelativeOrAbsolute);

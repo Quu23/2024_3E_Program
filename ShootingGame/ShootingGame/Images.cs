@@ -8,6 +8,8 @@ namespace ShootingGame
     static class Images
     {
         public static readonly BitmapImage BACKGROUND_IMAGE         = new BitmapImage(UtilityUris.BACKGROUND_URI);
+        public static readonly BitmapImage TITLE_IMAGE              = new BitmapImage(UtilityUris.TITLE_URI);
+        public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_IMAGE);
 
         public static readonly BitmapImage EXP_ORB_IMAGE            = new BitmapImage(UtilityUris.EXP_ORB_URI);
         public static readonly BitmapImage FAST_RATE_OF_SHOT_IMAGE  = new BitmapImage(UtilityUris.FAST_RATE_OF_SHOT_URI);
