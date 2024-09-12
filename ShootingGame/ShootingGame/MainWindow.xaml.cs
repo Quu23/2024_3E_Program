@@ -305,7 +305,7 @@ namespace ShootingGame
         {
             drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
             drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
-            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(500,selectForStartWindow*70+560 , 40 ,40));
+            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(SystemParameters.PrimaryScreenWidth * 0.25,selectForStartWindow*70+560 , 40 ,40));
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
