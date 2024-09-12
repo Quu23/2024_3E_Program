@@ -94,15 +94,15 @@ namespace ShootingGame
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
-            titleRect = new Rect(SystemParameters.PrimaryScreenWidth / 4,SystemParameters.PrimaryScreenHeight/4, 700,100);//割る4ぐらいがちょうどいい（適当）
-            modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, SystemParameters.PrimaryScreenHeight / 4+250, 700, 300);
+            titleRect = new Rect(SystemParameters.PrimaryScreenWidth * 76/300 ,SystemParameters.PrimaryScreenHeight/8, 700,100);//割る4ぐらいがちょうどいい（適当）
+            modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 , 700, 300);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            updateTimer.Start();
+            updateTimer.Start(); 
 
         }
 
