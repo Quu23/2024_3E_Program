@@ -94,7 +94,7 @@ namespace ShootingGame
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
-            titleRect = new Rect(SystemParameters.PrimaryScreenWidth * 76/300 ,SystemParameters.PrimaryScreenHeight/8, 700,100);//割る4ぐらいがちょうどいい（適当）
+            titleRect = new Rect(SystemParameters.PrimaryScreenWidth * 75/300 ,SystemParameters.PrimaryScreenHeight/8, 700,100);//割る4ぐらいがちょうどいい（適当）
             modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 , 700, 300);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
@@ -305,7 +305,7 @@ namespace ShootingGame
         {
             drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
             drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
-            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(SystemParameters.PrimaryScreenWidth * 0.25,selectForStartWindow*70+ SystemParameters.PrimaryScreenHeight / 4 + 300, 40 ,40));
+            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(SystemParameters.PrimaryScreenWidth / 4,90*selectForStartWindow + SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 + 20, 40 ,40));
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
