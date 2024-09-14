@@ -21,8 +21,6 @@ namespace ShootingGame
 
         DispatcherTimer updateTimer;
         private VisualCollection visuals;
-
-        private int selectForStartWindow = 0;
         
         
         /// <summary>
@@ -94,8 +92,8 @@ namespace ShootingGame
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
-            titleRect = new Rect(SystemParameters.PrimaryScreenWidth * 75/300 ,SystemParameters.PrimaryScreenHeight/8, 700,100);//割る4ぐらいがちょうどいい（適当）
-            modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 , 700, 300);
+            titleRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.TITLE_IMAGE.Width)/2 ,(SystemParameters.PrimaryScreenHeight-Images.MODE_SELECT_TEXT_IMAGE.Height)/8, 700,100);//割る4ぐらいがちょうどいい（適当）
+            modeSelectionTextRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.MODE_SELECT_TEXT_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) * 6/8, 700, 300);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
@@ -155,10 +153,6 @@ namespace ShootingGame
         private void StartLoop()
         {
             if (isKeyPresseds[4]) windowMode = WindowMode.STAGE1;
-            if (isKeyPresseds[0] && selectForStartWindow > 0) selectForStartWindow--;
-            if (isKeyPresseds[2] && selectForStartWindow < 2) selectForStartWindow++;
-
-            if ((isKeyPresseds[0] || isKeyPresseds[2]) && isKeyPresseds[1]) selectForStartWindow = 1;
         }
 
         private void GameoverLoop()
@@ -305,7 +299,6 @@ namespace ShootingGame
         {
             drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
             drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
-            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(SystemParameters.PrimaryScreenWidth / 4,90*selectForStartWindow + SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 + 20, 40 ,40));
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
