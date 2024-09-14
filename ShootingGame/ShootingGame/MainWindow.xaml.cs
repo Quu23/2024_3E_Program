@@ -44,6 +44,8 @@ namespace ShootingGame
         //タイトルなどのロゴ関係
         private Rect titleRect;
         private Rect modeSelectionTextRect;
+        //GAMEOVERもしくはGAMECLEARになったときにインスタンスを代入する。
+        private FormattedText scoreText = null;
 
         private readonly Pen hpBarPen;
         private Rect hpBarRect;
@@ -84,6 +86,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
+            musicPlayer.IsMuted = true;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -168,11 +171,21 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop()
         {
-            //とりあえず必要経験経験値=現在のレベル^2 + 5　にしている。
+            //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
             
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
-            if(player.Hp <= 0) Environment.Exit(0);
+            if(player.Hp <= 0)
+            {
+                windowMode = WindowMode.GAMEOVER;
+                scoreText = new FormattedText($"SCORE = {"まだSCORE変数を作ってない"}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 30
+                                    , Brushes.White
+                                    , 12.5);
+            }
 
             if (player.BulletCoolTime > 0) player.BulletCoolTime-=player.DecreaceBulletCoolTime;
 
@@ -344,6 +357,7 @@ namespace ShootingGame
                                     $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
                                     $"fps = {1.0 / spf.TotalSeconds}\n" +
                                     $"Speed = {player.Speed}\n" +
+                                    $"BGM Muted = {musicPlayer.IsMuted}\n" +
                                     $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
@@ -354,14 +368,16 @@ namespace ShootingGame
             }
         }
 
-        private void DrawGameoverWindow(DrawingContext drawingVisual)
+        private void DrawGameoverWindow(DrawingContext drawingContext)
         {
-
+            drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
+            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
         }
 
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
-
+            drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
+            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？
