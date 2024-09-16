@@ -13,4 +13,12 @@
     <Folder Include="music\se\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Owner\Source\Repos\2024_3E_Program\ShootingGame\ShootingGame\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Owner\Source\Repos\2024_3E_Program\ShootingGame\ShootingGame\.editorconfig" />
+  </ItemGroup>
+
 </Project>
