@@ -1,8 +1,8 @@
 ﻿namespace ShootingGame.Entities.Planes.Enemies
 {
-    internal class GoldenEnemy : Enemy
+    class GoldenEnemy : Enemy
     {
-        public GoldenEnemy(int x, int y, int level ) : base(x, y, /*r=*/10,  /*speed=*/10, null, /*LV=*/level, /*hp=*/1, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/200)
+        public GoldenEnemy(int x, int y, int level ) : base(x, y, /*r=*/10,  /*speed=*/15, Images.GOLDEN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/1, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/200)
         {
         }
 
