@@ -15,7 +15,7 @@
         {
             var bullets = new List<Bullet>
             {
-                new(CenterXForShotBullet, Y, 8, Level+15, 180, Level, Id.ENEMY)
+                new(CenterXForShotBullet, Y, Bullet.RADIUS_FOR_MEDIUM, Level+15, 180, Level, Id.ENEMY)
             };
             return bullets;
         }
