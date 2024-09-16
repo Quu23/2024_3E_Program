@@ -1,17 +1,18 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ShootingGame.Entities.Planes.Enemies
 {
     internal class MissileEnemy : Enemy
     {
-        private int maxChaseTimer;
         private int chaseTimer;
         private int moveDirection;
 
-        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/3, null, /*LV=*/level, /*hp=*/2, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/60)
+        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/10, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/2, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/60)
         {
-            maxChaseTimer = 10;
+            //追尾時間設定。調整求。
+            chaseTimer = 100;
         }
 
         public override int GetEXP()
@@ -28,10 +29,27 @@ namespace ShootingGame.Entities.Planes.Enemies
         }
         public override void Move()
         {
-            double dx = App.window.player.CenterX - CenterX;
-            double dy = App.window.player.CenterY - CenterY;
+            double radian;
 
-            moveDirection = (int)(180 - (Math.Atan2(dx, dy) * (180 / Math.PI)));
+            if (chaseTimer >= 0)
+            {
+                chaseTimer--;
+
+                double dx = App.window.player.CenterX - CenterX;
+                double dy = App.window.player.CenterY - CenterY;
+
+                radian = Math.PI - (Math.Atan2(dx, dy));
+                moveDirection = (int)(radian * (180 / Math.PI));
+            }
+            else
+            {
+                radian = moveDirection * (Math.PI / 180);
+            }
+
+            X += (int)(Speed * Math.Sin(radian));
+            Y -= (int)(Speed * Math.Cos(radian)); 
+
+            ChangeRect(X, Y);
         }
     }
 }

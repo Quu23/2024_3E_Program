@@ -32,6 +32,7 @@ namespace ShootingGame
         public static readonly BitmapImage TRUN_BACK_ENEMY_IMAGE    = new BitmapImage(UtilityUris.TRUN_BACK_ENEMY_URI);
         public static readonly BitmapImage HEXAGON_ENEMY_IMAGE      = new BitmapImage(UtilityUris.HEXAGON_ENEMY_URI);
         public static readonly BitmapImage GOLDEN_ENEMY_IMAGE       = new BitmapImage(UtilityUris.GOLDEN_ENEMY_URI);
+        public static readonly BitmapImage MISSILE_ENEMY_IMAGE      = new BitmapImage(UtilityUris.MISSILE_ENEMY_URI);
 
         /// <summary>
         /// 敵の弾 Sサイズ :  8x 8 (r=4)
