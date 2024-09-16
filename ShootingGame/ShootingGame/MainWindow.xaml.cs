@@ -21,8 +21,6 @@ namespace ShootingGame
 
         DispatcherTimer updateTimer;
         private VisualCollection visuals;
-
-        private int selectForStartWindow = 0;
         
         
         /// <summary>
@@ -46,6 +44,8 @@ namespace ShootingGame
         //タイトルなどのロゴ関係
         private Rect titleRect;
         private Rect modeSelectionTextRect;
+        //GAMEOVERもしくはGAMECLEARになったときにインスタンスを代入する。
+        private FormattedText scoreText = null;
 
         private readonly Pen hpBarPen;
         private Rect hpBarRect;
@@ -86,6 +86,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
+            musicPlayer.IsMuted = true;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -94,8 +95,8 @@ namespace ShootingGame
             backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
-            titleRect = new Rect(SystemParameters.PrimaryScreenWidth * 75/300 ,SystemParameters.PrimaryScreenHeight/8, 700,100);//割る4ぐらいがちょうどいい（適当）
-            modeSelectionTextRect = new Rect(SystemParameters.PrimaryScreenWidth / 4, SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 , 700, 300);
+            titleRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.TITLE_IMAGE.Width)/2 ,(SystemParameters.PrimaryScreenHeight-Images.MODE_SELECT_TEXT_IMAGE.Height)/8, 700,100);//割る4ぐらいがちょうどいい（適当）
+            modeSelectionTextRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.MODE_SELECT_TEXT_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) * 6/8, 700, 300);
 
             hpBarPen  = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
@@ -155,10 +156,6 @@ namespace ShootingGame
         private void StartLoop()
         {
             if (isKeyPresseds[4]) windowMode = WindowMode.STAGE1;
-            if (isKeyPresseds[0] && selectForStartWindow > 0) selectForStartWindow--;
-            if (isKeyPresseds[2] && selectForStartWindow < 2) selectForStartWindow++;
-
-            if ((isKeyPresseds[0] || isKeyPresseds[2]) && isKeyPresseds[1]) selectForStartWindow = 1;
         }
 
         private void GameoverLoop()
@@ -174,11 +171,21 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop()
         {
-            //とりあえず必要経験経験値=現在のレベル^2 + 5　にしている。
+            //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
             
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
-            if(player.Hp <= 0) Environment.Exit(0);
+            if(player.Hp <= 0)
+            {
+                windowMode = WindowMode.GAMEOVER;
+                scoreText = new FormattedText($"SCORE = {"まだSCORE変数を作ってない"}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 30
+                                    , Brushes.White
+                                    , 12.5);
+            }
 
             if (player.BulletCoolTime > 0) player.BulletCoolTime-=player.DecreaceBulletCoolTime;
 
@@ -305,7 +312,6 @@ namespace ShootingGame
         {
             drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
             drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
-            drawingContext.DrawImage(Images.STRAIGHT_ENEMY_IMAGE, new Rect(SystemParameters.PrimaryScreenWidth / 4,90*selectForStartWindow + SystemParameters.PrimaryScreenHeight / 4 + SystemParameters.PrimaryScreenHeight / 10 + 20, 40 ,40));
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
@@ -351,6 +357,7 @@ namespace ShootingGame
                                     $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
                                     $"fps = {1.0 / spf.TotalSeconds}\n" +
                                     $"Speed = {player.Speed}\n" +
+                                    $"BGM Muted = {musicPlayer.IsMuted}\n" +
                                     $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
@@ -361,14 +368,16 @@ namespace ShootingGame
             }
         }
 
-        private void DrawGameoverWindow(DrawingContext drawingVisual)
+        private void DrawGameoverWindow(DrawingContext drawingContext)
         {
-
+            drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
+            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
         }
 
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
-
+            drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
+            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？
