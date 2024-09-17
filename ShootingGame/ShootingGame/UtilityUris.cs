@@ -43,8 +43,8 @@ namespace ShootingGame
 
 
         //音楽のURI
-
-        public static readonly Uri BGM_URI               = new Uri("../../../music/bgm/temporary_bgm.mp3", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BGM1_URI               = new Uri("../../../music/bgm/bgm1.mp3", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BGM2_URI               = new Uri("../../../music/bgm/bgm2.mp3", UriKind.RelativeOrAbsolute);
 
     }
 }

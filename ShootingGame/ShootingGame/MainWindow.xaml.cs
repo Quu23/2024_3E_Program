@@ -80,7 +80,7 @@ namespace ShootingGame
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
-            musicPlayer.Open(UtilityUris.BGM_URI);
+            musicPlayer.Open(UtilityUris.BGM1_URI);
             //musicPlayer.Position = new TimeSpan(0,1,40);
             musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
             {
