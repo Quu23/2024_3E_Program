@@ -11,7 +11,7 @@
             return Level * 3;
         }
 
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>
             {

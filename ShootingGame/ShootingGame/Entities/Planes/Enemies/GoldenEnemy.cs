@@ -11,7 +11,7 @@
             return 100;
         }
 
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             return
             [

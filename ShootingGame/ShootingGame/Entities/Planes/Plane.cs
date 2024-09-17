@@ -49,10 +49,21 @@ namespace ShootingGame.Entities.Planes
         public int MaxBulletCoolTime { get => maxBulletCoolTime; set => maxBulletCoolTime = value; }
         public int DecreaceBulletCoolTime { get => decreaceBulletCoolTime; set => decreaceBulletCoolTime = value; }
 
+        public override void Action()
+        {
+            if (BulletCoolTime > 0) BulletCoolTime -= DecreaceBulletCoolTime;
+            base.Action();
+            if (BulletCoolTime <= 0)
+            {
+                App.window.bullets.AddRange(ShotBullet());
+                BulletCoolTime = MaxBulletCoolTime;
+            }
+        }
+
         /// <summary>
         /// 自分の飛行機の弾を生成するメソッド。
         /// </summary>
         /// <returns>生成したBulletのリストを返す。これをbulletsにaddする形で使う。</returns>
-        public abstract List<Bullet> ShotBullet();
+        protected abstract List<Bullet> ShotBullet();
     }
 }

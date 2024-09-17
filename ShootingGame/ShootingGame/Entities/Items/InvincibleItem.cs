@@ -18,7 +18,7 @@ namespace ShootingGame.Entities.Items
             player.isInvincible = true;
         }
 
-        public override void Move()
+        protected override void Move()
         {
             Y += Speed;
         }

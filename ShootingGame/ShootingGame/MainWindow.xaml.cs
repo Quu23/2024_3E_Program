@@ -187,9 +187,7 @@ namespace ShootingGame
                                     , 12.5);
             }
 
-            if (player.BulletCoolTime > 0) player.BulletCoolTime-=player.DecreaceBulletCoolTime;
-
-            player.Move();
+            player.Action();
 
             //todo:敵の配置とか種類をいじるならここを修正。
             if (enemies.Count <= 0)
@@ -206,7 +204,7 @@ namespace ShootingGame
             for (int bi = bullets.Count; bi > 0; bi--)
             {
                 Bullet tmp_bullet = bullets[bi - 1];
-                tmp_bullet.Move();
+                tmp_bullet.Action();
 
                 if (tmp_bullet.X < 0 || tmp_bullet.X > SystemParameters.PrimaryScreenWidth || tmp_bullet.Y < 0 || tmp_bullet.Y > SystemParameters.PrimaryScreenHeight)
                 {
@@ -241,8 +239,8 @@ namespace ShootingGame
             for (int ei = enemies.Count; ei > 0; ei--)
             {
                 Enemy tmp_enemy = enemies[ei - 1];
-                if (tmp_enemy.BulletCoolTime > 0) tmp_enemy.BulletCoolTime-=tmp_enemy.DecreaceBulletCoolTime;
-                tmp_enemy.Move();
+
+                tmp_enemy.Action();
 
                 if (player.IsHit(tmp_enemy))
                 {
@@ -253,17 +251,6 @@ namespace ShootingGame
                     enemies.Remove(tmp_enemy);
                     continue;
                 }
-                if (tmp_enemy.BulletCoolTime <= 0)
-                {
-                    bullets.AddRange(tmp_enemy.ShotBullet());
-                    tmp_enemy.BulletCoolTime = tmp_enemy.MaxBulletCoolTime;
-                }
-            }
-
-            if (isKeyPresseds[4] && player.BulletCoolTime <= 0)
-            {
-                bullets.AddRange(player.ShotBullet());
-                player.BulletCoolTime = player.MaxBulletCoolTime;
             }
         }
 

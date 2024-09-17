@@ -13,7 +13,7 @@ namespace ShootingGame.Entities.Items
             player.Exp += 50;
         }
 
-        public override void Move()
+        protected override void Move()
         {
             Y += Speed;
         }

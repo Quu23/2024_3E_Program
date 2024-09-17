@@ -22,7 +22,7 @@ namespace ShootingGame.Entities.Items
             }
         }
 
-        public override void Move()
+        protected override void Move()
         {
             Y += Speed;
         }

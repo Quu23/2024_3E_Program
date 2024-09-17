@@ -11,10 +11,9 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
         }
 
-        public override void Move()
+        protected override void Move()
         {
             Y += Speed;
-            ChangeRect(X, Y);
         }
 
         /// <summary>

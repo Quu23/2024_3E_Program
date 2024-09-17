@@ -13,7 +13,7 @@ namespace ShootingGame.Entities.Items
             App.window.enemies.Clear();
         }
 
-        public override void Move()
+        protected override void Move()
         {
             Y += Speed;
         }

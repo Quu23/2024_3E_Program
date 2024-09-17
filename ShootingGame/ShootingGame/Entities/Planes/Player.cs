@@ -39,7 +39,20 @@ namespace ShootingGame.Entities.Planes
             if (!isInvincible && base.IsHit(target)) return true;
             return false;
         }
-        public override void Move()
+
+        public override void Action()
+        {
+            if (BulletCoolTime > 0) BulletCoolTime -= DecreaceBulletCoolTime;
+            Move();
+            ChangeRect(X, Y);
+            if (BulletCoolTime <= 0 && MainWindow.isKeyPresseds[4])
+            {
+                App.window.bullets.AddRange(ShotBullet());
+                BulletCoolTime = MaxBulletCoolTime;
+            }
+        }
+
+        protected override void Move()
         {
             if (X > 0 && MainWindow.isKeyPresseds[1])
             {
@@ -65,14 +78,12 @@ namespace ShootingGame.Entities.Planes
                 Y += Speed;
             }
             if (Y + Img.Height > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Img.Height);
-
-            ChangeRect(X, Y);
         }
 
 
         // TODO:levelに応じた弾の出し方・攻撃力の設定
         // TODO:弾の画像設定
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();

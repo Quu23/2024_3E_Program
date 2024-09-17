@@ -16,7 +16,7 @@ namespace ShootingGame.Entities.Items
             player.Speed = player.defaultSpeed;
         }
 
-        public override void Move()
+        protected override void Move()
         {
             X = 5;
             Y += Speed;

@@ -14,7 +14,7 @@
         /// <summary>
         /// 放射状に三つの弾を発生させる。進行方向とそこから±60deg方向
         /// </summary>
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>()
             {

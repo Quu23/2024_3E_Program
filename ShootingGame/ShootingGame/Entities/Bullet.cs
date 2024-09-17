@@ -40,7 +40,12 @@
         public Id Id { get => id; }
         public int Damage { get => damage; }
 
-        public override void Move()
+        public sealed override void Action()
+        {
+            base.Action();
+        }
+
+        protected override void Move()
         {
             Y -= (int)(Speed * Math.Cos(degree * Math.PI / 180));
             X += (int)(Speed * Math.Sin(degree * Math.PI / 180));

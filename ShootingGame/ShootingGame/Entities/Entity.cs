@@ -34,6 +34,15 @@ namespace ShootingGame.Entities
             Img = img;
         }
 
+        /// <summary>
+        /// Entityの行動（移動,弾打つ）を管理するメソッド
+        /// </summary>
+        public virtual void Action()
+        {
+            Move();
+            ChangeRect(X, Y);
+        }
+
 
         public override bool Equals(object obj)
         {
@@ -58,7 +67,7 @@ namespace ShootingGame.Entities
             return false;
         }
 
-        public abstract void Move();
+        protected abstract void Move();
 
         protected void ChangeRect(int x, int y)
         {

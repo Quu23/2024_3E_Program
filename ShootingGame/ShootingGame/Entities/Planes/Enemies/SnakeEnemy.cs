@@ -11,7 +11,7 @@
             return Level + 5;
         }
 
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             return
             [
@@ -19,7 +19,7 @@
             ];
         }
 
-        public override void Move()
+        protected override void Move()
         {
             base.Move();
             X = (int)(10 * Speed * Math.Sin(Math.PI / 216 * Y)) + 60;

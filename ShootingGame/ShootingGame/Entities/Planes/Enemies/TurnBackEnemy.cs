@@ -13,7 +13,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             return Level + 5;
         }
 
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             return
             [
@@ -22,7 +22,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             ];
         }
 
-        public override void Move()
+        protected override void Move()
         {
             base.Move();
             

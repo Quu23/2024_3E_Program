@@ -20,14 +20,14 @@ namespace ShootingGame.Entities.Planes.Enemies
             return Level * 3;
         }
 
-        public override List<Bullet> ShotBullet()
+        protected override List<Bullet> ShotBullet()
         {
             return
             [
                 new(CenterXForShotBullet, Y ,bulletRadius, Speed+5,moveDirection,1, Id.ENEMY )
             ];
         }
-        public override void Move()
+        protected override void Move()
         {
             double radian;
 
@@ -48,8 +48,6 @@ namespace ShootingGame.Entities.Planes.Enemies
 
             X += (int)(Speed * Math.Sin(radian));
             Y -= (int)(Speed * Math.Cos(radian)); 
-
-            ChangeRect(X, Y);
         }
     }
 }
