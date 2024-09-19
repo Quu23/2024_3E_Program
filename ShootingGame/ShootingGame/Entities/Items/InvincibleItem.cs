@@ -4,18 +4,20 @@ namespace ShootingGame.Entities.Items
 {
     internal class InvincibleItem : TransientItem
     {
-        public InvincibleItem(int x, int y, int EFFECT_IIME) : base(x, y, 2, 6, null, 5)
+        public InvincibleItem(int x, int y, int EFFECT_IIME) : base(x, y, 2, 6, null, StatusEffects.INVINCIBLE, 5)
         {
+        }
+
+        protected override void Effect(Player player)
+        {
+            //無敵状態にする、というのはステータス上に何も影響を与えない。
+            ;
         }
 
         public override void CancelEffect(Player player)
         {
-            player.isInvincible = false;
-        }
-
-        public override void MakeEffect(Player player)
-        {
-            player.isInvincible = true;
+            //ステータス上に何も影響を与えてないので、何もしなくてよい。
+            ;
         }
 
         protected override void Move()
