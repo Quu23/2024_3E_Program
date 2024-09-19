@@ -60,6 +60,13 @@ namespace ShootingGame.Entities.Planes
             }
         }
 
+        public virtual bool IsHit(Entity target)
+        {
+            if ((CenterX - target.CenterX) * (CenterX - target.CenterX) + (CenterY - target.CenterY) * (CenterY - target.CenterY) < (Radius + target.Radius) * (Radius + target.Radius))
+                return true;
+            return false;
+        }
+
         /// <summary>
         /// 自分の飛行機の弾を生成するメソッド。
         /// </summary>

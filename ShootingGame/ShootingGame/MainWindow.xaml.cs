@@ -212,7 +212,7 @@ namespace ShootingGame
                     continue;
                 }
 
-                if (tmp_bullet.Id == Id.ENEMY && tmp_bullet.IsHit(player))
+                if (tmp_bullet.Id == Id.ENEMY && player.IsHit(tmp_bullet))
                 {
                     player.Hp -= tmp_bullet.Damage;
                     bullets.Remove(tmp_bullet);
@@ -222,7 +222,7 @@ namespace ShootingGame
                 for (int ei = enemies.Count; ei > 0; ei--)
                 {
                     Enemy tmp_enemy = enemies[ei - 1];
-                    if (tmp_bullet.Id == Id.PLAYER && tmp_bullet.IsHit(tmp_enemy))
+                    if (tmp_bullet.Id == Id.PLAYER && tmp_enemy.IsHit(tmp_bullet))
                     {
                         tmp_enemy.Hp -= tmp_bullet.Damage;
                         bullets.Remove(tmp_bullet);

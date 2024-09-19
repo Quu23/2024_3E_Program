@@ -60,13 +60,6 @@ namespace ShootingGame.Entities
             return HashCode.Combine(X, Y , Radius , Speed);
         }
 
-        public virtual bool IsHit(Entity target)
-        {
-            if ((CenterX - target.CenterX) * (CenterX - target.CenterX) + (CenterY - target.CenterY) * (CenterY - target.CenterY) < ( Radius + target.Radius) * (Radius + target.Radius))
-                return true;
-            return false;
-        }
-
         protected abstract void Move();
 
         protected void ChangeRect(int x, int y)
