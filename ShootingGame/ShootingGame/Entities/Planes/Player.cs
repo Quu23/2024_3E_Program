@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using ShootingGame.Entities.Items;
+using System.Windows;
+using static ShootingGame.Entities.Items.StatusEffects;
 
 namespace ShootingGame.Entities.Planes
 {
@@ -7,15 +9,23 @@ namespace ShootingGame.Entities.Planes
         public int MAX_HP;
         private int exp;
 
+        public Dictionary<StatusEffects, int> status;
+
         public int defaultSpeed;
-        public bool isInvincible;//無敵状態かどうか判定する変数（無敵＝true,Not無敵＝false）
 
         public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 10)
         {
             //最初は5にする？
             MAX_HP = 5;
             defaultSpeed = Speed;
-            isInvincible = false;
+            status = new Dictionary<StatusEffects, int>() { 
+                // 効果　　　　　　効果時間
+                { SPEED_UP       ,0}, 
+                { SPEED_DOWN     ,0},
+                { SHOT_RATE_UP   ,0},
+                { SHOT_RATE_DOWN ,0},
+                { INVINCIBLE     ,0},
+            };
 
         }
         public int Exp { get => exp; set => exp = value; }
@@ -36,13 +46,19 @@ namespace ShootingGame.Entities.Planes
 
         public override bool IsHit(Entity target)
         {
-            if (!isInvincible && base.IsHit(target)) return true;
+            if (status[INVINCIBLE] >= 0 && base.IsHit(target)) return true;
             return false;
         }
 
         public override void Action()
         {
             if (BulletCoolTime > 0) BulletCoolTime -= DecreaceBulletCoolTime;
+
+            foreach (var kvp in status)
+            {
+                if (kvp.Value > 0) status[kvp.Key] --;
+            }
+
             Move();
             ChangeRect(X, Y);
             if (BulletCoolTime <= 0 && MainWindow.isKeyPresseds[4])
