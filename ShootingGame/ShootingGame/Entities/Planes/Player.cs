@@ -46,7 +46,7 @@ namespace ShootingGame.Entities.Planes
 
         public override bool IsHit(Entity target)
         {
-            if (status[INVINCIBLE] >= 0 && base.IsHit(target)) return true;
+            if (status[INVINCIBLE] <= 0 && base.IsHit(target)) return true;
             return false;
         }
 

@@ -12,7 +12,7 @@ namespace ShootingGame.Entities.Items
 
         public override void MakeEffect(Player player)
         {
-            player.defaultSpeed += 5;
+            player.defaultSpeed += 2;
             player.Speed = player.defaultSpeed;
         }
 
