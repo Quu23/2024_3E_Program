@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Items
 {
     internal class InvincibleItem : TransientItem
     {
-        public InvincibleItem(int x, int y, int EFFECT_IIME) : base(x, y, 8, 6, Images.INVINCIBLE_ITEM_IMAGE, StatusEffects.INVINCIBLE, 5)
+        public InvincibleItem(int x, int y) : base(x, y, 8, 6, Images.INVINCIBLE_ITEM_IMAGE, StatusEffects.INVINCIBLE, 5)
         {
         }
 

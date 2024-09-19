@@ -6,7 +6,7 @@ namespace ShootingGame.Entities
     /// <summary>
     /// 全ての当たり判定を持つオブジェクトの親クラス。当たり判定を簡単にするために、円で近似している。
     /// </summary>
-    abstract public class Entity
+    public abstract class Entity
     {
         private int x;
         private int y;

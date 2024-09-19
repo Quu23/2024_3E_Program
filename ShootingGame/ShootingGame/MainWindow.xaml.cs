@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ShootingGame.Entities;
+using ShootingGame.Entities.Items;
 using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
 
@@ -33,6 +34,8 @@ namespace ShootingGame
         public List<Enemy> enemies = new List<Enemy>();
 
         public List<Bullet> bullets = new List<Bullet>();
+
+        public List<Item> items = new List<Item>();
 
         private MediaPlayer musicPlayer;
 
@@ -200,6 +203,19 @@ namespace ShootingGame
                 enemies.Add(new ShotgunEnemy(5*dw, 10, 1));
             }
 
+            //todo:アイテムの位置とか種類をいじるならここ。
+            if (items.Count <= 0)
+            {
+                int dw = (int)((Width - 200) / 7.0);
+                items.Add(new ClearEnemiesItem(dw, 30));
+                items.Add(new ExpOrb(2 * dw, 30));
+                items.Add(new HealingItem(3 * dw, 30));
+                items.Add(new InvincibleItem(4 * dw, 30));
+                items.Add(new ShotRateUpItem(5 * dw, 30));
+                items.Add(new SpeedUpItem(6 * dw, 30));
+                items.Add(new SpeedDownItem(7 * dw, 30));
+            }
+
 
             for (int bi = bullets.Count; bi > 0; bi--)
             {
@@ -249,6 +265,24 @@ namespace ShootingGame
                 if (tmp_enemy.Y > SystemParameters.PrimaryScreenHeight || tmp_enemy.Y < -tmp_enemy.Radius)
                 {
                     enemies.Remove(tmp_enemy);
+                    continue;
+                }
+            }
+
+            for (int i = items.Count; i > 0; i--)
+            {
+                Item tmp_item = items[i - 1];
+
+                tmp_item.Action();
+                if (player.IsHit(tmp_item))
+                {
+                    tmp_item.MakeEffect(player);
+                    items.Remove(tmp_item);
+                    continue;
+                }
+                if (tmp_item.Y > SystemParameters.PrimaryScreenHeight || tmp_item.Y < -tmp_item.Radius)
+                {
+                    items.Remove(tmp_item);
                     continue;
                 }
             }
@@ -319,6 +353,12 @@ namespace ShootingGame
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, enemy);
             }
 
+            foreach (var item in items)
+            {
+                drawingContext.DrawImage(item.Img, item.Rect);
+                if (isKeyPresseds[6]) DrawHitRange (drawingContext, item);
+            }
+
 
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
@@ -341,6 +381,7 @@ namespace ShootingGame
                                     $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
                                     $"bullets.Count  = {bullets.Count}\n" +
                                     $"enemies.Count  = {enemies.Count}\n" +
+                                    $"items.Count    = {items.Count}\n" +
                                     $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
                                     $"fps = {1.0 / spf.TotalSeconds}\n" +
                                     $"Speed = {player.Speed}\n" +

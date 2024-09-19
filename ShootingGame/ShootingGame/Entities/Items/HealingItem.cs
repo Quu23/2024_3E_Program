@@ -5,9 +5,9 @@ namespace ShootingGame.Entities.Items
 {
     internal class HealingItem : Item
     {
-        public HealingItem(int x, int y, BitmapImage img) : base(x, y, 8, 6, Images.HEALING_ITEM_IMAGE)
+        public HealingItem(int x, int y) : base(x, y, 8, 6, Images.HEALING_ITEM_IMAGE)
         {
-            throw new NotImplementedException("HealingItem's Image is null");
+
         }
 
         public override void MakeEffect(Player player)
