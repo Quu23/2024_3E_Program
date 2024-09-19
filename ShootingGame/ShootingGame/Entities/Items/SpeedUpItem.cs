@@ -6,7 +6,7 @@ namespace ShootingGame.Entities.Items
 
     class SpeedUpItem : Item
     {
-        public SpeedUpItem(int x, int y) : base(x, y, 4, 10, null)
+        public SpeedUpItem(int x, int y) : base(x, y, 8, 10, Images.SPEED_UP_ITEM_IMAGE)
         {
         }
 

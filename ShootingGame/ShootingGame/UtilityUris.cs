@@ -18,10 +18,12 @@ namespace ShootingGame
 
 
         //アイテム
-        public static readonly Uri EXP_ORB_URI           = new Uri("../../../img/Exp_Orb.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri FAST_RATE_OF_SHOT_URI = new Uri("../../../img/Fast_Rate.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri HEALIING_ITEM_URI     = new Uri("../../../img/Healing_Item.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri INVINCIBLE_URI        = new Uri("../../../img/Invincible_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri EXP_ORB_URI            = new Uri("../../../img/Exp_Orb.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOT_RATE_UP_ITEM_URI  = new Uri("../../../img/Shot_Rate_Up_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SPEED_UP_ITEM_URI      = new Uri("../../../img/Speed_Up_Item.png", UriKind.RelativeOrAbsolute); 
+        public static readonly Uri HEALIING_ITEM_URI      = new Uri("../../../img/Healing_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri INVINCIBLE_ITEM_URI    = new Uri("../../../img/Invincible_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri CLEAR_ENEMIES_ITEM_URI = new Uri("../../../img/Clear_Enemies_Item.png", UriKind.RelativeOrAbsolute);
 
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);

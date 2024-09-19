@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Items
 {
     class ExpOrb : Item
     {
-        public ExpOrb(int x, int y) : base(x, y, 2, 15, Images.EXP_ORB_IMAGE)
+        public ExpOrb(int x, int y) : base(x, y, 4, 15, Images.EXP_ORB_IMAGE)
         {
         }
 

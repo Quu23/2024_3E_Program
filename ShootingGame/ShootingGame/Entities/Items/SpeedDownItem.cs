@@ -5,7 +5,7 @@ namespace ShootingGame.Entities.Items
 {
     class SpeedDownItem : TransientItem
     {
-        public SpeedDownItem(int x, int y, BitmapImage img) : base(x, y, 4, 6, img,  StatusEffects.SPEED_DOWN,5)
+        public SpeedDownItem(int x, int y, BitmapImage img) : base(x, y, 8, 6, img,  StatusEffects.SPEED_DOWN,5)
         {
         }
 
