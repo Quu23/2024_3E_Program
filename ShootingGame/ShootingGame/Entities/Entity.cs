@@ -43,6 +43,12 @@ namespace ShootingGame.Entities
             ChangeRect(X, Y);
         }
 
+        public bool isOutOfWindow()
+        {
+            if (X < -Radius*2 || X > SystemParameters.PrimaryScreenWidth || Y < -Radius*2 || Y > SystemParameters.PrimaryScreenHeight) return true;
+            return false;
+        }
+
 
         public override bool Equals(object obj)
         {

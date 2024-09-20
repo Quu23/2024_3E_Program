@@ -114,7 +114,7 @@ namespace ShootingGame
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
             //データ読み込み
-            LoadData();
+            //LoadData();
 
             updateTimer.Start();
 
@@ -127,7 +127,7 @@ namespace ShootingGame
 
         private void WriteScore()
         {
-
+            throw new NotImplementedException();
         }
 
         private DateTime start;
@@ -180,7 +180,7 @@ namespace ShootingGame
         {
             if (isKeyPresseds[4]) { 
                 windowMode = WindowMode.STAGE1;
-                player = new Player(message);
+                if(message.Length > 0)player = new Player(message);
             }
         }
 
@@ -245,7 +245,7 @@ namespace ShootingGame
                 Bullet tmp_bullet = bullets[bi - 1];
                 tmp_bullet.Action();
 
-                if (tmp_bullet.X < 0 || tmp_bullet.X > SystemParameters.PrimaryScreenWidth || tmp_bullet.Y < 0 || tmp_bullet.Y > SystemParameters.PrimaryScreenHeight)
+                if (tmp_bullet.isOutOfWindow())
                 {
                     bullets.Remove(tmp_bullet);
                     continue;
@@ -285,7 +285,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                if (tmp_enemy.Y > SystemParameters.PrimaryScreenHeight || tmp_enemy.Y < -tmp_enemy.Radius)
+                if (tmp_enemy.isOutOfWindow())
                 {
                     enemies.Remove(tmp_enemy);
                     continue;
@@ -303,7 +303,7 @@ namespace ShootingGame
                     items.Remove(tmp_item);
                     continue;
                 }
-                if (tmp_item.Y > SystemParameters.PrimaryScreenHeight || tmp_item.Y < -tmp_item.Radius)
+                if (tmp_item.isOutOfWindow())
                 {
                     items.Remove(tmp_item);
                     continue;
