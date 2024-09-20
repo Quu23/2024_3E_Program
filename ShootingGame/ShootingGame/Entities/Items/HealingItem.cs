@@ -3,7 +3,7 @@ using ShootingGame.Entities.Planes;
 
 namespace ShootingGame.Entities.Items
 {
-    internal class HealingItem : Item
+    class HealingItem : Item
     {
         public HealingItem(int x, int y) : base(x, y, 8, 6, Images.HEALING_ITEM_IMAGE)
         {
