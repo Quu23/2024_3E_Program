@@ -1,4 +1,5 @@
 ﻿using ShootingGame.Entities.Items;
+using System.Numerics;
 using System.Windows;
 using static ShootingGame.Entities.Items.StatusEffects;
 
@@ -8,6 +9,12 @@ namespace ShootingGame.Entities.Planes
     {
         public int MAX_HP;
         private int exp;
+
+        /// <summary>
+        /// 状態異常やダッシュ状態を抜きにした（つまり平常状態の）ステータス <br/>
+        /// r , defaultSpeed , maxhp , decreaceBulletCool
+        /// </summary>
+        private int[] normalStatus;
 
         public Dictionary<StatusEffects, int> status;
 
@@ -26,6 +33,10 @@ namespace ShootingGame.Entities.Planes
                 { SHOT_RATE_DOWN ,0},
                 { INVINCIBLE     ,0},
             };
+
+            normalStatus = [
+                Radius, defaultSpeed, MAX_HP, DecreaceBulletCoolTime,
+            ];
 
         }
         public int Exp { get => exp; set => exp = value; }
@@ -56,7 +67,23 @@ namespace ShootingGame.Entities.Planes
 
             foreach (var kvp in status)
             {
-                if (kvp.Value > 0) status[kvp.Key] --;
+                if (kvp.Value > 0)
+                {
+                    status[kvp.Key]--;
+                    if (status[kvp.Key] <= 0) ResetStatus(kvp.Key);
+                }
+            }
+
+            if (MainWindow.isKeyPresseds[7])
+            {
+                if (Speed != defaultSpeed * 3)
+                {
+                    Speed *= 3;
+                }
+            }
+            else
+            {
+                Speed = defaultSpeed;
             }
 
             Move();
@@ -65,6 +92,38 @@ namespace ShootingGame.Entities.Planes
             {
                 App.window.bullets.AddRange(ShotBullet());
                 BulletCoolTime = MaxBulletCoolTime;
+            }
+        }
+
+        /// <summary>
+        /// 引数で指定した状態異常に関するステータスをリセットする。
+        /// </summary>
+        /// <param name="key">状態異常の種類。全部リセットするならNORMALを指定する。</param>
+        private void ResetStatus(StatusEffects key)
+        {
+            switch (key)
+            {
+                case NORMALE:
+                    Radius = normalStatus[0];
+                    defaultSpeed = normalStatus[1];
+                    MAX_HP = normalStatus[2];
+                    DecreaceBulletCoolTime = normalStatus[3];
+                    break;
+                case SPEED_UP:
+                case SPEED_DOWN:
+                    defaultSpeed = normalStatus[1];
+                    Speed = defaultSpeed;
+                    break;
+                case SHOT_RATE_UP:
+                case SHOT_RATE_DOWN:
+                    DecreaceBulletCoolTime = normalStatus[3];
+                    break;
+                case INVINCIBLE:
+                    //無敵になったからステータスが上がってるとかはないからなんも書かん。
+                    ;
+                    break;
+                default:
+                    break;
             }
         }
 

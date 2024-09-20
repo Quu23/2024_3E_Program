@@ -33,11 +33,5 @@ namespace ShootingGame.Entities.Items
         /// </summary>
         /// <param name="player"></param>
         protected abstract void Effect(Player player);
-
-        /// <summary>
-        /// アイテムの効果を切る。効果時間を過ぎたら呼び出す。
-        /// </summary>
-        /// <param name="player"></param>
-        public abstract void CancelEffect(Player player);
     }
 }
