@@ -7,6 +7,8 @@ namespace ShootingGame.Entities.Planes
 {
     public class Player : Plane
     {
+        public readonly string name;
+
         public int MAX_HP;
         private int exp;
 
@@ -20,10 +22,13 @@ namespace ShootingGame.Entities.Planes
 
         public int defaultSpeed;
 
-        public Player() : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 10)
+        public Player(string name) : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 10)
         {
             //最初は5にする？
             MAX_HP = 5;
+
+            this.name = name;
+
             defaultSpeed = Speed;
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　効果時間
@@ -39,6 +44,7 @@ namespace ShootingGame.Entities.Planes
             ];
 
         }
+
         public int Exp { get => exp; set => exp = value; }
         public double GetMaxHp { get => MAX_HP; }
 

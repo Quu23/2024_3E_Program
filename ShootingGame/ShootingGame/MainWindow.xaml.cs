@@ -18,12 +18,18 @@ namespace ShootingGame
     {
         public static WindowMode windowMode;
 
+
+        private static string message = ""; 
+
+
+        public static int score = 0;
+
         const int FPS = 60;
 
         DispatcherTimer updateTimer;
         private VisualCollection visuals;
-        
-        
+
+
         /// <summary>
         ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT
         /// </summary>
@@ -71,15 +77,16 @@ namespace ShootingGame
 
             windowMode = WindowMode.START;
 
-            player = new Player();
+            player = new Player("ななし");
 
             //タイマーの設定 
             updateTimer = new DispatcherTimer();
-            updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
+            updateTimer.Interval = TimeSpan.FromMilliseconds(1000 / FPS);
             updateTimer.Tick += Timer_Tick;
 
-            KeyUp   += DepressedKey;
+            KeyUp += DepressedKey;
             KeyDown += PressedKey;
+            KeyDown += messageInputKey;
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
@@ -95,18 +102,31 @@ namespace ShootingGame
             //背景アニメーション設定
             // https://qiita.com/tera1707/items/15fd23cab641c75945b9
             backgroundImage = Images.BACKGROUND_IMAGE;
-            backgroundRect  = new Rect(0, 0 , SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
+            backgroundRect = new Rect(0, 0, SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
-            titleRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.TITLE_IMAGE.Width)/2 ,(SystemParameters.PrimaryScreenHeight-Images.MODE_SELECT_TEXT_IMAGE.Height)/8, 700,100);//割る4ぐらいがちょうどいい（適当）
-            modeSelectionTextRect = new Rect((SystemParameters.PrimaryScreenWidth-Images.MODE_SELECT_TEXT_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) * 6/8, 700, 300);
+            titleRect = new Rect((SystemParameters.PrimaryScreenWidth - Images.TITLE_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) / 8, 700, 100);//割る4ぐらいがちょうどいい（適当）
+            modeSelectionTextRect = new Rect((SystemParameters.PrimaryScreenWidth - Images.MODE_SELECT_TEXT_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) * 6 / 8, 700, 300);
 
-            hpBarPen  = new Pen(Brushes.Black, 1);
-            hpBarRect = new Rect(1600/1934.0 * SystemParameters.PrimaryScreenWidth, 1030/1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
+            hpBarPen = new Pen(Brushes.Black, 1);
+            hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            updateTimer.Start(); 
+            //データ読み込み
+            LoadData();
+
+            updateTimer.Start();
+
+        }
+
+        private void LoadData()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void WriteScore()
+        {
 
         }
 
@@ -147,7 +167,7 @@ namespace ShootingGame
                 case WindowMode.LANKING:
                     break;
             }
-            
+
             // 画面の再描画
             visuals.Clear();
             visuals.Add(CreateDrawingVisual());
@@ -158,7 +178,10 @@ namespace ShootingGame
 
         private void StartLoop()
         {
-            if (isKeyPresseds[4]) windowMode = WindowMode.STAGE1;
+            if (isKeyPresseds[4]) { 
+                windowMode = WindowMode.STAGE1;
+                player = new Player(message);
+            }
         }
 
         private void GameoverLoop()
@@ -176,9 +199,9 @@ namespace ShootingGame
         {
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
-            
+
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
-            if(player.Hp <= 0)
+            if (player.Hp <= 0)
             {
                 windowMode = WindowMode.GAMEOVER;
                 scoreText = new FormattedText($"SCORE = {"まだSCORE変数を作ってない"}"
@@ -195,12 +218,12 @@ namespace ShootingGame
             //todo:敵の配置とか種類をいじるならここを修正。
             if (enemies.Count <= 0)
             {
-                int dw = (int)((Width-200) / 5.0);
+                int dw = (int)((Width - 200) / 5.0);
                 enemies.Add(new MissileEnemy(dw, 10, 1));
-                enemies.Add(new HexagonEnemy(2*dw, 10, 1));
-                enemies.Add(new GoldenEnemy(3*dw, 10, 1));
-                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
-                enemies.Add(new ShotgunEnemy(5*dw, 10, 1));
+                enemies.Add(new HexagonEnemy(2 * dw, 10, 1));
+                enemies.Add(new GoldenEnemy(3 * dw, 10, 1));
+                enemies.Add(new TurnBackEnemy(4 * dw, 10, 1));
+                enemies.Add(new ShotgunEnemy(5 * dw, 10, 1));
             }
 
             //todo:アイテムの位置とか種類をいじるならここ。
@@ -243,7 +266,7 @@ namespace ShootingGame
                         tmp_enemy.Hp -= tmp_bullet.Damage;
                         bullets.Remove(tmp_bullet);
 
-                        if(tmp_enemy.Hp <= 0)
+                        if (tmp_enemy.Hp <= 0)
                         {
                             player.Exp += tmp_enemy.GetEXP();
                             enemies.Remove(tmp_enemy);
@@ -333,6 +356,15 @@ namespace ShootingGame
         {
             drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
             drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
+
+            drawingContext.DrawText(new FormattedText(
+                                     $"NAME = [{message}]"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 30
+                                    , Brushes.Yellow
+                                    , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
@@ -356,7 +388,7 @@ namespace ShootingGame
             foreach (var item in items)
             {
                 drawingContext.DrawImage(item.Img, item.Rect);
-                if (isKeyPresseds[6]) DrawHitRange (drawingContext, item);
+                if (isKeyPresseds[6]) DrawHitRange(drawingContext, item);
             }
 
 
@@ -422,7 +454,7 @@ namespace ShootingGame
         {
             SolidColorBrush colorBrush = Brushes.ForestGreen.Clone();
             colorBrush.Opacity = 0.25;
-            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen , 1) ,new Point(target.CenterX,target.CenterY),target.Radius,target.Radius);
+            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(target.CenterX, target.CenterY), target.Radius, target.Radius);
         }
 
         private void PressedKey(object? sender, KeyEventArgs e)
@@ -430,7 +462,7 @@ namespace ShootingGame
             switch (e.Key)
             {
                 case Key.W:
-                    isKeyPresseds[0] = true; 
+                    isKeyPresseds[0] = true;
                     break;
                 case Key.A:
                     isKeyPresseds[1] = true;
@@ -498,5 +530,23 @@ namespace ShootingGame
                     break;
             }
         }
+
+        private void messageInputKey(object? sender, KeyEventArgs e)
+        {
+            if (windowMode != WindowMode.START) return;
+
+            if (e.Key == Key.Back && message.Length > 0)message = message.Remove(message.Length - 1, 1);
+            
+            // 名前の文字数制限は8文字
+            if (message.Length > 8) return;
+
+            if (e.Key >= Key.D0 && e.Key <= Key.D9) message　+= $"{e.Key - Key.D0}";
+
+            if (e.Key >= Key.A  && e.Key <= Key.Z) message += e.Key.ToString();
+
+
+
+        }
+
     }
 }
