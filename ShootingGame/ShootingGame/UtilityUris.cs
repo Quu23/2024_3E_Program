@@ -9,7 +9,7 @@ namespace ShootingGame
     {
         //画像のURI
 
-
+        //ゲームタイトルなど
         public static readonly Uri BACKGROUND_URI        = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
         public static readonly Uri TITLE_URI             = new Uri("../../../img/Title.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MODE_SELECT_TEXT_URI  = new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
@@ -44,8 +44,19 @@ namespace ShootingGame
         public static readonly Uri E_BULLET_URI          = new Uri("../../../img/Enemy_Bullet.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri E_BULLET_BIG_URI      = new Uri("../../../img/Enemy_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
 
+        //状態異常等のアイコン
+        public static readonly Uri SPEED_UP_ICON_URI       = new Uri("../../../img/Icon_Speedup.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SPEED_DOWN_ICON_URI     = new Uri("../../../img/Icon_Speeddown.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOT_RATE_UP_ICON_URI   = new Uri("../../../img/Icon_Rateup.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Ratedown.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri INCINCIBLE_ICON_URI     = new Uri("../../../img/Icon_Invincible.png", UriKind.RelativeOrAbsolute);
+
+
+
 
         //音楽のURI
+
+
         public static readonly Uri BGM1_URI               = new Uri("../../../music/bgm/bgm1.mp3", UriKind.RelativeOrAbsolute);
         public static readonly Uri BGM2_URI               = new Uri("../../../music/bgm/bgm2.mp3", UriKind.RelativeOrAbsolute);
 

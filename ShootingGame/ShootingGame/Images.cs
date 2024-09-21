@@ -50,5 +50,12 @@ namespace ShootingGame
         /// </summary>
         public static readonly BitmapImage ENEMY_BULLET_BIG_IMAGE   = new BitmapImage(UtilityUris.E_BULLET_BIG_URI);
 
+        //状態異常のアイコン
+        public static readonly BitmapImage SPEED_UP_ICON_IMAGE       = new BitmapImage(UtilityUris.SPEED_UP_ICON_URI);
+        public static readonly BitmapImage SPEED_DOWN_ICON_IMAGE     = new BitmapImage(UtilityUris.SPEED_DOWN_ICON_URI);
+        public static readonly BitmapImage SHOT_RATE_UP_ICON_IMAGE   = new BitmapImage(UtilityUris.SHOT_RATE_UP_ICON_URI);
+        public static readonly BitmapImage SHOT_RATE_DOWN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ICON_URI);
+        public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
+
     }
 }

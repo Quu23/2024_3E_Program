@@ -61,6 +61,8 @@ namespace ShootingGame
 
         private readonly Point statusPoint;
 
+        private Rect statusIconRect;
+
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
 
@@ -112,6 +114,8 @@ namespace ShootingGame
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
+
+            statusIconRect = new Rect(/*起点X=*/SystemParameters.PrimaryScreenWidth - 16 * (player.status.Count + 1) , 10 , 16, 16);
 
             //データ読み込み
             //LoadData();
@@ -404,6 +408,16 @@ namespace ShootingGame
             hpBarRect.Width = player.Hp * 10;
             drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
 
+            foreach (var kvp in player.status)
+            {
+                if (kvp.Value > 0)
+                {
+                    drawingContext.DrawImage(GetStatusIconImage(kvp.Key), statusIconRect);
+                }
+                statusIconRect.X += statusIconRect.Width;
+            }
+            statusIconRect.X -= statusIconRect.Width * player.status.Count ;
+
 
             if (isKeyPresseds[6])
             {
@@ -455,6 +469,24 @@ namespace ShootingGame
             SolidColorBrush colorBrush = Brushes.ForestGreen.Clone();
             colorBrush.Opacity = 0.25;
             dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(target.CenterX, target.CenterY), target.Radius, target.Radius);
+        }
+
+        private BitmapImage GetStatusIconImage(StatusEffects effect)
+        {
+            switch (effect) {
+                case StatusEffects.SPEED_UP:
+                    return Images.SPEED_UP_ICON_IMAGE;
+                case StatusEffects.SPEED_DOWN:
+                    return Images.SPEED_DOWN_ICON_IMAGE;
+                case StatusEffects.SHOT_RATE_UP:
+                    return Images.SHOT_RATE_UP_ICON_IMAGE;
+                case StatusEffects.SHOT_RATE_DOWN:
+                    return Images.SHOT_RATE_DOWN_ICON_IMAGE;
+                case StatusEffects.INVINCIBLE:
+                    return Images.INCINCIBLE_ICON_IMAGE;
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         private void PressedKey(object? sender, KeyEventArgs e)
