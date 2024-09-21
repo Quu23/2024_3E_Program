@@ -4,13 +4,13 @@ using ShootingGame.Entities.Planes;
 namespace ShootingGame.Entities.Items
 {
 
-    class SpeedUpItem : Item
+    class SpeedUpItem : TransientItem
     {
-        public SpeedUpItem(int x, int y) : base(x, y, 8, 10, Images.SPEED_UP_ITEM_IMAGE)
+        public SpeedUpItem(int x, int y) : base(x, y, 8, 10, Images.SPEED_UP_ITEM_IMAGE, StatusEffects.SPEED_UP , 50)
         {
         }
 
-        public override void MakeEffect(Player player)
+        protected override void Effect(Player player)
         {
             player.defaultSpeed += 2;
             player.Speed = player.defaultSpeed;
