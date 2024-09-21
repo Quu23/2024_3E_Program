@@ -115,7 +115,7 @@ namespace ShootingGame
 
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(/*起点X=*/SystemParameters.PrimaryScreenWidth - 16 * (player.status.Count + 1) , 10 , 16, 16);
+            statusIconRect = new Rect(/*起点X=*/SystemParameters.PrimaryScreenWidth - 32 * (player.status.Count + 1) , 10 , 32, 32);
 
             //データ読み込み
             //LoadData();
