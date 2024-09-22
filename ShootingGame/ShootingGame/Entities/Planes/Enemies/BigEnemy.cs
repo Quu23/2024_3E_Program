@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class BigEnemy : Enemy
     {
-        public BigEnemy(int x, int y, int level) : base(x, y, 40, 1, null, level, 10, Bullet.RADIUS_FOR_BIG, 100)
+        public BigEnemy(int x, int y, int level) : base(x, y, 40, 1, Images.BIG_ENEMY_IMAGE, level, 10, Bullet.RADIUS_FOR_BIG, 100)
         {
         }
 
