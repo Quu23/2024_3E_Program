@@ -188,7 +188,15 @@ namespace ShootingGame.Entities.Planes
         {
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();
-            bullets.Add(new Bullet(X + Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
+            if (status[StatusEffects.DESTROY_MODE] > 0)
+            {
+                Bullet destroyBullet = new Bullet(X + Radius, Y, 64, Speed + 5, 0, 9999, Id.PLAYER);                
+                bullets.Add(destroyBullet);
+            }
+            else
+            {
+                bullets.Add(new Bullet(X + Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
+            }   
             return bullets;
         }
     }

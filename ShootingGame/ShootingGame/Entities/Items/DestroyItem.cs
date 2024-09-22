@@ -5,17 +5,18 @@ namespace ShootingGame.Entities.Items
 {
     class DestroyItem : TransientItem
     {
-        public DestroyItem(int x, int y) : base(x, y, 64, 10, null, StatusEffects.DESTROY_MODE, 240)
+        public DestroyItem(int x, int y) : base(x, y, 64, 10, Images.DESTROY_ITEM_IMAGE, StatusEffects.DESTROY_MODE, 240)
         {
         }
 
         protected override void Effect(Player player)
         {
+           
         }
 
         protected override void Move()
         {
-            throw new NotImplementedException();
+            Y += Speed;
         }
     }
 }

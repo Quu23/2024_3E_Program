@@ -242,7 +242,7 @@ namespace ShootingGame
                 items.Add(new InvincibleItem(4 * dw, 30));
                 items.Add(new ShotRateUpItem(5 * dw, 30));
                 items.Add(new SpeedUpItem(6 * dw, 30));
-                items.Add(new SpeedDownItem(7 * dw, 30));
+                items.Add(new DestroyItem(7 * dw, 30));
             }
 
 
