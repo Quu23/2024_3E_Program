@@ -9,10 +9,10 @@ namespace ShootingGame.Entities.Planes.Enemies
         private int chaseTimer;
         private int moveDirection;
 
-        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/10, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/2, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/100)
+        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/10, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/1 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/100)
         {
             //追尾時間設定。調整求。
-            chaseTimer = 100;
+            chaseTimer = 80;
         }
 
         protected override int GetEXP()
@@ -46,7 +46,7 @@ namespace ShootingGame.Entities.Planes.Enemies
                 radian = moveDirection * (Math.PI / 180);
             }
 
-            X += (int)(Speed * Math.Sin(radian));
+            X += (int)(1.3 * Speed * Math.Sin(radian));
             Y -= (int)(Speed * Math.Cos(radian)); 
         }
     }

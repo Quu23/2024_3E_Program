@@ -223,12 +223,13 @@ namespace ShootingGame
             //todo:敵の配置とか種類をいじるならここを修正。
             if (enemies.Count <= 0)
             {
-                int dw = (int)((Width - 200) / 5.0);
-                enemies.Add(new MissileEnemy(dw, 10, 1));
-                enemies.Add(new HexagonEnemy(2 * dw, 10, 1));
-                enemies.Add(new SplashEnemy(3 * dw, 10, 1));
-                enemies.Add(new TurnBackEnemy(4 * dw, 10, 1));
-                enemies.Add(new ShotgunEnemy(5 * dw, 10, 1));
+                int dw = (int)((Width - 200)/ 5.0 );
+                enemies.Add(new HexagonEnemy(dw, 10, 1));
+                enemies.Add(new SnakeEnemy(2*dw, 10, 1));
+                enemies.Add(new SplitEnemy(3*dw, 10, 1));
+                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
+                enemies.Add(new MissileEnemy(5*dw, 10, 1));
+
             }
 
             //todo:アイテムの位置とか種類をいじるならここ。
