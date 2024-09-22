@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Items
 {
     class ScoreBoosterItem : TransientItem
     {
-        public ScoreBoosterItem(int x, int y, int radius, int speed, BitmapImage img, StatusEffects EFFECT_KIND, int EFFECT_IIME) : base(x, y, radius, speed, img, EFFECT_KIND, EFFECT_IIME)
+        public ScoreBoosterItem(int x, int y) : base(x, y, 5, 7, null,StatusEffects.INCREACE_RATE_OF_SCORE, 15)
         {
         }
 
@@ -19,12 +19,13 @@ namespace ShootingGame.Entities.Items
 
         protected override void Effect(Player player)
         {
-            throw new NotImplementedException();
+            player.increaseRateOfScore = 150;
         }
 
         protected override void Move()
         {
-            throw new NotImplementedException();
+            X = 7;
+            Y += Speed;
         }
     }
 }
