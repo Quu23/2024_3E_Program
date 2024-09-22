@@ -38,6 +38,8 @@ namespace ShootingGame
         public static readonly Uri HEXAGON_ENEMY_URI     = new Uri("../../../img/Hexagon_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri GOLDEN_ENEMY_URI      = new Uri("../../../img/Golden_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MISSILE_ENEMY_URI     = new Uri("../../../img/Missile_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BIG_ENEMY_URI         = new Uri("../../../img/Big_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SPLIT_ENEMY_URI       = new Uri("../../../img/Split_Enemy.png", UriKind.RelativeOrAbsolute);
 
         //enemyの弾
         public static readonly Uri E_BULLET_SMALL_URI    = new Uri("../../../img/Enemy_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);

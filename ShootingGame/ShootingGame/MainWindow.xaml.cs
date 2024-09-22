@@ -225,7 +225,7 @@ namespace ShootingGame
                 int dw = (int)((Width - 200) / 5.0);
                 enemies.Add(new MissileEnemy(dw, 10, 1));
                 enemies.Add(new HexagonEnemy(2 * dw, 10, 1));
-                enemies.Add(new GoldenEnemy(3 * dw, 10, 1));
+                enemies.Add(new SplitEnemy(3 * dw, 10, 1));
                 enemies.Add(new TurnBackEnemy(4 * dw, 10, 1));
                 enemies.Add(new ShotgunEnemy(5 * dw, 10, 1));
             }

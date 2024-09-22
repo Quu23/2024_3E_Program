@@ -10,7 +10,13 @@ namespace ShootingGame.Entities.Planes.Enemies
     class SplitEnemy : Enemy
     {
         private readonly int START_HP;
-        public SplitEnemy(int x, int y,int level, int hp) : base(x, y, 20, 5, null, level, 20 , Bullet.RADIUS_FOR_MEDIUM, 20)
+
+        public SplitEnemy(int x, int y, int level) :this(x, y, level, 10)
+        {
+
+        }
+
+        private SplitEnemy(int x, int y,int level, int hp) : base(x, y, 20, 3, Images.SPLIT_ENEMY_IMAGE, level, hp , Bullet.RADIUS_FOR_MEDIUM, 100)
         {
             START_HP = hp;
         }
@@ -32,8 +38,8 @@ namespace ShootingGame.Entities.Planes.Enemies
             base.DeadAction(player, enemies);
             if (START_HP > 1)
             {
-                enemies.Add(new SplitEnemy(X-Radius, Y, Level, START_HP / 2));
-                enemies.Add(new SplitEnemy(X+Radius, Y, Level, START_HP / 2));
+                enemies.Add(new SplitEnemy(X-Radius*2, Y, Level, START_HP / 2));
+                enemies.Add(new SplitEnemy(X+Radius*2, Y, Level, START_HP / 2));
             }
         }
     }
