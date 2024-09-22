@@ -272,8 +272,7 @@ namespace ShootingGame
 
                         if (tmp_enemy.Hp <= 0)
                         {
-                            player.Exp += tmp_enemy.GetEXP();
-                            enemies.Remove(tmp_enemy);
+                            tmp_enemy.DeadAction(player,enemies);
                         }
                     }
                 }

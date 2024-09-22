@@ -15,7 +15,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             chaseTimer = 100;
         }
 
-        public override int GetEXP()
+        protected override int GetEXP()
         {
             return Level * 3;
         }

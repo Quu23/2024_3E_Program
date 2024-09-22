@@ -8,7 +8,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
         }
 
-        public override int GetEXP()
+        protected override int GetEXP()
         {
             return Level + 5;
         }

@@ -6,7 +6,7 @@
         {
         }
 
-        public override int GetEXP()
+        protected override int GetEXP()
         {
             return Level * 2;
         }

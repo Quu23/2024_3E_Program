@@ -17,9 +17,20 @@ namespace ShootingGame.Entities.Planes.Enemies
         }
 
         /// <summary>
+        /// このEnemyを倒したときのアクションを表す。
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="enemies"></param>
+        public virtual void DeadAction(Player player,List<Enemy> enemies)
+        {
+            player.Exp += GetEXP();
+            enemies.Remove(this);
+        }
+
+        /// <summary>
         /// このEnemyを倒したときに獲得できるEXPを返す。
         /// </summary>
         /// <returns>このEnemyが持つEXP</returns>
-        public abstract int GetEXP();
+        protected abstract int GetEXP();
     }
 }
