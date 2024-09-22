@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Items
 {
     class ScoreBoosterItem : TransientItem
     {
-        public ScoreBoosterItem(int x, int y, int radius, int speed, BitmapImage img, StatusEffects EFFECT_KIND, int EFFECT_IIME) : base(x, y, radius, speed, img, EFFECT_KIND, EFFECT_IIME)
+        public ScoreBoosterItem(int x, int y, int radius, 10, BitmapImage img, StatusEffects EFFECT_KIND, int EFFECT_IIME) : base(x, y, radius, speed, img, EFFECT_KIND, EFFECT_IIME)
         {
         }
 

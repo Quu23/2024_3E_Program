@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Entities\Items\NewFile1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="bin\Debug\net8.0-windows\" />
     <Folder Include="music\se\" />
   </ItemGroup>

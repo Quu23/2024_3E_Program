@@ -12,7 +12,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/10, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/1 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/100)
         {
             //追尾時間設定。調整求。
-            chaseTimer = 80;
+            chaseTimer = 150;
         }
 
         protected override int GetEXP()
