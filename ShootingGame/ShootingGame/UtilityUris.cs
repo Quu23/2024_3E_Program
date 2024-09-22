@@ -26,6 +26,7 @@ namespace ShootingGame
         public static readonly Uri HEALIING_ITEM_URI       = new Uri("../../../img/Healing_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri INVINCIBLE_ITEM_URI     = new Uri("../../../img/Invincible_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri CLEAR_ENEMIES_ITEM_URI  = new Uri("../../../img/Clear_Enemies_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri DESTROY_ITEM_IMAGE      = new Uri("../../../img/Destroy_Item.png", UriKind.RelativeOrAbsolute);
 
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
