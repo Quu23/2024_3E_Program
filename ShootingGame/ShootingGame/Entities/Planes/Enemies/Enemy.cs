@@ -24,6 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         public virtual void DeadAction(Player player,List<Enemy> enemies)
         {
             player.Exp += GetEXP();
+            MainWindow.score += player.increaseRateOfScore * GetEXP();
             enemies.Remove(this);
         }
 

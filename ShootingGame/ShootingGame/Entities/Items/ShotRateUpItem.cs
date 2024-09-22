@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Items
 {
     class ShotRateUpItem : TransientItem
     {
-        public ShotRateUpItem(int x, int y) : base(x, y, 8, 6, Images.SHOT_RATE_UP_ITEM_IMAGE, StatusEffects.SHOT_RATE_UP, 100)
+        public ShotRateUpItem(int x, int y) : base(x, y, 16, 6, Images.SHOT_RATE_UP_ITEM_IMAGE, StatusEffects.SHOT_RATE_UP, 100)
         {
         }
 

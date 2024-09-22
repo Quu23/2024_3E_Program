@@ -5,11 +5,12 @@
     /// </summary>
     public enum StatusEffects
     {
-        NORMALE        =  0,
-        SPEED_UP       =  1,
-        SPEED_DOWN     = -1,
-        SHOT_RATE_UP   =  2,
-        SHOT_RATE_DOWN = -2,
-        INVINCIBLE     =  3,
+        NORMALE                =  0,
+        SPEED_UP               =  1,
+        SPEED_DOWN             = -1,
+        SHOT_RATE_UP           =  2,
+        SHOT_RATE_DOWN         = -2,
+        INCREACE_RATE_OF_SCORE = 3,
+        INVINCIBLE             =  4,
     }
 }

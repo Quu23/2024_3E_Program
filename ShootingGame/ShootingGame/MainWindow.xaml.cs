@@ -21,7 +21,6 @@ namespace ShootingGame
 
         private static string message = ""; 
 
-
         public static int score = 0;
 
         const int FPS = 60;
@@ -60,6 +59,7 @@ namespace ShootingGame
         private Rect hpBarRect;
 
         private readonly Point statusPoint;
+        private readonly Point scorePoint;
 
         private Rect statusIconRect;
 
@@ -113,9 +113,10 @@ namespace ShootingGame
             hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
+            scorePoint  = new Point(30, 30);
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(/*起点X=*/SystemParameters.PrimaryScreenWidth - 32 * (player.status.Count + 1) , 10 , 32, 32);
+            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
             //データ読み込み
             //LoadData();
@@ -208,11 +209,11 @@ namespace ShootingGame
             if (player.Hp <= 0)
             {
                 windowMode = WindowMode.GAMEOVER;
-                scoreText = new FormattedText($"SCORE = {"まだSCORE変数を作ってない"}"
+                scoreText = new FormattedText($"SCORE = {score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , new Typeface("Verdana")
-                                    , 30
+                                    , 100
                                     , Brushes.White
                                     , 12.5);
             }
@@ -394,6 +395,13 @@ namespace ShootingGame
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, item);
             }
 
+            drawingContext.DrawText(new FormattedText($"SCORE:{score}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 20
+                                    , Brushes.White
+                                    , 12.5), scorePoint);
 
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
@@ -413,9 +421,9 @@ namespace ShootingGame
                 {
                     drawingContext.DrawImage(GetStatusIconImage(kvp.Key), statusIconRect);
                 }
-                statusIconRect.X += statusIconRect.Width;
+                statusIconRect.Y += statusIconRect.Height;
             }
-            statusIconRect.X -= statusIconRect.Width * player.status.Count ;
+            statusIconRect.Y -= statusIconRect.Height * player.status.Count ;
 
 
             if (isKeyPresseds[6])
