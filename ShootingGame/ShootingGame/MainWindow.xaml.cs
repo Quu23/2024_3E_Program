@@ -238,7 +238,7 @@ namespace ShootingGame
                 items.Add(new ExpOrb(2 * dw, 30));
                 items.Add(new HealingItem(3 * dw, 30));
                 items.Add(new InvincibleItem(4 * dw, 30));
-                items.Add(new ShotRateUpItem(5 * dw, 30));
+                items.Add(new ShotRateDownItem(5 * dw, 30));
                 items.Add(new SpeedUpItem(6 * dw, 30));
                 items.Add(new SpeedDownItem(7 * dw, 30));
             }

@@ -18,6 +18,7 @@ namespace ShootingGame
         //アイテム
         public static readonly BitmapImage EXP_ORB_IMAGE            = new BitmapImage(UtilityUris.EXP_ORB_URI);
         public static readonly BitmapImage SHOT_RATE_UP_ITEM_IMAGE  = new BitmapImage(UtilityUris.SHOT_RATE_UP_ITEM_URI);
+        public static readonly BitmapImage SHOT_RATE_DOWN_ITEM_IMAGE= new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ITEM_URI);
         public static readonly BitmapImage SPEED_UP_ITEM_IMAGE      = new BitmapImage(UtilityUris.SPEED_UP_ITEM_URI);
         public static readonly BitmapImage SPEED_DOWN_ITEM_IMAGE    = new BitmapImage(UtilityUris.SPEED_DOWN_ITEM_URI);
         public static readonly BitmapImage HEALING_ITEM_IMAGE       = new BitmapImage(UtilityUris.HEALIING_ITEM_URI);

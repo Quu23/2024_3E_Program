@@ -12,7 +12,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         private int degree;
         int sign;
 
-        public SplashEnemy(int x, int y,  int level) : base(x, y, 20, 3, Images.SPLASH_ENEMY_IMAGE, level, 5 ,Bullet.RADIUS_FOR_SMALL ,20)
+        public SplashEnemy(int x, int y,  int level) : base(x, y, 20, 3, Images.SPLASH_ENEMY_IMAGE, level, 5 ,Bullet.RADIUS_FOR_SMALL ,10)
         {
             degree = 150;
             sign = 1;
