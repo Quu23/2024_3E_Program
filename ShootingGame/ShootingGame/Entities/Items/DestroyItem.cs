@@ -5,7 +5,7 @@ namespace ShootingGame.Entities.Items
 {
     class DestroyItem : TransientItem
     {
-        public DestroyItem(int x, int y) : base(x, y, 64, 10, Images.DESTROY_ITEM_IMAGE, StatusEffects.DESTROY_MODE, 240)
+        public DestroyItem(int x, int y) : base(x, y, 16, 10, Images.DESTROY_ITEM_IMAGE, StatusEffects.DESTROY_MODE, 60)
         {
         }
 

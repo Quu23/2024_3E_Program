@@ -228,7 +228,7 @@ namespace ShootingGame
                 enemies.Add(new SnakeEnemy(2*dw, 10, 1));
                 enemies.Add(new SplitEnemy(3*dw, 10, 1));
                 enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
-                enemies.Add(new MissileEnemy(5*dw, 10, 1));
+                enemies.Add(new GoldenEnemy(5*dw, 10, 1));
 
             }
 
@@ -492,6 +492,8 @@ namespace ShootingGame
                     return Images.SHOT_RATE_DOWN_ICON_IMAGE;
                 case StatusEffects.INVINCIBLE:
                     return Images.INCINCIBLE_ICON_IMAGE;
+                case StatusEffects.DESTROY_MODE:
+                    return Images.DESTROY_ITEM_IMAGE;
                 default:
                     throw new NotImplementedException();
             }
