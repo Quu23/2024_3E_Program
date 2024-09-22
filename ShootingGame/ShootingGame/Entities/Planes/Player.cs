@@ -32,7 +32,7 @@ namespace ShootingGame.Entities.Planes
             defaultSpeed = Speed;
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　効果時間
-                { SPEED_UP       ,0}, 
+                { SPEED_UP       ,0},
                 { SPEED_DOWN     ,0},
                 { SHOT_RATE_UP   ,0},
                 { SHOT_RATE_DOWN ,0},
@@ -43,6 +43,20 @@ namespace ShootingGame.Entities.Planes
                 Radius, defaultSpeed, MAX_HP, DecreaceBulletCoolTime,
             ];
 
+        }
+
+        public override int Hp 
+        { 
+            get => base.Hp; 
+            set
+            { 
+                if (status == null)
+                {
+                    base.Hp = value;
+                    return;
+                }
+                if (status[INVINCIBLE] <= 0) base.Hp = value; 
+            } 
         }
 
         public int Exp { get => exp; set => exp = value; }
@@ -63,7 +77,7 @@ namespace ShootingGame.Entities.Planes
 
         public override bool IsHit(Entity target)
         {
-            if (status[INVINCIBLE] <= 0 && base.IsHit(target)) return true;
+            if (base.IsHit(target)) return true;
             return false;
         }
 
