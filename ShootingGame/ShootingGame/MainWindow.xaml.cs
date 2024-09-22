@@ -88,7 +88,7 @@ namespace ShootingGame
 
             KeyUp += DepressedKey;
             KeyDown += PressedKey;
-            KeyDown += messageInputKey;
+            KeyDown += MessageInputKey;
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
@@ -562,7 +562,7 @@ namespace ShootingGame
             }
         }
 
-        private void messageInputKey(object? sender, KeyEventArgs e)
+        private void MessageInputKey(object? sender, KeyEventArgs e)
         {
             if (windowMode != WindowMode.START) return;
 
