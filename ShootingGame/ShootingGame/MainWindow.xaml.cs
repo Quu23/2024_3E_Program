@@ -98,7 +98,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = false;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -249,7 +249,7 @@ namespace ShootingGame
                 Bullet tmp_bullet = bullets[bi - 1];
                 tmp_bullet.Action();
 
-                if (tmp_bullet.isOutOfWindow())
+                if (tmp_bullet.IsOutOfWindow())
                 {
                     bullets.Remove(tmp_bullet);
                     continue;
@@ -289,7 +289,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                if (tmp_enemy.isOutOfWindow())
+                if (tmp_enemy.IsOutOfWindow())
                 {
                     enemies.Remove(tmp_enemy);
                     continue;
@@ -307,7 +307,7 @@ namespace ShootingGame
                     items.Remove(tmp_item);
                     continue;
                 }
-                if (tmp_item.isOutOfWindow())
+                if (tmp_item.IsOutOfWindow())
                 {
                     items.Remove(tmp_item);
                     continue;
