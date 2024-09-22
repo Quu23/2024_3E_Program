@@ -23,7 +23,7 @@ namespace ShootingGame.Entities.Planes
             Level = level;
             Hp = hp;
             BulletCoolTime = 0;
-            DecreaceBulletCoolTime = 1;
+            DecreaceBulletCoolTime = 3;
             this.bulletRadius = bulletRadius;
             MaxBulletCoolTime = maxBulletCoolTime;
         }
