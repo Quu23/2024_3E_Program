@@ -10,11 +10,12 @@ namespace ShootingGame.Entities.Planes.Enemies
     class SplashEnemy : Enemy
     {
         private int degree;
-        int a = 1;
+        int sign;
 
-        public SplashEnemy(int x, int y,  int level) : base(x, y, 20, 3, Images.STRAIGHT_ENEMY_IMAGE, level, 5 ,Bullet.RADIUS_FOR_SMALL ,9)
+        public SplashEnemy(int x, int y,  int level) : base(x, y, 20, 3, Images.SPLASH_ENEMY_IMAGE, level, 5 ,Bullet.RADIUS_FOR_SMALL ,10)
         {
-            this.degree = 150;
+            degree = 150;
+            sign = 1;
         }
 
         protected override int GetEXP()
@@ -27,10 +28,16 @@ namespace ShootingGame.Entities.Planes.Enemies
             var bullets = new List<Bullet>() {
                 new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,3,Id.ENEMY),
             };
-            if (this.degree <= 150){a = 1; }
-            else if(this.degree >= 210){a = -1; }
+            if (degree <= 150 )
+            {
+                sign = 1; 
+            }
+            else if(degree >= 210)
+            {
+                sign = -1; 
+            }
 
-            degree += 10 * a;
+            degree += 10 * sign;
             return bullets;
         }
     }
