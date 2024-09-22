@@ -98,7 +98,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = false;
+            musicPlayer.IsMuted = true;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -404,7 +404,7 @@ namespace ShootingGame
                                     , 12.5), statusPoint);
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
-            hpBarRect.Width = player.Hp * 10;
+            hpBarRect.Width = player.Hp >= 0 ? player.Hp * 10 : 0;
             drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
 
             foreach (var kvp in player.status)

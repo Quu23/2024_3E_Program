@@ -28,6 +28,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             var bullets = new List<Bullet>() {
                 new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,3,Id.ENEMY),
             };
+
             if (degree <= 150 )
             {
                 sign = 1; 
@@ -38,6 +39,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             }
 
             degree += 10 * sign;
+
             return bullets;
         }
     }

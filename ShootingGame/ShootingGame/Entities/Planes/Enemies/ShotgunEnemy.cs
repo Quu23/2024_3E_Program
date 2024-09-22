@@ -2,7 +2,7 @@
 {
     class ShotgunEnemy : Enemy
     {
-        public ShotgunEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level + 5, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 70)
+        public ShotgunEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/level + 5, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 200)
         {
         }
 
