@@ -26,7 +26,6 @@ namespace ShootingGame
 
         private static string message = ""; 
 
-
         public static int score = 0;
 
         const int FPS = 60;
@@ -65,6 +64,7 @@ namespace ShootingGame
         private Rect hpBarRect;
 
         private readonly Point statusPoint;
+        private readonly Point scorePoint;
 
         private Rect statusIconRect;
 
@@ -118,9 +118,10 @@ namespace ShootingGame
             hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
+            scorePoint  = new Point(30, 30);
             statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(/*起点X=*/SystemParameters.PrimaryScreenWidth - 32 * (player.status.Count + 1) , 10 , 32, 32);
+            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
             //データ読み込み
             //LoadData();
@@ -237,11 +238,11 @@ namespace ShootingGame
             if (player.Hp <= 0)
             {
                 windowMode = WindowMode.GAMEOVER;
-                scoreText = new FormattedText($"SCORE = {"まだSCORE変数を作ってない"}"
+                scoreText = new FormattedText($"SCORE = {score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , new Typeface("Verdana")
-                                    , 30
+                                    , 100
                                     , Brushes.White
                                     , 12.5);
             }
@@ -251,12 +252,13 @@ namespace ShootingGame
             //todo:敵の配置とか種類をいじるならここを修正。
             if (enemies.Count <= 0)
             {
-                int dw = (int)((Width - 200) / 5.0);
-                enemies.Add(new MissileEnemy(dw, 10, 1));
-                enemies.Add(new HexagonEnemy(2 * dw, 10, 1));
-                enemies.Add(new SplashEnemy(3 * dw, 10, 1));
-                enemies.Add(new TurnBackEnemy(4 * dw, 10, 1));
-                enemies.Add(new ShotgunEnemy(5 * dw, 10, 1));
+                int dw = (int)((Width - 200)/ 5.0 );
+                enemies.Add(new HexagonEnemy(dw, 10, 1));
+                enemies.Add(new SnakeEnemy(2*dw, 10, 1));
+                enemies.Add(new SplitEnemy(3*dw, 10, 1));
+                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
+                enemies.Add(new MissileEnemy(5*dw, 10, 1));
+
             }
 
             //todo:アイテムの位置とか種類をいじるならここ。
@@ -267,7 +269,7 @@ namespace ShootingGame
                 items.Add(new ExpOrb(2 * dw, 30));
                 items.Add(new HealingItem(3 * dw, 30));
                 items.Add(new InvincibleItem(4 * dw, 30));
-                items.Add(new ShotRateDownItem(5 * dw, 30));
+                items.Add(new ShotRateUpItem(5 * dw, 30));
                 items.Add(new SpeedUpItem(6 * dw, 30));
                 items.Add(new SpeedDownItem(7 * dw, 30));
             }
@@ -423,6 +425,13 @@ namespace ShootingGame
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, item);
             }
 
+            drawingContext.DrawText(new FormattedText($"SCORE:{score}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , new Typeface("Verdana")
+                                    , 20
+                                    , Brushes.White
+                                    , 12.5), scorePoint);
 
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
@@ -442,9 +451,9 @@ namespace ShootingGame
                 {
                     drawingContext.DrawImage(GetStatusIconImage(kvp.Key), statusIconRect);
                 }
-                statusIconRect.X += statusIconRect.Width;
+                statusIconRect.Y += statusIconRect.Height;
             }
-            statusIconRect.X -= statusIconRect.Width * player.status.Count ;
+            statusIconRect.Y -= statusIconRect.Height * player.status.Count ;
 
 
             if (isKeyPresseds[6])

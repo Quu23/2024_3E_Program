@@ -10,8 +10,8 @@ namespace ShootingGame.Entities.Planes.Enemies
     class SplitEnemy : Enemy
     {
         private readonly int START_HP;
-
-        public SplitEnemy(int x, int y, int level) :this(x, y, level, 10)
+        
+        public SplitEnemy(int x, int y, int level) :this(x, y, level, 3)
         {
 
         }
