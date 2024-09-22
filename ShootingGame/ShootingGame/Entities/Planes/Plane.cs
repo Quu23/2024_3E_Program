@@ -44,7 +44,7 @@ namespace ShootingGame.Entities.Planes
                 level = value;
             }
         }
-        public int Hp { get => hp; set => hp = value; }
+        public virtual int Hp { get => hp; set => hp = value; }
         public int BulletCoolTime { get => bulletCoolTime; set => bulletCoolTime = value; }
         public int MaxBulletCoolTime { get => maxBulletCoolTime; set => maxBulletCoolTime = value; }
         public int DecreaceBulletCoolTime { get => decreaceBulletCoolTime; set => decreaceBulletCoolTime = value; }
