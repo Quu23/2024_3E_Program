@@ -8,11 +8,10 @@ using ShootingGame.Entities;
 using ShootingGame.Entities.Items;
 using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
-
-using System;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;   // List<T> クラスを使うのに必要
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ShootingGame
 {
@@ -24,7 +23,9 @@ namespace ShootingGame
         public static WindowMode windowMode;
 
 
-        private static string message = ""; 
+        private static string message = "";
+
+        private SortedDictionary<int, string> ranking;
 
         public static int score = 0;
 
@@ -124,7 +125,8 @@ namespace ShootingGame
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
             //データ読み込み
-            //LoadData();
+            ranking = new SortedDictionary<int, string>();
+            LoadData();
 
             updateTimer.Start();
 
@@ -132,36 +134,52 @@ namespace ShootingGame
 
         private void LoadData()
         {
-            throw new NotImplementedException();
+            string path = @"../../../data/score_board.txt";
+
+            // ファイル読み込み＆文字化け防止
+            var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
+
+            // 1行ずつ読み込んで表示
+            foreach (var line in lines)
+            {
+                string[] temp = line.Split(',');
+
+                //for(int i = 0; i < temp.Length; i++)
+                //{
+                //    Debug.WriteLine(temp[i]);
+                //}
+                int temp2 = Convert.ToInt32(temp[0]);
+
+                ranking.Add(temp2,temp[1]);
+                //Debug.WriteLine(temp[0]);
+                foreach(var temp3 in ranking)
+                {
+                    Debug.WriteLine(temp3);
+                }
+                
+
+
+
+            }
         }
 
-        private void WriteScore(String[] args)
+        private void WriteScore()
         {
             // 書き込むファイルの絶対パス
-            string path = @"C:\Users\Owner\source\repos\2024_3E_Program\ShootingGame\ShootingGame\data\score_board.txt";
-
-            // 書き込む内容（配列でもList<T>クラスでも可能）
-            List<string> text = new List<string>
-            {
-                "player.name",
-                "score"
-            };
+            string path = @"../../../data/score_board.txt";
 
             // ファイルを開く＆文字化け防止
             // 第二引数が「true」 → 追加書き込みOK
             // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
-            StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8"));
-
-            foreach (var line in text)
+            using(StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
             {
-                file.WriteLine(line);
+                // score_board.txt に書き込み
+                file.WriteLine($"{score},{player.name}");
             }
-
-            // ファイルクローズ
-            file.Close();
+            
 
             // 書き込んだファイルを読み込む
-            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("shift-jis")));
+            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
         }
 
         private DateTime start;
@@ -245,6 +263,8 @@ namespace ShootingGame
                                     , 100
                                     , Brushes.White
                                     , 12.5);
+
+                WriteScore();
             }
 
             player.Action();
