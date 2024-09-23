@@ -69,6 +69,8 @@ namespace ShootingGame
 
         private Rect statusIconRect;
 
+        private readonly Typeface FONT_TYPEFACE;
+
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
 
@@ -124,6 +126,8 @@ namespace ShootingGame
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
+            FONT_TYPEFACE = new Typeface(new FontFamily(new Uri("../../../fonts/"), "./#dotfont"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
@@ -164,10 +168,6 @@ namespace ShootingGame
                 {
                     Debug.WriteLine(temp3);
                 }
-                
-
-
-
             }
         }
 
@@ -267,7 +267,7 @@ namespace ShootingGame
                 scoreText = new FormattedText($"SCORE = {score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 100
                                     , Brushes.White
                                     , 12.5);
@@ -423,7 +423,7 @@ namespace ShootingGame
                                      $"NAME = [{message}]"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 30
                                     , Brushes.Yellow
                                     , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
@@ -456,7 +456,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 20
                                     , Brushes.White
                                     , 12.5), scorePoint);
@@ -464,7 +464,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
@@ -500,7 +500,7 @@ namespace ShootingGame
                                     $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 12
                                     , Brushes.White
                                     , 12.5), new Point(10, 10));

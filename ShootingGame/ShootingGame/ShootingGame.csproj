@@ -9,8 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="fonts\dotfont.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="bin\Debug\net8.0-windows\" />
     <Folder Include="music\se\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="fonts\dotfont.ttf" />
   </ItemGroup>
 
 </Project>
