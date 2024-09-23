@@ -152,24 +152,11 @@ namespace ShootingGame
             {
                 string[] temp = line.Split(',');
 
-                //for(int i = 0; i < temp.Length; i++)
-                //{
-                //    Debug.WriteLine(temp[i]);
-                //}
-                int temp2 = Convert.ToInt32(temp[0]);
-
-                ranking.Add(temp2,temp[1]);
-                //Debug.WriteLine(temp[0]);
-                foreach(var temp3 in ranking)
-                {
-                    Debug.WriteLine(temp3);
-                }
-                
-
-
-
+                ranking.Add(Convert.ToInt32(temp[0]), temp[1]);
             }
         }
+
+        //データ書き込み
 
         private void WriteScore()
         {
