@@ -125,8 +125,16 @@ namespace ShootingGame
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
             //データ読み込み
-            ranking = new SortedDictionary<int, string>();
+
+            //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
+            ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x,int y) =>
+            {
+                if (x > y) return -1;
+                if (x < y) return  1;
+                return 0;
+            }));
             LoadData();
+            
 
             updateTimer.Start();
 
