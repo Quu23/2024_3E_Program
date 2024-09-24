@@ -121,12 +121,12 @@ namespace ShootingGame
             hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(30, 30);
-            statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
+            scorePoint  = new Point(30, 0);
+            statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
-            FONT_TYPEFACE = new Typeface(new FontFamily(new Uri("../../../fonts/"), "./#dotfont"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+            FONT_TYPEFACE = new Typeface((FontFamily)Application.Current.Resources["dotfont"], FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
 
             //データ読み込み
 
@@ -503,7 +503,7 @@ namespace ShootingGame
                                     , FONT_TYPEFACE
                                     , 12
                                     , Brushes.White
-                                    , 12.5), new Point(10, 10));
+                                    , 12.5), new Point(10, 30));
             }
         }
 
