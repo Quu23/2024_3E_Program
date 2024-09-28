@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:ShootingGame"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <FontFamily x:Key="dotfont">
+                /ShootingGame;component/fonts/dotfont.ttf#dotfont
+            </FontFamily>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

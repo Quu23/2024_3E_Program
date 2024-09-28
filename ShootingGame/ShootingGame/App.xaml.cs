@@ -12,6 +12,7 @@ namespace ShootingGame
         public static ShootingGame.MainWindow window;
 
         App(){
+            InitializeComponent();
             window = new MainWindow();
         }
 

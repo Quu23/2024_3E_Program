@@ -8,6 +8,10 @@ using ShootingGame.Entities;
 using ShootingGame.Entities.Items;
 using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
+using System.IO;
+using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ShootingGame
 {
@@ -19,7 +23,9 @@ namespace ShootingGame
         public static WindowMode windowMode;
 
 
-        private static string message = ""; 
+        private static string message = "";
+
+        private SortedDictionary<int, string> ranking;
 
         public static int score = 0;
 
@@ -62,6 +68,8 @@ namespace ShootingGame
         private readonly Point scorePoint;
 
         private Rect statusIconRect;
+
+        private readonly Typeface FONT_TYPEFACE;
 
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
@@ -113,13 +121,24 @@ namespace ShootingGame
             hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(30, 30);
-            statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
+            scorePoint  = new Point(30, 0);
+            statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
+            FONT_TYPEFACE = new Typeface((FontFamily)Application.Current.Resources["dotfont"], FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+
             //データ読み込み
-            //LoadData();
+
+            //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
+            ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x,int y) =>
+            {
+                if (x > y) return -1;
+                if (x < y) return  1;
+                return 0;
+            }));
+            LoadData();
+            
 
             updateTimer.Start();
 
@@ -127,12 +146,48 @@ namespace ShootingGame
 
         private void LoadData()
         {
-            throw new NotImplementedException();
+            string path = @"../../../data/score_board.txt";
+
+            // ファイル読み込み＆文字化け防止
+            var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
+
+            // 1行ずつ読み込んで表示
+            foreach (var line in lines)
+            {
+                string[] temp = line.Split(',');
+
+                //for(int i = 0; i < temp.Length; i++)
+                //{
+                //    Debug.WriteLine(temp[i]);
+                //}
+                int temp2 = Convert.ToInt32(temp[0]);
+
+                ranking.Add(temp2,temp[1]);
+                //Debug.WriteLine(temp[0]);
+                foreach(var temp3 in ranking)
+                {
+                    Debug.WriteLine(temp3);
+                }
+            }
         }
 
         private void WriteScore()
         {
-            throw new NotImplementedException();
+            // 書き込むファイルの絶対パス
+            string path = @"../../../data/score_board.txt";
+
+            // ファイルを開く＆文字化け防止
+            // 第二引数が「true」 → 追加書き込みOK
+            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+            using(StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            {
+                // score_board.txt に書き込み
+                file.WriteLine($"{score},{player.name}");
+            }
+            
+
+            // 書き込んだファイルを読み込む
+            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
         }
 
         private DateTime start;
@@ -212,10 +267,12 @@ namespace ShootingGame
                 scoreText = new FormattedText($"SCORE = {score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 100
                                     , Brushes.White
                                     , 12.5);
+
+                WriteScore();
             }
 
             player.Action();
@@ -366,7 +423,7 @@ namespace ShootingGame
                                      $"NAME = [{message}]"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 30
                                     , Brushes.Yellow
                                     , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
@@ -399,7 +456,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 20
                                     , Brushes.White
                                     , 12.5), scorePoint);
@@ -407,7 +464,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
@@ -443,10 +500,10 @@ namespace ShootingGame
                                     $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 12
                                     , Brushes.White
-                                    , 12.5), new Point(10, 10));
+                                    , 12.5), new Point(10, 30));
             }
         }
 
