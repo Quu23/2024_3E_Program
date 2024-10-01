@@ -26,6 +26,7 @@ namespace ShootingGame
         private static string message = "";
 
         private SortedDictionary<int, string> ranking;
+        private List<Entity> loadStageData;
 
         public static int score = 0;
 
@@ -137,14 +138,15 @@ namespace ShootingGame
                 if (x < y) return  1;
                 return 0;
             }));
-            LoadData();
-            
+            LoadRankingData();
+
+            loadStageData = new List<Entity>();
 
             updateTimer.Start();
 
         }
 
-        private void LoadData()
+        private void LoadRankingData()
         {
             string path = @"../../../data/score_board.txt";
 
@@ -168,6 +170,21 @@ namespace ShootingGame
                 {
                     Debug.WriteLine(temp3);
                 }
+            }
+        }
+
+        private void LoadStageData(WindowMode nextMode)
+        {
+            switch (nextMode)
+            {
+                case WindowMode.STAGE1:
+                    break;
+                case WindowMode.STAGE2:
+                    break;
+                case WindowMode.STAGE3:
+                    break;
+                default:
+                    throw new ArgumentException($"nextModeにはSTAGE1,STAGE2,STAGE3のみが指定されるべきです。 nextMode={nextMode.ToString()}");
             }
         }
 
