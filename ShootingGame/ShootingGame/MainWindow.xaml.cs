@@ -98,7 +98,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = false;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -226,7 +226,7 @@ namespace ShootingGame
                 int dw = (int)((Width - 200)/ 5.0 );
                 enemies.Add(new HexagonEnemy(dw, 10, 1));
                 enemies.Add(new SnakeEnemy(2*dw, 10, 1));
-                enemies.Add(new SplitEnemy(3*dw, 10, 1));
+                enemies.Add(new SplashEnemy(3*dw, 10, 1));
                 enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
                 enemies.Add(new GoldenEnemy(5*dw, 10, 1));
 
