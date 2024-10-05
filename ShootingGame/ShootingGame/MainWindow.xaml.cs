@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Shapes;
 
 namespace ShootingGame
 {
@@ -26,7 +27,7 @@ namespace ShootingGame
         private static string message = "";
 
         private SortedDictionary<int, string> ranking;
-        private List<Entity> loadStageData;
+        private List<(int, int, Entity)> loadStageData;
 
         public static int score = 0;
 
@@ -140,7 +141,7 @@ namespace ShootingGame
             }));
             LoadRankingData();
 
-            loadStageData = new List<Entity>();
+            loadStageData = new List<(int, int, Entity)>();
 
             updateTimer.Start();
 
@@ -153,38 +154,125 @@ namespace ShootingGame
             // ファイル読み込み＆文字化け防止
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
 
-            // 1行ずつ読み込んで表示
+            // 1行ずつ読み込み
             foreach (var line in lines)
             {
                 string[] temp = line.Split(',');
 
-                //for(int i = 0; i < temp.Length; i++)
-                //{
-                //    Debug.WriteLine(temp[i]);
-                //}
                 int temp2 = Convert.ToInt32(temp[0]);
 
                 ranking.Add(temp2,temp[1]);
-                //Debug.WriteLine(temp[0]);
-                foreach(var temp3 in ranking)
-                {
-                    Debug.WriteLine(temp3);
-                }
             }
         }
 
         private void LoadStageData(WindowMode nextMode)
         {
+            string path;
             switch (nextMode)
             {
                 case WindowMode.STAGE1:
+                    path = @"../../../data/stages/stage1.txt";
                     break;
                 case WindowMode.STAGE2:
+                    path = @"../../../data/stages/stage2.txt";
                     break;
                 case WindowMode.STAGE3:
+                    path = @"../../../data/stages/stage3.txt";
                     break;
                 default:
                     throw new ArgumentException($"nextModeにはSTAGE1,STAGE2,STAGE3のみが指定されるべきです。 nextMode={nextMode.ToString()}");
+            }
+            // ファイル読み込み＆文字化け防止
+            var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
+
+            // 1行ずつ読み込み
+            foreach (var line in lines)//ステージデータは一つにつき要素を５つ持っている。[stage_position(int) , 0 / 1 , enemy_type(EnemyType) / item_type(ItemType) , x (int), y(int)]
+            {
+                string[] temp = line.Split(',');
+                int[] stagedata = new int[temp.Length];
+
+                for(int i = 0; i < 5; i++)
+                {
+                    int temp2 = Convert.ToInt32(temp[i]);
+                    stagedata[i] = temp2;
+                }
+                if (stagedata[1] == 0)
+                {
+                    EnemyTypes enemyTypes = (EnemyTypes) stagedata[2];
+                    switch (enemyTypes)
+                    {
+                        case EnemyTypes.BIG_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new BigEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.GOLDEN_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new GoldenEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.HEXAGON_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new HexagonEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.MISSILE_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new MissileEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.SHOTGUN_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new ShotgunEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.SNAKE_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new SnakeEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.SPLASH_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new SplashEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.SPLIT_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new SplitEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.STRAIGHT_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new StraightEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                        case EnemyTypes.TURNBACK_ENEMY:
+                            loadStageData.Add((stagedata[0], 0, new TurnBackEnemy(stagedata[3], stagedata[4], 1)));
+                            break;
+                    }
+
+                }
+                //もしエラーが起きた場合はステージデータの要素の2番目が０か１以外になっていないか確認すること。
+                else
+                {
+                    ItemTypes itemTypes = (ItemTypes) stagedata[2];
+                    switch(itemTypes)
+                    {
+                        case ItemTypes.CLEAR_ENEMIES_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new ClearEnemiesItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.DESTROY_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new DestroyItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.EXP_ORB:
+                            loadStageData.Add((stagedata[0], 1, new ExpOrb(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.HEALING_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new HealingItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.INVINCIBLE_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new InvincibleItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.SCORE_BOOSTER_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new ScoreBoosterItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.SHOT_RATE_DOWN_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new ShotRateDownItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.SHOT_RATE_UP_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new ShotRateUpItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.SPEED_DOWN_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new SpeedDownItem(stagedata[3], stagedata[4])));
+                            break;
+                        case ItemTypes.SPEED_UP_ITEM:
+                            loadStageData.Add((stagedata[0], 1, new SpeedUpItem(stagedata[3], stagedata[4])));
+                            break;
+                    }
+                }
+                
             }
         }
 
