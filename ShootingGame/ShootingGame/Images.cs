@@ -27,6 +27,7 @@ namespace ShootingGame
         public static readonly BitmapImage INVINCIBLE_ITEM_IMAGE     = new BitmapImage(UtilityUris.INVINCIBLE_ITEM_URI);
         public static readonly BitmapImage CLEAR_ENEMIES_ITEM_IMAGE  = new BitmapImage(UtilityUris.CLEAR_ENEMIES_ITEM_URI);
         public static readonly BitmapImage DESTROY_ITEM_IMAGE        = new BitmapImage(UtilityUris.DESTROY_ITEM_URI);
+        public static readonly BitmapImage SCORE_BOOSTER_ITEM_IMAGE  = new BitmapImage(UtilityUris.SCORE_BOOSTER_ITEM_URI);
 
         //プレイヤー
         public static readonly BitmapImage PLAYER_IMAGE             = new BitmapImage(UtilityUris.PLAYER_URI);
