@@ -27,7 +27,12 @@ namespace ShootingGame
         private static string message = "";
 
         private SortedDictionary<int, string> ranking;
-        private List<(int, int, Entity)> loadStageData;
+        /// <summary>
+        /// pos,enemy or item,type,x
+        /// </summary>
+        private List<(int, int, int, int)> stageData;
+
+        public static int stagePosition;
 
         public static int score = 0;
 
@@ -102,13 +107,13 @@ namespace ShootingGame
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
-            musicPlayer.Open(UtilityUris.BGM1_URI);
+            musicPlayer.Open(UtilityUris.BGM2_URI);
             //musicPlayer.Position = new TimeSpan(0,1,40);
             musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = false;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -141,7 +146,10 @@ namespace ShootingGame
             }));
             LoadRankingData();
 
-            loadStageData = new List<(int, int, Entity)>();
+            stageData = new List<(int, int, int, int)>();
+            LoadStageData(WindowMode.STAGE1);
+
+            stagePosition = 0;
 
             updateTimer.Start();
 
@@ -186,93 +194,17 @@ namespace ShootingGame
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
 
             // 1行ずつ読み込み
-            foreach (var line in lines)//ステージデータは一つにつき要素を５つ持っている。[stage_position(int) , 0 / 1 , enemy_type(EnemyType) / item_type(ItemType) , x (int), y(int)]
+            foreach (var line in lines)//ステージデータは一つにつき要素を4つ持っている。[stage_position(int) , 0 / 1 , enemy_type(EnemyType) / item_type(ItemType) , x (int),]
             {
                 string[] temp = line.Split(',');
-                int[] stagedata = new int[temp.Length];
+                int[] data = new int[temp.Length];
 
-                for(int i = 0; i < 5; i++)
+                for(int i = 0; i < 4; i++)
                 {
                     int temp2 = Convert.ToInt32(temp[i]);
-                    stagedata[i] = temp2;
+                    data[i] = temp2;
                 }
-                if (stagedata[1] == 0)
-                {
-                    EnemyTypes enemyTypes = (EnemyTypes) stagedata[2];
-                    switch (enemyTypes)
-                    {
-                        case EnemyTypes.BIG_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new BigEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.GOLDEN_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new GoldenEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.HEXAGON_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new HexagonEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.MISSILE_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new MissileEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.SHOTGUN_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new ShotgunEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.SNAKE_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new SnakeEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.SPLASH_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new SplashEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.SPLIT_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new SplitEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.STRAIGHT_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new StraightEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                        case EnemyTypes.TURNBACK_ENEMY:
-                            loadStageData.Add((stagedata[0], 0, new TurnBackEnemy(stagedata[3], stagedata[4], 1)));
-                            break;
-                    }
-
-                }
-                //もしエラーが起きた場合はステージデータの要素の2番目が０か１以外になっていないか確認すること。
-                else
-                {
-                    ItemTypes itemTypes = (ItemTypes) stagedata[2];
-                    switch(itemTypes)
-                    {
-                        case ItemTypes.CLEAR_ENEMIES_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new ClearEnemiesItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.DESTROY_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new DestroyItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.EXP_ORB:
-                            loadStageData.Add((stagedata[0], 1, new ExpOrb(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.HEALING_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new HealingItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.INVINCIBLE_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new InvincibleItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.SCORE_BOOSTER_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new ScoreBoosterItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.SHOT_RATE_DOWN_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new ShotRateDownItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.SHOT_RATE_UP_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new ShotRateUpItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.SPEED_DOWN_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new SpeedDownItem(stagedata[3], stagedata[4])));
-                            break;
-                        case ItemTypes.SPEED_UP_ITEM:
-                            loadStageData.Add((stagedata[0], 1, new SpeedUpItem(stagedata[3], stagedata[4])));
-                            break;
-                    }
-                }
-                
+                stageData.Add((data[0], data[1], data[2], data[3]));
             }
         }
 
@@ -362,6 +294,8 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop()
         {
+            stagePosition++;
+
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
 
@@ -383,29 +317,110 @@ namespace ShootingGame
             player.Action();
 
             //todo:敵の配置とか種類をいじるならここを修正。
-            if (enemies.Count <= 0)
-            {
-                int dw = (int)((Width - 200)/ 5.0 );
-                enemies.Add(new HexagonEnemy(dw, 10, 1));
-                enemies.Add(new SnakeEnemy(2*dw, 10, 1));
-                enemies.Add(new SplitEnemy(3*dw, 10, 1));
-                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
-                enemies.Add(new GoldenEnemy(5*dw, 10, 1));
+            //if (enemies.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 200)/ 5.0 );
+            //    enemies.Add(new ShotgunEnemy(dw, 10, 1));
+            //    enemies.Add(new StraightEnemy(2*dw, 10, 1));
+            //    enemies.Add(new SplashEnemy(3*dw, 10, 1));
+            //    enemies.Add(new MissileEnemy(4*dw, 10, 1));
+            //    enemies.Add(new BigEnemy(5*dw, 10, 1));
 
+            //}
+
+            for (int i=0;i<stageData.Count;i++)
+            {
+                var pair = stageData[i];
+
+                if (stagePosition < pair.Item1) break;
+
+                if (pair.Item2 == 0)
+                {
+                    switch ((EnemyTypes)pair.Item3)
+                    {
+                        case EnemyTypes.BIG_ENEMY:
+                            enemies.Add(new BigEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.GOLDEN_ENEMY:
+                            enemies.Add(new GoldenEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.HEXAGON_ENEMY:
+                            enemies.Add(new HexagonEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.MISSILE_ENEMY:
+                            enemies.Add(new MissileEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SHOTGUN_ENEMY:
+                            enemies.Add(new ShotgunEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SNAKE_ENEMY:
+                            enemies.Add(new SnakeEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SPLASH_ENEMY:
+                            enemies.Add(new SplashEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SPLIT_ENEMY:
+                            enemies.Add(new SplitEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.STRAIGHT_ENEMY:
+                            enemies.Add(new StraightEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.TURNBACK_ENEMY:
+                            enemies.Add(new TurnBackEnemy(pair.Item4, 0, 1));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch ((ItemTypes)pair.Item3)
+                    {
+                        case ItemTypes.CLEAR_ENEMIES_ITEM:
+                            items.Add(new ClearEnemiesItem(pair.Item4,0));
+                            break;
+                        case ItemTypes.DESTROY_ITEM:
+                            items.Add(new DestroyItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.EXP_ORB:
+                            items.Add(new ExpOrb(pair.Item4, 0));
+                            break;
+                        case ItemTypes.HEALING_ITEM:
+                            items.Add(new HealingItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.INVINCIBLE_ITEM:
+                            items.Add(new InvincibleItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SCORE_BOOSTER_ITEM:
+                            items.Add(new ScoreBoosterItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SHOT_RATE_DOWN_ITEM:
+                            items.Add(new ShotRateDownItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SHOT_RATE_UP_ITEM:
+                            items.Add(new ShotRateUpItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SPEED_DOWN_ITEM:
+                            items.Add(new SpeedDownItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SPEED_UP_ITEM:
+                            items.Add(new SpeedUpItem(pair.Item4, 0));
+                            break;
+                    }
+                }
+                stageData.Remove(pair);
             }
 
             //todo:アイテムの位置とか種類をいじるならここ。
-            if (items.Count <= 0)
-            {
-                int dw = (int)((Width - 200) / 7.0);
-                items.Add(new ClearEnemiesItem(dw, 30));
-                items.Add(new ExpOrb(2 * dw, 30));
-                items.Add(new HealingItem(3 * dw, 30));
-                items.Add(new InvincibleItem(4 * dw, 30));
-                items.Add(new ShotRateUpItem(5 * dw, 30));
-                items.Add(new SpeedUpItem(6 * dw, 30));
-                items.Add(new DestroyItem(7 * dw, 30));
-            }
+            //if (items.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 200) / 7.0);
+            //    items.Add(new ClearEnemiesItem(dw, 30));
+            //    items.Add(new ExpOrb(2 * dw, 30));
+            //    items.Add(new HealingItem(3 * dw, 30));
+            //    items.Add(new InvincibleItem(4 * dw, 30));
+            //    items.Add(new ShotRateDownItem(5 * dw, 30));
+            //    items.Add(new SpeedDownItem(6 * dw, 30));
+            //    items.Add(new DestroyItem(7 * dw, 30));
+            //}
 
 
             for (int bi = bullets.Count; bi > 0; bi--)
@@ -595,6 +610,7 @@ namespace ShootingGame
                 drawingContext.DrawText(new FormattedText(
                                     $"Width = {Width} / Height = {Height}\n" +
                                     $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                    $"stagePosition = {stagePosition}\n" +
                                     $"bullets.Count  = {bullets.Count}\n" +
                                     $"enemies.Count  = {enemies.Count}\n" +
                                     $"items.Count    = {items.Count}\n" +
@@ -656,6 +672,8 @@ namespace ShootingGame
                     return Images.INCINCIBLE_ICON_IMAGE;
                 case StatusEffects.DESTROY_MODE:
                     return Images.DESTROY_ITEM_IMAGE;
+                case StatusEffects.INCREACE_RATE_OF_SCORE:
+                    return Images.SCORE_BOOSTER_ITEM_IMAGE;
                 default:
                     throw new NotImplementedException();
             }

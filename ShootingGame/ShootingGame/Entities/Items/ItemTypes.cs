@@ -2,7 +2,7 @@
 {
     enum ItemTypes
     {
-        CLEAR_ENEMIES_ITEM = 10,
+        CLEAR_ENEMIES_ITEM,
         DESTROY_ITEM,
         EXP_ORB,
         HEALING_ITEM,

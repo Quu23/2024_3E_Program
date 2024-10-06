@@ -2,8 +2,12 @@
 {
     class SnakeEnemy : Enemy
     {
+        //sinカーブの軸(y軸)の座標
+        private readonly int basicX;
+
         public SnakeEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.SNAKE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/2 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 80)
         {
+            basicX = x;
         }
 
         protected override int GetEXP()
@@ -22,7 +26,7 @@
         protected override void Move()
         {
             base.Move();
-            X = (int)(20 * Speed * Math.Sin(Math.PI / 216 * Y)) + 60;
+            X = (int)(20 * Speed * Math.Sin(Math.PI / 216 * Y)) + basicX;
         }
     }
 }
