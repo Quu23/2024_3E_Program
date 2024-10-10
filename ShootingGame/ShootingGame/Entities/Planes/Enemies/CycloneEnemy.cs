@@ -43,14 +43,8 @@ namespace ShootingGame.Entities.Planes.Enemies
         private int degree;
         private int moveTime;
 
-        private readonly int firstDegree;
-
         int realX;
         int realY;
-
-        int firstX;
-        int firstY; 
-
 
         //回転行列の係数 a = cos θ , y = sin θ
         double a;
@@ -62,13 +56,10 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             degree = 1;
             moveTime = 0;
-            firstDegree = first_degree;
 
             a = Math.Cos(-first_degree * Math.PI / 180);
             b = Math.Sin(-first_degree * Math.PI / 180);
 
-            firstX = en.X;
-            firstY = en.Y;
             parent = en;
 
             realX = x;
