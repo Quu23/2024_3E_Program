@@ -1,5 +1,4 @@
 ﻿using ShootingGame.Entities.Items;
-using System.Numerics;
 using System.Windows;
 using static ShootingGame.Entities.Items.StatusEffects;
 

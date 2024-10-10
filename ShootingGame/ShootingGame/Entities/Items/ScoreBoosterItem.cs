@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Items
 {
     class ScoreBoosterItem : TransientItem
     {
-        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, null,StatusEffects.INCREACE_RATE_OF_SCORE, 15)
+        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, Images.SCORE_BOOSTER_ITEM_IMAGE,StatusEffects.INCREACE_RATE_OF_SCORE, 15)
         {
         }
 
@@ -24,7 +24,6 @@ namespace ShootingGame.Entities.Items
 
         protected override void Move()
         {
-            X = 7;
             Y += Speed;
         }
     }

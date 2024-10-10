@@ -8,6 +8,11 @@ using ShootingGame.Entities;
 using ShootingGame.Entities.Items;
 using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
+using System.IO;
+using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows.Shapes;
 
 namespace ShootingGame
 {
@@ -19,7 +24,15 @@ namespace ShootingGame
         public static WindowMode windowMode;
 
 
-        private static string message = ""; 
+        private static string message = "";
+
+        private SortedDictionary<int, string> ranking;
+        /// <summary>
+        /// pos,enemy or item,type,x
+        /// </summary>
+        private List<(int, int, int, int)> stageData;
+
+        public static int stagePosition;
 
         public static int score = 0;
 
@@ -63,6 +76,8 @@ namespace ShootingGame
 
         private Rect statusIconRect;
 
+        private readonly Typeface FONT_TYPEFACE;
+
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
 
@@ -92,7 +107,7 @@ namespace ShootingGame
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
-            musicPlayer.Open(UtilityUris.BGM1_URI);
+            musicPlayer.Open(UtilityUris.BGM2_URI);
             //musicPlayer.Position = new TimeSpan(0,1,40);
             musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
             {
@@ -113,26 +128,103 @@ namespace ShootingGame
             hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(30, 30);
-            statusPoint = new Point(hpBarRect.X - 50, hpBarRect.Y - 10);
+            scorePoint  = new Point(30, 0);
+            statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
 
+            FONT_TYPEFACE = new Typeface((FontFamily)Application.Current.Resources["dotfont"], FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+
             //データ読み込み
-            //LoadData();
+
+            //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
+            ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x,int y) =>
+            {
+                if (x > y) return -1;
+                if (x < y) return  1;
+                return 0;
+            }));
+            LoadRankingData();
+
+            stageData = new List<(int, int, int, int)>();
+            LoadStageData(WindowMode.STAGE1);
+
+            stagePosition = 0;
 
             updateTimer.Start();
 
         }
 
-        private void LoadData()
+        private void LoadRankingData()
         {
-            throw new NotImplementedException();
+            string path = @"../../../data/score_board.txt";
+
+            // ファイル読み込み＆文字化け防止
+            var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
+
+            // 1行ずつ読み込み
+            foreach (var line in lines)
+            {
+                string[] temp = line.Split(',');
+
+                int temp2 = Convert.ToInt32(temp[0]);
+
+                ranking.Add(temp2,temp[1]);
+            }
+        }
+
+        private void LoadStageData(WindowMode nextMode)
+        {
+            string path;
+            switch (nextMode)
+            {
+                case WindowMode.STAGE1:
+                    path = @"../../../data/stages/stage1.txt";
+                    break;
+                case WindowMode.STAGE2:
+                    path = @"../../../data/stages/stage2.txt";
+                    break;
+                case WindowMode.STAGE3:
+                    path = @"../../../data/stages/stage3.txt";
+                    break;
+                default:
+                    throw new ArgumentException($"nextModeにはSTAGE1,STAGE2,STAGE3のみが指定されるべきです。 nextMode={nextMode.ToString()}");
+            }
+            // ファイル読み込み＆文字化け防止
+            var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
+
+            // 1行ずつ読み込み
+            foreach (var line in lines)//ステージデータは一つにつき要素を4つ持っている。[stage_position(int) , 0 / 1 , enemy_type(EnemyType) / item_type(ItemType) , x (int),]
+            {
+                string[] temp = line.Split(',');
+                int[] data = new int[temp.Length];
+
+                for(int i = 0; i < 4; i++)
+                {
+                    int temp2 = Convert.ToInt32(temp[i]);
+                    data[i] = temp2;
+                }
+                stageData.Add((data[0], data[1], data[2], data[3]));
+            }
         }
 
         private void WriteScore()
         {
-            throw new NotImplementedException();
+            // 書き込むファイルの絶対パス
+            string path = @"../../../data/score_board.txt";
+
+            // ファイルを開く＆文字化け防止
+            // 第二引数が「true」 → 追加書き込みOK
+            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+            using(StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            {
+                // score_board.txt に書き込み
+                file.WriteLine($"{score},{player.name}");
+            }
+            
+
+            // 書き込んだファイルを読み込む
+            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
         }
 
         private DateTime start;
@@ -202,6 +294,8 @@ namespace ShootingGame
         // TODO:ゲームループの実装
         private void GameLoop()
         {
+            stagePosition++;
+
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
 
@@ -212,38 +306,121 @@ namespace ShootingGame
                 scoreText = new FormattedText($"SCORE = {score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 100
                                     , Brushes.White
                                     , 12.5);
+
+                WriteScore();
             }
 
             player.Action();
 
             //todo:敵の配置とか種類をいじるならここを修正。
-            if (enemies.Count <= 0)
-            {
-                int dw = (int)((Width - 200)/ 5.0 );
-                enemies.Add(new HexagonEnemy(dw, 10, 1));
-                enemies.Add(new SnakeEnemy(2*dw, 10, 1));
-                enemies.Add(new SplashEnemy(3*dw, 10, 1));
-                enemies.Add(new TurnBackEnemy(4*dw, 10, 1));
-                enemies.Add(new GoldenEnemy(5*dw, 10, 1));
+            //if (enemies.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 200)/ 5.0 );
+            //    enemies.Add(new ShotgunEnemy(dw, 10, 1));
+            //    enemies.Add(new StraightEnemy(2*dw, 10, 1));
+            //    enemies.Add(new SplashEnemy(3*dw, 10, 1));
+            //    enemies.Add(new MissileEnemy(4*dw, 10, 1));
+            //    enemies.Add(new BigEnemy(5*dw, 10, 1));
 
+            //}
+
+            for (int i=0;i<stageData.Count;i++)
+            {
+                var pair = stageData[i];
+
+                if (stagePosition < pair.Item1) break;
+
+                if (pair.Item2 == 0)
+                {
+                    switch ((EnemyTypes)pair.Item3)
+                    {
+                        case EnemyTypes.BIG_ENEMY:
+                            enemies.Add(new BigEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.GOLDEN_ENEMY:
+                            enemies.Add(new GoldenEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.HEXAGON_ENEMY:
+                            enemies.Add(new HexagonEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.MISSILE_ENEMY:
+                            enemies.Add(new MissileEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SHOTGUN_ENEMY:
+                            enemies.Add(new ShotgunEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SNAKE_ENEMY:
+                            enemies.Add(new SnakeEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SPLASH_ENEMY:
+                            enemies.Add(new SplashEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.SPLIT_ENEMY:
+                            enemies.Add(new SplitEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.STRAIGHT_ENEMY:
+                            enemies.Add(new StraightEnemy(pair.Item4, 0, 1));
+                            break;
+                        case EnemyTypes.TURNBACK_ENEMY:
+                            enemies.Add(new TurnBackEnemy(pair.Item4, 0, 1));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch ((ItemTypes)pair.Item3)
+                    {
+                        case ItemTypes.CLEAR_ENEMIES_ITEM:
+                            items.Add(new ClearEnemiesItem(pair.Item4,0));
+                            break;
+                        case ItemTypes.DESTROY_ITEM:
+                            items.Add(new DestroyItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.EXP_ORB:
+                            items.Add(new ExpOrb(pair.Item4, 0));
+                            break;
+                        case ItemTypes.HEALING_ITEM:
+                            items.Add(new HealingItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.INVINCIBLE_ITEM:
+                            items.Add(new InvincibleItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SCORE_BOOSTER_ITEM:
+                            items.Add(new ScoreBoosterItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SHOT_RATE_DOWN_ITEM:
+                            items.Add(new ShotRateDownItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SHOT_RATE_UP_ITEM:
+                            items.Add(new ShotRateUpItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SPEED_DOWN_ITEM:
+                            items.Add(new SpeedDownItem(pair.Item4, 0));
+                            break;
+                        case ItemTypes.SPEED_UP_ITEM:
+                            items.Add(new SpeedUpItem(pair.Item4, 0));
+                            break;
+                    }
+                }
+                stageData.Remove(pair);
             }
 
             //todo:アイテムの位置とか種類をいじるならここ。
-            if (items.Count <= 0)
-            {
-                int dw = (int)((Width - 200) / 7.0);
-                items.Add(new ClearEnemiesItem(dw, 30));
-                items.Add(new ExpOrb(2 * dw, 30));
-                items.Add(new HealingItem(3 * dw, 30));
-                items.Add(new InvincibleItem(4 * dw, 30));
-                items.Add(new ShotRateUpItem(5 * dw, 30));
-                items.Add(new SpeedUpItem(6 * dw, 30));
-                items.Add(new DestroyItem(7 * dw, 30));
-            }
+            //if (items.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 200) / 7.0);
+            //    items.Add(new ClearEnemiesItem(dw, 30));
+            //    items.Add(new ExpOrb(2 * dw, 30));
+            //    items.Add(new HealingItem(3 * dw, 30));
+            //    items.Add(new InvincibleItem(4 * dw, 30));
+            //    items.Add(new ShotRateDownItem(5 * dw, 30));
+            //    items.Add(new SpeedDownItem(6 * dw, 30));
+            //    items.Add(new DestroyItem(7 * dw, 30));
+            //}
 
 
             for (int bi = bullets.Count; bi > 0; bi--)
@@ -366,7 +543,7 @@ namespace ShootingGame
                                      $"NAME = [{message}]"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 30
                                     , Brushes.Yellow
                                     , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
@@ -399,7 +576,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 20
                                     , Brushes.White
                                     , 12.5), scorePoint);
@@ -407,7 +584,7 @@ namespace ShootingGame
             drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
@@ -433,6 +610,7 @@ namespace ShootingGame
                 drawingContext.DrawText(new FormattedText(
                                     $"Width = {Width} / Height = {Height}\n" +
                                     $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                    $"stagePosition = {stagePosition}\n" +
                                     $"bullets.Count  = {bullets.Count}\n" +
                                     $"enemies.Count  = {enemies.Count}\n" +
                                     $"items.Count    = {items.Count}\n" +
@@ -443,10 +621,10 @@ namespace ShootingGame
                                     $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
-                                    , new Typeface("Verdana")
+                                    , FONT_TYPEFACE
                                     , 12
                                     , Brushes.White
-                                    , 12.5), new Point(10, 10));
+                                    , 12.5), new Point(10, 30));
             }
         }
 
@@ -494,6 +672,8 @@ namespace ShootingGame
                     return Images.INCINCIBLE_ICON_IMAGE;
                 case StatusEffects.DESTROY_MODE:
                     return Images.DESTROY_ITEM_IMAGE;
+                case StatusEffects.INCREACE_RATE_OF_SCORE:
+                    return Images.SCORE_BOOSTER_ITEM_IMAGE;
                 default:
                     throw new NotImplementedException();
             }
