@@ -328,86 +328,92 @@ namespace ShootingGame
 
             //}
 
-            for (int i=0;i<stageData.Count;i++)
+
+            if (enemies.Count < 1)
             {
-                var pair = stageData[i];
-
-                if (stagePosition < pair.Item1) break;
-
-                if (pair.Item2 == 0)
-                {
-                    switch ((EnemyTypes)pair.Item3)
-                    {
-                        case EnemyTypes.BIG_ENEMY:
-                            enemies.Add(new BigEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.GOLDEN_ENEMY:
-                            enemies.Add(new GoldenEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.HEXAGON_ENEMY:
-                            enemies.Add(new HexagonEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.MISSILE_ENEMY:
-                            enemies.Add(new MissileEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.SHOTGUN_ENEMY:
-                            enemies.Add(new ShotgunEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.SNAKE_ENEMY:
-                            enemies.Add(new SnakeEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.SPLASH_ENEMY:
-                            enemies.Add(new SplashEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.SPLIT_ENEMY:
-                            enemies.Add(new SplitEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.STRAIGHT_ENEMY:
-                            enemies.Add(new StraightEnemy(pair.Item4, 0, 1));
-                            break;
-                        case EnemyTypes.TURNBACK_ENEMY:
-                            enemies.Add(new TurnBackEnemy(pair.Item4, 0, 1));
-                            break;
-                    }
-                }
-                else
-                {
-                    switch ((ItemTypes)pair.Item3)
-                    {
-                        case ItemTypes.CLEAR_ENEMIES_ITEM:
-                            items.Add(new ClearEnemiesItem(pair.Item4,0));
-                            break;
-                        case ItemTypes.DESTROY_ITEM:
-                            items.Add(new DestroyItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.EXP_ORB:
-                            items.Add(new ExpOrb(pair.Item4, 0));
-                            break;
-                        case ItemTypes.HEALING_ITEM:
-                            items.Add(new HealingItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.INVINCIBLE_ITEM:
-                            items.Add(new InvincibleItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.SCORE_BOOSTER_ITEM:
-                            items.Add(new ScoreBoosterItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.SHOT_RATE_DOWN_ITEM:
-                            items.Add(new ShotRateDownItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.SHOT_RATE_UP_ITEM:
-                            items.Add(new ShotRateUpItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.SPEED_DOWN_ITEM:
-                            items.Add(new SpeedDownItem(pair.Item4, 0));
-                            break;
-                        case ItemTypes.SPEED_UP_ITEM:
-                            items.Add(new SpeedUpItem(pair.Item4, 0));
-                            break;
-                    }
-                }
-                stageData.Remove(pair);
+                enemies.Add(new CycloneEnemy(800, 10, 1));
             }
+
+            //for (int i=0;i<stageData.Count;i++)
+            //{
+            //    var pair = stageData[i];
+
+            //    if (stagePosition < pair.Item1) break;
+
+            //    if (pair.Item2 == 0)
+            //    {
+            //        switch ((EnemyTypes)pair.Item3)
+            //        {
+            //            case EnemyTypes.BIG_ENEMY:
+            //                enemies.Add(new BigEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.GOLDEN_ENEMY:
+            //                enemies.Add(new GoldenEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.HEXAGON_ENEMY:
+            //                enemies.Add(new HexagonEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.MISSILE_ENEMY:
+            //                enemies.Add(new MissileEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.SHOTGUN_ENEMY:
+            //                enemies.Add(new ShotgunEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.SNAKE_ENEMY:
+            //                enemies.Add(new SnakeEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.SPLASH_ENEMY:
+            //                enemies.Add(new SplashEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.SPLIT_ENEMY:
+            //                enemies.Add(new SplitEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.STRAIGHT_ENEMY:
+            //                enemies.Add(new StraightEnemy(pair.Item4, 0, 1));
+            //                break;
+            //            case EnemyTypes.TURNBACK_ENEMY:
+            //                enemies.Add(new TurnBackEnemy(pair.Item4, 0, 1));
+            //                break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        switch ((ItemTypes)pair.Item3)
+            //        {
+            //            case ItemTypes.CLEAR_ENEMIES_ITEM:
+            //                items.Add(new ClearEnemiesItem(pair.Item4,0));
+            //                break;
+            //            case ItemTypes.DESTROY_ITEM:
+            //                items.Add(new DestroyItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.EXP_ORB:
+            //                items.Add(new ExpOrb(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.HEALING_ITEM:
+            //                items.Add(new HealingItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.INVINCIBLE_ITEM:
+            //                items.Add(new InvincibleItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.SCORE_BOOSTER_ITEM:
+            //                items.Add(new ScoreBoosterItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.SHOT_RATE_DOWN_ITEM:
+            //                items.Add(new ShotRateDownItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.SHOT_RATE_UP_ITEM:
+            //                items.Add(new ShotRateUpItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.SPEED_DOWN_ITEM:
+            //                items.Add(new SpeedDownItem(pair.Item4, 0));
+            //                break;
+            //            case ItemTypes.SPEED_UP_ITEM:
+            //                items.Add(new SpeedUpItem(pair.Item4, 0));
+            //                break;
+            //        }
+            //    }
+            //    stageData.Remove(pair);
+            //}
 
             //todo:アイテムの位置とか種類をいじるならここ。
             //if (items.Count <= 0)
