@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Planes.Enemies
     class CycloneEnemy : Enemy
     {
 
-        public CycloneEnemy(int x, int y, int level) : base(x, y, /*r=*/16, /*speed=*/3, Images.STRAIGHT_ENEMY_IMAGE, level, level * 3, Bullet.RADIUS_FOR_MEDIUM, 200)
+        public CycloneEnemy(int x, int y, int level) : base(x, y, /*r=*/16, /*speed=*/3, Images.CYCLONE_ENEMY_IMAGE, level, level * 3, Bullet.RADIUS_FOR_MEDIUM, 200)
         {
         }
 

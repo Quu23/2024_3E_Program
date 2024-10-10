@@ -44,6 +44,7 @@ namespace ShootingGame
         public static readonly BitmapImage BIG_ENEMY_IMAGE          = new BitmapImage(UtilityUris.BIG_ENEMY_URI);
         public static readonly BitmapImage SPLIT_ENEMY_IMAGE        = new BitmapImage(UtilityUris.SPLIT_ENEMY_URI);
         public static readonly BitmapImage SPLASH_ENEMY_IMAGE       = new BitmapImage(UtilityUris.SPLASH_ENEMY_URI);
+        public static readonly BitmapImage CYCLONE_ENEMY_IMAGE      = new BitmapImage(UtilityUris.CYCLONE_ENEMY_URI);
 
         /// <summary>
         /// 敵の弾 Sサイズ :  8x 8 (r=4)
