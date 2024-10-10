@@ -23,11 +23,11 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             var bullets = new List<Bullet>()
             {
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,   0, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  72, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 144, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 216, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 288, 1, Id.ENEMY, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  45, 1, Id.ENEMY, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 135, 1, Id.ENEMY, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 225, 1, Id.ENEMY, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 315, 1, Id.ENEMY, this),
+                //new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 288, 1, Id.ENEMY, this),
             };
             
             return bullets;
@@ -48,6 +48,9 @@ namespace ShootingGame.Entities.Planes.Enemies
         int realX;
         int realY;
 
+        int firstX;
+        int firstY; 
+
 
         //回転行列の係数 a = cos θ , y = sin θ
         double a;
@@ -55,16 +58,19 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         CycloneEnemy parent;
 
-        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, Id id, CycloneEnemy en) : base(x, y, radius, 3, first_degree, damage, id)
+        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, Id id, CycloneEnemy en) : base(x, y, radius, 5, first_degree, damage, id)
         {
             degree = 1;
             moveTime = 0;
             firstDegree = first_degree;
 
-            a = Math.Cos(first_degree * Math.PI / 180);
-            b = Math.Sin(first_degree * Math.PI / 180);
+            a = Math.Cos(-first_degree * Math.PI / 180);
+            b = Math.Sin(-first_degree * Math.PI / 180);
 
+            firstX = en.X;
+            firstY = en.Y;
             parent = en;
+
             realX = x;
             realY = y;
         }
@@ -73,24 +79,18 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             moveTime++;
 
-            //if (moveTime < 10)
-            //{
-            //    base.Move();
-            //    return;
-            //}
-
             realY -= (int)(Speed * Math.Exp(degree * Math.PI / 180) * Math.Cos(degree * Math.PI / 180));
-            realX += (int)(Speed* Math.Exp(degree * Math.PI / 180) * Math.Sin(degree * Math.PI / 180));
+            realX += (int)(Speed * Math.Exp(degree * Math.PI / 180) * Math.Sin(degree * Math.PI / 180));
 
-            int tmpX = realX - parent.CenterX;
-            int tmpY = realY - parent.CenterY;
+            int tmpX = realX - parent.X;
+            int tmpY = realY - parent.Y;
 
-            X = (int)(a * tmpX - b * tmpY) + parent.CenterX;
-            Y = (int)(a * tmpX + a * tmpY) + parent.CenterY;
+            X = (int)(a * tmpX - b * tmpY) + parent.X;
+            Y = (int)(b * tmpX + a * tmpY) + parent.Y;
 
             degree+=5;
 
-            if ((degree > 90 && Speed >= 3 ) || (degree > 135 && Speed >= 2))
+            if ((degree > 90 && Speed >= 5 ) || (degree > 135 && Speed >= 4) || (degree > 150 && Speed >= 3) || (degree > 180 && Speed >= 2))
             {
                 Speed--;
             }
