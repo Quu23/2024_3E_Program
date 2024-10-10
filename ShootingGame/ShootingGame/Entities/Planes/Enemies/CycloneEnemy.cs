@@ -32,9 +32,15 @@ namespace ShootingGame.Entities.Planes.Enemies
                 new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 216, 1, Id.ENEMY),
                 new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 288, 1, Id.ENEMY),
             };
-
+            
             return bullets;
 
+        }
+        protected override void Move()
+        {
+            Y -= (int)(Speed * Math.Pow(2, degree * Math.PI / 180) * Math.Cos(degree * Math.PI / 180));
+            X += (int)(Speed * Math.Pow(2, degree * Math.PI / 180) * Math.Sin(degree * Math.PI / 180));
+            ChangeRect(X, Y);
         }
     }
 }
