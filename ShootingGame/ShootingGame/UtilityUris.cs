@@ -57,6 +57,7 @@ namespace ShootingGame
         public static readonly Uri SHOT_RATE_UP_ICON_URI   = new Uri("../../../img/Icon_Rateup.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Ratedown.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri INCINCIBLE_ICON_URI     = new Uri("../../../img/Icon_Invincible.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Scoreboost.png", UriKind.RelativeOrAbsolute);
 
 
 

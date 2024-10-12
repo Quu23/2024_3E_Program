@@ -65,6 +65,7 @@ namespace ShootingGame
         public static readonly BitmapImage SHOT_RATE_UP_ICON_IMAGE   = new BitmapImage(UtilityUris.SHOT_RATE_UP_ICON_URI);
         public static readonly BitmapImage SHOT_RATE_DOWN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ICON_URI);
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
+        public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
 
     }
 }

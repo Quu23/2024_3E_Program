@@ -457,7 +457,7 @@ namespace ShootingGame
 
                         if (tmp_enemy.Hp <= 0)
                         {
-                            tmp_enemy.DeadAction(player,enemies);
+                            tmp_enemy.DeadAction(player,enemies,items);
                         }
                     }
                 }
@@ -678,8 +678,8 @@ namespace ShootingGame
                     return Images.INCINCIBLE_ICON_IMAGE;
                 case StatusEffects.DESTROY_MODE:
                     return Images.DESTROY_ITEM_IMAGE;
-                case StatusEffects.INCREACE_RATE_OF_SCORE:
-                    return Images.SCORE_BOOSTER_ITEM_IMAGE;
+                case StatusEffects.SCORE_BOOST:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();
             }

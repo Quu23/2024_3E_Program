@@ -1,6 +1,6 @@
 ﻿namespace ShootingGame.Entities.Planes.Enemies
 {
-    enum EnemyTypes
+    public enum EnemyTypes
     {
         BIG_ENEMY,
         GOLDEN_ENEMY,
@@ -12,5 +12,6 @@
         SPLIT_ENEMY,
         STRAIGHT_ENEMY,
         TURNBACK_ENEMY,
+        CYCLONE_ENEMY,
     }
 }

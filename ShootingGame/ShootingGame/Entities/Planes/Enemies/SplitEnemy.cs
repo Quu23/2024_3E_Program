@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShootingGame.Entities.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,9 +34,9 @@ namespace ShootingGame.Entities.Planes.Enemies
             };
         }
 
-        public override void DeadAction(Player player, List<Enemy> enemies)
+        public override void DeadAction(Player player, List<Enemy> enemies, List<Item> items)
         {
-            base.DeadAction(player, enemies);
+            base.DeadAction(player, enemies, items);
             if (Radius > 10)
             {
                 enemies.Add(new SplitEnemy(X-Radius*2, Y, Level, Radius / 2));

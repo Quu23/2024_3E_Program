@@ -39,7 +39,7 @@ namespace ShootingGame.Entities.Planes
                 { SPEED_DOWN              ,0},
                 { SHOT_RATE_UP            ,0},
                 { SHOT_RATE_DOWN          ,0},
-                { INCREACE_RATE_OF_SCORE  ,0},
+                { SCORE_BOOST             ,0},
                 { INVINCIBLE              ,0},
                 { DESTROY_MODE            ,0},
             };
