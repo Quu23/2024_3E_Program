@@ -5,10 +5,10 @@ namespace ShootingGame.Entities
 {
     public class Bullet : Entity
     {
-        private int degree;
-        private int damage;
+        protected int degree;
+        private   int damage;
         /// <summary>
-        /// idはプレイヤーか敵かを識別するためのもの
+        /// typeはプレイヤーか敵かを識別するためのもの
         /// </summary>
         private EnemyTypes type;
 
@@ -30,7 +30,7 @@ namespace ShootingGame.Entities
         public EnemyTypes Type { get => type; }
         public int Damage { get => damage; }
 
-        public sealed override void Action()
+        public override void Action()
         {
             base.Action();
         }
@@ -46,6 +46,14 @@ namespace ShootingGame.Entities
         {
             if (type == EnemyTypes.PLAYER)
             {
+                if (radius == RADIUS_FOR_SMALL)
+                {
+                    return Images.PLAYER_BULLET_SMALL_IMAGE;
+                }
+                if (radius == RADIUS_FOR_BIG)
+                {
+                    return Images.PLAYER_BULLET_BIG_IMAGE;
+                }
                 return Images.PLAYER_BULLET_IMAGE;
             }
             else

@@ -10,9 +10,6 @@ using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
 using System.IO;
 using System.Text;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Shapes;
 
 namespace ShootingGame
 {
@@ -587,7 +584,7 @@ namespace ShootingGame
                                     , Brushes.White
                                     , 12.5), scorePoint);
 
-            drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}"
+            drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}\nWEAPON:{player.Weapon}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -709,6 +706,7 @@ namespace ShootingGame
                     break;
                 case Key.Enter:
                     isKeyPresseds[5] = true;
+                    updateTimer.Interval = TimeSpan.FromMilliseconds(100);
                     break;
 
                 //デバック用
@@ -746,6 +744,7 @@ namespace ShootingGame
                     break;
                 case Key.Enter:
                     isKeyPresseds[5] = false;
+                    updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
                     break;
 
                 case Key.Tab:
