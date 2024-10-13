@@ -23,10 +23,10 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             var bullets = new List<Bullet>()
             {
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  45, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 135, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 225, 1, Id.ENEMY, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 315, 1, Id.ENEMY, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  45, 1, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 135, 1, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 225, 1, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 315, 1, this),
                 //new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 288, 1, Id.ENEMY, this),
             };
             
@@ -52,7 +52,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         CycloneEnemy parent;
 
-        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, Id id, CycloneEnemy en) : base(x, y, radius, 5, first_degree, damage, id)
+        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, CycloneEnemy en) : base(x, y, radius, 5, first_degree, damage, EnemyTypes.CYCLONE_ENEMY)
         {
             degree = 1;
             moveTime = 0;

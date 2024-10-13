@@ -2,6 +2,9 @@
 {
     public enum EnemyTypes
     {
+        //playerもある意味Enemyであることを暗に示す。哲学。
+        PLAYER = -1,
+
         BIG_ENEMY,
         GOLDEN_ENEMY,
         HEXAGON_ENEMY,

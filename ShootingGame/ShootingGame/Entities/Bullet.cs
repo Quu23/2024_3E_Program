@@ -1,6 +1,8 @@
-﻿namespace ShootingGame.Entities
+﻿using ShootingGame.Entities.Planes.Enemies;
+using System.Windows.Media.Imaging;
+
+namespace ShootingGame.Entities
 {
-    public enum Id { PLAYER, ENEMY }
     public class Bullet : Entity
     {
         private int degree;
@@ -8,7 +10,7 @@
         /// <summary>
         /// idはプレイヤーか敵かを識別するためのもの
         /// </summary>
-        private Id id;
+        private EnemyTypes type;
 
         public static readonly int RADIUS_FOR_SMALL = 4;
         public static readonly int RADIUS_FOR_MEDIUM = 8;
@@ -16,28 +18,16 @@
 
         /// <param name="degree">弾の進行方向を表す。プレイヤーの進行方向（画面の下から上）を0度として時計回りが正。一般角θとの関係は、degree = -θ + 90° </param>
         /// <param name="id">Id列挙型の要素を用いる。</param>
-        public Bullet(int x, int y, int radius, int speed, int degree, int damage, Id id) : base(x, y, radius, speed, id == Id.PLAYER ? Images.PLAYER_BULLET_IMAGE : Images.ENEMY_BULLET_IMAGE)
+        public Bullet(int x, int y, int radius, int speed, int degree, int damage, EnemyTypes type) : base(x, y, radius, speed, GetBulletImage(radius,type))
         {
             this.degree = degree;
             this.damage = damage;
-            this.id = id;
-
-            if (id == Id.ENEMY)
-            {
-                if (radius == RADIUS_FOR_SMALL)
-                {
-                    Img = Images.ENEMY_BULLET_SMALL_IMAGE;
-                }
-                if (radius == RADIUS_FOR_BIG)
-                {
-                    Img = Images.ENEMY_BULLET_BIG_IMAGE;
-                }
-            }
+            this.type = type;
         }
         /// <summary>
-        /// プレイヤーか敵かを識別する用。enumのIdを用いる。
+        /// 弾の種類を識別する用。enumのIdを用いる。
         /// </summary>
-        public Id Id { get => id; }
+        public EnemyTypes Type { get => type; }
         public int Damage { get => damage; }
 
         public sealed override void Action()
@@ -50,6 +40,26 @@
             Y -= (int)(Speed * Math.Cos(degree * Math.PI / 180));
             X += (int)(Speed * Math.Sin(degree * Math.PI / 180));
             ChangeRect(X, Y);
+        }
+
+        private static BitmapImage GetBulletImage(int radius,EnemyTypes type)
+        {
+            if (type == EnemyTypes.PLAYER)
+            {
+                return Images.PLAYER_BULLET_IMAGE;
+            }
+            else
+            {
+                if (radius == RADIUS_FOR_SMALL)
+                {
+                    return Images.ENEMY_BULLET_SMALL_IMAGE;
+                }
+                if (radius == RADIUS_FOR_BIG)
+                {
+                    return Images.ENEMY_BULLET_BIG_IMAGE;
+                }
+                return Images.ENEMY_BULLET_IMAGE;
+            }
         }
     }
 

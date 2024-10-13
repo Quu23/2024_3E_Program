@@ -17,8 +17,8 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             return
             [
-                new(X ,Y ,bulletRadius, 10, 90, 1,Id.ENEMY),
-                new(X ,Y ,bulletRadius, 10,270, 1,Id.ENEMY)
+                new(X ,Y ,bulletRadius, 10, 90, 1,EnemyTypes.TURNBACK_ENEMY),
+                new(X ,Y ,bulletRadius, 10,270, 1,EnemyTypes.TURNBACK_ENEMY)
             ];
         }
 

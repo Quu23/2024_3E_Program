@@ -189,13 +189,13 @@ namespace ShootingGame.Entities.Planes
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
             {
-                Bullet destroyBullet = new Bullet(X + Radius, Y - 50, 100, 4, 0, 9999, Id.PLAYER); 
+                Bullet destroyBullet = new Bullet(X + Radius, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER); 
                 destroyBullet.Img = Images.DESTROY_ITEM_IMAGE;  
                 bullets.Add(destroyBullet);
             }
             else
             {
-                bullets.Add(new Bullet(X + Radius, Y, 8, Speed + 5, 0, Level, Id.PLAYER));
+                bullets.Add(new Bullet(X + Radius, Y, 8, Speed + 5, 0, Level, Enemies.EnemyTypes.PLAYER));
             }   
             return bullets;
         }
