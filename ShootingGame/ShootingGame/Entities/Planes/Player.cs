@@ -329,12 +329,12 @@ namespace ShootingGame.Entities.Planes
                 List<Enemy> enemies = App.window.enemies;
 
                 int minDistanceEnemyIndex = 0;
-                int minSquareDistancs = (X - enemies[minDistanceEnemyIndex].X) * (X - enemies[minDistanceEnemyIndex].X) + (Y - enemies[minDistanceEnemyIndex].Y) * (Y - enemies[minDistanceEnemyIndex].Y);
+                int minSquareDistance = (X - enemies[minDistanceEnemyIndex].X) * (X - enemies[minDistanceEnemyIndex].X) + (Y - enemies[minDistanceEnemyIndex].Y) * (Y - enemies[minDistanceEnemyIndex].Y);
 
-                for (int i = 0; i < enemies.Count; i++)
+                for (int i = 1; i < enemies.Count; i++)
                 {
                     int squareDistance = (X - enemies[i].X) * (X - enemies[i].X) + (Y - enemies[i].Y) * (Y - enemies[i].Y); ;
-                    if (squareDistance < minDistanceEnemyIndex)
+                    if (squareDistance < minSquareDistance)
                     {
                         minDistanceEnemyIndex = i;
                     }

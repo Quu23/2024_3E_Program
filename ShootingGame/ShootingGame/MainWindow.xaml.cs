@@ -314,22 +314,22 @@ namespace ShootingGame
             player.Action();
 
             //todo:敵の配置とか種類をいじるならここを修正。
-            //if (enemies.Count <= 0)
-            //{
-            //    int dw = (int)((Width - 200)/ 5.0 );
-            //    enemies.Add(new ShotgunEnemy(dw, 10, 1));
-            //    enemies.Add(new StraightEnemy(2*dw, 10, 1));
-            //    enemies.Add(new SplashEnemy(3*dw, 10, 1));
-            //    enemies.Add(new MissileEnemy(4*dw, 10, 1));
-            //    enemies.Add(new BigEnemy(5*dw, 10, 1));
-
-            //}
-
-
-            if (enemies.Count < 1)
+            if (enemies.Count <= 0)
             {
-                enemies.Add(new CycloneEnemy(800, 10, 1));
+                int dw = (int)((Width - 200) / 5.0);
+                enemies.Add(new ShotgunEnemy(dw, 10, 1));
+                enemies.Add(new StraightEnemy(2 * dw, 10, 1));
+                enemies.Add(new SplashEnemy(3 * dw, 10, 1));
+                enemies.Add(new MissileEnemy(4 * dw, 10, 1));
+                enemies.Add(new BigEnemy(5 * dw, 10, 1));
+
             }
+
+
+            //if (enemies.Count < 2)
+            //{
+            //    enemies.Add(new CycloneEnemy(800, 10, 1));
+            //}
 
             //for (int i=0;i<stageData.Count;i++)
             //{
