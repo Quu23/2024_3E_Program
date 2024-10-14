@@ -32,6 +32,8 @@ namespace ShootingGame
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri P_BULLET_URI          = new Uri("../../../img/Player_Bullet.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET_SMALL_URI = new Uri("../../../img/Player_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET_BIG_URI = new Uri("../../../img/Player_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
 
         //enemy
         public static readonly Uri STRAIGHT_ENEMY_URI    = new Uri("../../../img/StraightEnemy.png", UriKind.RelativeOrAbsolute);
@@ -57,6 +59,7 @@ namespace ShootingGame
         public static readonly Uri SHOT_RATE_UP_ICON_URI   = new Uri("../../../img/Icon_Rateup.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Ratedown.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri INCINCIBLE_ICON_URI     = new Uri("../../../img/Icon_Invincible.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Scoreboost.png", UriKind.RelativeOrAbsolute);
 
 
 

@@ -19,7 +19,7 @@
         {
             return
             [
-                new(CenterXForShotBullet ,Y ,Bullet.RADIUS_FOR_MEDIUM, 10,180, 1 ,Id.ENEMY)
+                new(CenterXForShotBullet ,Y ,Bullet.RADIUS_FOR_MEDIUM, 10,180, 1 ,EnemyTypes.SNAKE_ENEMY)
             ];
         }
 

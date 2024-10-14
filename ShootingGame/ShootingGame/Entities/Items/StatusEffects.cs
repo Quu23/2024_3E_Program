@@ -10,7 +10,7 @@
         SPEED_DOWN             = -1,
         SHOT_RATE_UP           =  2,
         SHOT_RATE_DOWN         = -2,
-        INCREACE_RATE_OF_SCORE =  3,
+        SCORE_BOOST            =  3,
         INVINCIBLE             =  4,
         DESTROY_MODE           =  5,
     }

@@ -18,9 +18,9 @@
         {
             var bullets = new List<Bullet>()
             {
-                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 150 , 1,Id.ENEMY),
-                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 180 , 1,Id.ENEMY),
-                new(CenterXForShotBullet ,Y , bulletRadius , 8 ,-150 , 1,Id.ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 150 , 1,EnemyTypes.SHOTGUN_ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 , 180 , 1,EnemyTypes.SHOTGUN_ENEMY),
+                new(CenterXForShotBullet ,Y , bulletRadius , 8 ,-150 , 1,EnemyTypes.SHOTGUN_ENEMY),
             };
 
             return bullets;

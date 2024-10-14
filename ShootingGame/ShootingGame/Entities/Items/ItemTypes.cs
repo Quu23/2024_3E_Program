@@ -1,6 +1,6 @@
 ﻿namespace ShootingGame.Entities.Items
 {
-    enum ItemTypes
+    public enum ItemTypes
     {
         CLEAR_ENEMIES_ITEM,
         DESTROY_ITEM,

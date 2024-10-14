@@ -20,12 +20,12 @@
             var bullets = new List<Bullet>()
             {
                 // todo:X,Yの微調整
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,   0, 1, Id.ENEMY),
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,  60, 1, Id.ENEMY),
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 120, 1, Id.ENEMY),
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 180, 1, Id.ENEMY),
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 240, 1, Id.ENEMY),
-                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 300, 1, Id.ENEMY)
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,   0, 1, EnemyTypes.HEXAGON_ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10,  60, 1, EnemyTypes.HEXAGON_ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 120, 1, EnemyTypes.HEXAGON_ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 180, 1, EnemyTypes.HEXAGON_ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 240, 1, EnemyTypes.HEXAGON_ENEMY),
+                new(CenterXForShotBullet, Y, bulletRadius, Speed+10, 300, 1, EnemyTypes.HEXAGON_ENEMY)
             };
 
             return bullets;

@@ -31,7 +31,19 @@ namespace ShootingGame
 
         //プレイヤー
         public static readonly BitmapImage PLAYER_IMAGE             = new BitmapImage(UtilityUris.PLAYER_URI);
-        public static readonly BitmapImage PLAYER_BULLET_IMAGE      = new BitmapImage(UtilityUris.P_BULLET_URI);
+
+        /// <summary>
+        /// プレイヤーの弾 Sサイズ :  8x 8 (r=4)
+        /// </summary>
+        public static readonly BitmapImage PLAYER_BULLET_SMALL_IMAGE = new BitmapImage(UtilityUris.P_BULLET_SMALL_URI);
+        /// <summary>
+        /// プレイヤーの弾 Mサイズ : 16x16 (r=8)
+        /// </summary>
+        public static readonly BitmapImage PLAYER_BULLET_IMAGE = new BitmapImage(UtilityUris.P_BULLET_URI);
+        /// <summary>
+        /// プレイヤーの弾 Sサイズ : 32x32 (r=16)
+        /// </summary>
+        public static readonly BitmapImage PLAYER_BULLET_BIG_IMAGE = new BitmapImage(UtilityUris.P_BULLET_BIG_URI);
 
         //敵キャラ
         public static readonly BitmapImage STRAIGHT_ENEMY_IMAGE     = new BitmapImage(UtilityUris.STRAIGHT_ENEMY_URI);
@@ -51,11 +63,11 @@ namespace ShootingGame
         /// </summary>
         public static readonly BitmapImage ENEMY_BULLET_SMALL_IMAGE = new BitmapImage(UtilityUris.E_BULLET_SMALL_URI);
         /// <summary>
-        /// 敵の弾 Sサイズ : 16x16 (r=8)
+        /// 敵の弾 Mサイズ : 16x16 (r=8)
         /// </summary>
         public static readonly BitmapImage ENEMY_BULLET_IMAGE       = new BitmapImage(UtilityUris.E_BULLET_URI);
         /// <summary>
-        /// 敵の弾 Sサイズ : 32x32 (r=16)
+        /// 敵の弾 Lサイズ : 32x32 (r=16)
         /// </summary>
         public static readonly BitmapImage ENEMY_BULLET_BIG_IMAGE   = new BitmapImage(UtilityUris.E_BULLET_BIG_URI);
 
@@ -65,6 +77,7 @@ namespace ShootingGame
         public static readonly BitmapImage SHOT_RATE_UP_ICON_IMAGE   = new BitmapImage(UtilityUris.SHOT_RATE_UP_ICON_URI);
         public static readonly BitmapImage SHOT_RATE_DOWN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ICON_URI);
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
+        public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
 
     }
 }

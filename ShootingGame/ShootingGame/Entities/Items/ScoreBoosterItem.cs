@@ -1,16 +1,10 @@
 ﻿using ShootingGame.Entities.Planes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace ShootingGame.Entities.Items
 {
     class ScoreBoosterItem : TransientItem
     {
-        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, Images.SCORE_BOOSTER_ITEM_IMAGE,StatusEffects.INCREACE_RATE_OF_SCORE, 15)
+        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, Images.SCORE_BOOSTER_ITEM_IMAGE,StatusEffects.SCORE_BOOST, 30)
         {
         }
 
