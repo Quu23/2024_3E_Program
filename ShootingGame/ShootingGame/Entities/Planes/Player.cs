@@ -25,7 +25,7 @@ namespace ShootingGame.Entities.Planes
 
         private int weapon;
 
-        public Player(string name) : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 30)
+        public Player(string name) : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -288,7 +288,7 @@ namespace ShootingGame.Entities.Planes
 
         public BoundBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_BIG, speed, degree, damage, EnemyTypes.PLAYER)
         {
-            boundCounter = 2;
+            boundCounter = 1;
         }
 
         public override void Action()

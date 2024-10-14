@@ -2,7 +2,7 @@
 {
     class StraightEnemy : Enemy
     {
-        public StraightEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 2, Images.STRAIGHT_ENEMY_IMAGE, /*LV=*/level, /*hp=*/1 + level, Bullet.RADIUS_FOR_MEDIUM, 100)
+        public StraightEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 2, Images.STRAIGHT_ENEMY_IMAGE, /*LV=*/level, /*hp=*/1 + level, Bullet.RADIUS_FOR_MEDIUM, 200)
         {
         }
 
@@ -15,7 +15,7 @@
         {
             var bullets = new List<Bullet>
             {
-                new(CenterXForShotBullet, Y, Bullet.RADIUS_FOR_MEDIUM, Level+15, 180, Level, EnemyTypes.STRAIGHT_ENEMY)
+                new(CenterXForShotBullet, Y, Bullet.RADIUS_FOR_MEDIUM, Level+5, 180, Level, EnemyTypes.STRAIGHT_ENEMY)
             };
             return bullets;
         }
