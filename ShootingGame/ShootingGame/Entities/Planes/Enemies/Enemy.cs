@@ -24,7 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies
                 {  5, CLEAR_ENEMIES_ITEM},
                 {  1,       DESTROY_ITEM},
                 { 10,            EXP_ORB},
-                { 50,       HEALING_ITEM},
+                { 70,       HEALING_ITEM},
                 {  7,    INVINCIBLE_ITEM},
                 { 20, SCORE_BOOSTER_ITEM},
                 { 30,  SHOT_RATE_UP_ITEM},
