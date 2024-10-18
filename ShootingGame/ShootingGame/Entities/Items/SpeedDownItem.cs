@@ -12,7 +12,7 @@ namespace ShootingGame.Entities.Items
         protected override void Effect(Player player)
         {
             // Speedが負になることもあるけど、その場合上下左右のキーが逆になるからむしろ面白いかも。
-            player.defaultSpeed -= 2;
+            player.defaultSpeed -= (int)(4.9);
             player.Speed = player.defaultSpeed;
         }
 

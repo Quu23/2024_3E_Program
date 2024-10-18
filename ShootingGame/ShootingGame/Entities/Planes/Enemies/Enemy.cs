@@ -38,7 +38,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         public Enemy(int x, int y, int radius, int speed, BitmapImage img, int level, int hp, int bulletRadius, int maxBulletCoolTime) : base(x, y, radius, speed, img, level, hp, bulletRadius, maxBulletCoolTime)
         {
-            random = new Random(MainWindow.score);
+            random = new Random();
 
             SortedDictionary<int, ItemTypes> weightsProb = GetWeightedProbsOfDropItem;
 

@@ -557,7 +557,8 @@ namespace ShootingGame
                                     $"fps = {1.0 / spf.TotalSeconds}\n" +
                                     $"Speed = {player.Speed}\n" +
                                     $"BGM Muted = {musicPlayer.IsMuted}\n" +
-                                    $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}"
+                                    $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n" +
+                                    $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE

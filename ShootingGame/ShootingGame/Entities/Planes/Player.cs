@@ -263,8 +263,10 @@ namespace ShootingGame.Entities.Planes
             //bound
             if (Weapon == 2)
             {
-                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
+                //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
+                //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
+                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, Level));
+                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, Level));
                 return;
             }
 
@@ -281,12 +283,14 @@ namespace ShootingGame.Entities.Planes
 
     internal class BoundBullet : Bullet
     {
-        public static int LEFT_DEGREE  = -30;
-        public static int RIGHT_DEGREE =  30;
+        //public static int LEFT_DEGREE  = -20;
+        //public static int RIGHT_DEGREE =  20;
+        public static int WIDE_LEFT_DEGREE = -65;
+        public static int WIDE_RIGHT_DEGREE = 65;
 
         int boundCounter;
 
-        public BoundBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_BIG, speed, degree, damage, EnemyTypes.PLAYER)
+        public BoundBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, damage, EnemyTypes.PLAYER)
         {
             boundCounter = 1;
         }

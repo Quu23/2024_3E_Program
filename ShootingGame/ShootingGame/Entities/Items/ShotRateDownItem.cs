@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Items
 
         protected override void Effect(Player player)
         {
-            player.DecreaceBulletCoolTime /= 3;
+            player.DecreaceBulletCoolTime = 0;
         }
 
         protected override void Move()
