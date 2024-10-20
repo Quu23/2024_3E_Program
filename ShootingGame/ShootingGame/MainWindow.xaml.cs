@@ -313,40 +313,44 @@ namespace ShootingGame
 
             player.Action();
 
-            ////todo:敵の配置とか種類をいじるならここを修正。
+            //todo:敵の配置とか種類をいじるならここを修正。
             //if (enemies.Count <= 0)
             //{
             //    int dw = (int)((Width - 200) / 5.0);
-            //    enemies.Add(new ShotgunEnemy(dw, 10, 1));
-            //    enemies.Add(new StraightEnemy(2 * dw, 10, 1));
+            //    enemies.Add(new SplitEnemy(dw, 10, 1));
+            //    enemies.Add(new CycloneEnemy(2 * dw, 10, 1));
             //    enemies.Add(new SplashEnemy(3 * dw, 10, 1));
-            //    enemies.Add(new MissileEnemy(4 * dw, 10, 1));
+            //    enemies.Add(new HexagonEnemy(4 * dw, 10, 1));
             //    enemies.Add(new BigEnemy(5 * dw, 10, 1));
 
             //}
 
+            if (enemies.Count < 1)
+            {
+                enemies.Add(new LaserEnemy(500,0,1));
+            }
 
             //if (enemies.Count < 2)
             //{
             //    enemies.Add(new CycloneEnemy(800, 10, 1));
             //}
 
-            for (int i = 0; i < stageData.Count; i++)
-            {
-                var pair = stageData[i];
+            //for (int i = 0; i < stageData.Count; i++)
+            //{
+            //    var pair = stageData[i];
 
-                if (stagePosition < pair.Item1) break;
+            //    if (stagePosition < pair.Item1) break;
 
-                if (pair.Item2 == 0)
-                {
-                    enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3,pair.Item4, 0, 1));                  
-                }
-                else
-                {
-                    items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
-                }
-                stageData.Remove(pair);
-            }
+            //    if (pair.Item2 == 0)
+            //    {
+            //        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3,pair.Item4, 0, 1));                  
+            //    }
+            //    else
+            //    {
+            //        items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
+            //    }
+            //    stageData.Remove(pair);
+            //}
 
             //todo:アイテムの位置とか種類をいじるならここ。
             //if (items.Count <= 0)
