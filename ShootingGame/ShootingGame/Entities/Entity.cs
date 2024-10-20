@@ -45,7 +45,7 @@ namespace ShootingGame.Entities
 
         public bool IsOutOfWindow()
         {
-            if (X < -Radius*2 || X > SystemParameters.PrimaryScreenWidth || Y < -Radius*2 || Y > SystemParameters.PrimaryScreenHeight) return true;
+            if (X < App.window.moveableLeftSidePosition - Radius * 2 || X > App.window.moveableRightSidePosition || Y < -Radius*2 || Y > SystemParameters.PrimaryScreenHeight) return true;
             return false;
         }
 

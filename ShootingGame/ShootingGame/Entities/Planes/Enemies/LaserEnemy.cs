@@ -10,14 +10,14 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         protected override int GetEXP()
         {
-            return 100;
+            return 10;
         }
 
         protected override List<Bullet> ShotBullet()
         {
             return new List<Bullet>()
             {
-                new LaserBullet(CenterXForShotBullet ,Y + Radius, LaserBullet.LEFT_SIDE_DEGREE,bulletRadius)
+                new LaserBullet(CenterXForShotBullet ,Y + Radius, LaserBullet.STRAIGHT_DEGREE,bulletRadius)
             };
         }
         protected override void Move()

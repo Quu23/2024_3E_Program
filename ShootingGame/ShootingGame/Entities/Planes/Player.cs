@@ -25,7 +25,7 @@ namespace ShootingGame.Entities.Planes
 
         private int weapon;
 
-        public Player(string name) : base(/*x=*/150, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
+        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -187,18 +187,18 @@ namespace ShootingGame.Entities.Planes
 
         protected override void Move()
         {
-            if (X > 0 && MainWindow.isKeyPresseds[1])
+            if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1])
             {
                 X -= Speed;
             }
-            if (X < 0) X = 0;
+            if (X < App.window.moveableLeftSidePosition) X = App.window.moveableLeftSidePosition;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            if (X + Img.Width < SystemParameters.PrimaryScreenWidth && MainWindow.isKeyPresseds[3])
+            if (X + Img.Width < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if (X + Img.Width > SystemParameters.PrimaryScreenWidth) X = (int)(SystemParameters.PrimaryScreenWidth - Img.Width);
+            if (X + Img.Width > App.window.moveableRightSidePosition) X = (int)(App.window.moveableRightSidePosition - Img.Width);
 
             if (Y > 0 && MainWindow.isKeyPresseds[0])
             {
@@ -307,7 +307,7 @@ namespace ShootingGame.Entities.Planes
                     base.Action();
                     boundCounter--;
                 }
-                if (X <= 0 || X >= SystemParameters.PrimaryScreenWidth)
+                if (X <= App.window.moveableLeftSidePosition || X >= App.window.moveableRightSidePosition)
                 {
                     degree *= -1;
                     base.Action();

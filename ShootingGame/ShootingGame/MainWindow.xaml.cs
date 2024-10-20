@@ -21,6 +21,12 @@ namespace ShootingGame
     {
         public static WindowMode windowMode;
 
+        //　画面横の黒画面用
+        public int moveableLeftSidePosition;
+        public int moveableRightSidePosition;
+        public Rect unmoveableAreaRect;
+        public Pen  unmoveableAreaPen;
+
 
         private static string message = "";
 
@@ -90,9 +96,19 @@ namespace ShootingGame
 
             InitializeComponent();
 
+            Loaded += (sender, e) =>
+            {
+                moveableLeftSidePosition = (int)(Width / 4);
+                moveableRightSidePosition = (int)(Width - moveableLeftSidePosition);
+                unmoveableAreaRect = new Rect(0, 0, moveableLeftSidePosition, Height - 15);
+            };
+            unmoveableAreaPen = new Pen(Brushes.Yellow, 1);
+
+
             windowMode = WindowMode.START;
 
             player = new Player("ななし");
+            Debug.WriteLine(player.X);
 
             //タイマーの設定 
             updateTimer = new DispatcherTimer();
@@ -275,7 +291,10 @@ namespace ShootingGame
         {
             if (isKeyPresseds[4]) { 
                 windowMode = WindowMode.STAGE1;
-                if(message.Length > 0)player = new Player(message);
+                if (message.Length > 0)
+                {
+                    player = new Player(message);
+                }
             }
         }
 
@@ -496,6 +515,11 @@ namespace ShootingGame
 
         private void DrawGameWindow(DrawingContext drawingContext)
         {
+
+            drawingContext.DrawRectangle(Brushes.Black, unmoveableAreaPen, unmoveableAreaRect);
+            unmoveableAreaRect.X = moveableRightSidePosition;
+            drawingContext.DrawRectangle(Brushes.Black, unmoveableAreaPen, unmoveableAreaRect);
+            unmoveableAreaRect.X = 0;
 
             drawingContext.DrawImage(player.Img, player.Rect);
             if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
