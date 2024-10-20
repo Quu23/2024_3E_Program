@@ -10,6 +10,7 @@ using ShootingGame.Entities.Planes;
 using ShootingGame.Entities.Planes.Enemies;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 
 namespace ShootingGame
 {
@@ -368,7 +369,8 @@ namespace ShootingGame
 
             for (int bi = bullets.Count; bi > 0; bi--)
             {
-                Bullet tmp_bullet = bullets[bi - 1];
+
+                Bullet tmp_bullet = bullets[bi - 1]; Debug.WriteLine($"{bi}:{tmp_bullet.ToString()}");
                 tmp_bullet.Action();
 
                 if (tmp_bullet.IsOutOfWindow())
