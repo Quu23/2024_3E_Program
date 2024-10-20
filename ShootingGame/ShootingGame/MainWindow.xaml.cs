@@ -277,6 +277,9 @@ namespace ShootingGame
                     break;
                 case WindowMode.LANKING:
                     break;
+                case WindowMode.DEBUG:
+                    DebugModeLoop();
+                    break;
             }
 
             // 画面の再描画
@@ -289,13 +292,52 @@ namespace ShootingGame
 
         private void StartLoop()
         {
-            if (isKeyPresseds[4]) { 
+            if (isKeyPresseds[4]) {
+                if (message.Equals("DEBUG"))
+                {
+                    windowMode = WindowMode.DEBUG;
+                    player = new Player("DebugMode");
+                    player.LevelUp(30);
+                    return;
+                }
+
                 windowMode = WindowMode.STAGE1;
                 if (message.Length > 0)
                 {
                     player = new Player(message);
                 }
             }
+        }
+
+        private void DebugModeLoop()
+        {
+            if (enemies.Count <= 0)
+            {
+                int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
+
+                int basicX = moveableLeftSidePosition - 50;
+
+                enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
+                enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
+                enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
+                enemies.Add(new HexagonEnemy(4 * dw + basicX, 10, 1));
+                enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+
+            }
+
+            //if (items.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 200) / 7.0);
+            //    items.Add(new ClearEnemiesItem(dw, 30));
+            //    items.Add(new ExpOrb(2 * dw, 30));
+            //    items.Add(new HealingItem(3 * dw, 30));
+            //    items.Add(new InvincibleItem(4 * dw, 30));
+            //    items.Add(new ShotRateDownItem(5 * dw, 30));
+            //    items.Add(new SpeedDownItem(6 * dw, 30));
+            //    items.Add(new DestroyItem(7 * dw, 30));
+            //}
+
+            BasicGameLogic();
         }
 
         private void GameoverLoop()
@@ -310,6 +352,29 @@ namespace ShootingGame
 
         // TODO:ゲームループの実装
         private void GameLoop()
+        {
+
+            for (int i = 0; i < stageData.Count; i++)
+            {
+                var pair = stageData[i];
+
+                if (stagePosition < pair.Item1) break;
+
+                if (pair.Item2 == 0)
+                {
+                    enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, 1));
+                }
+                else
+                {
+                    items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
+                }
+                stageData.Remove(pair);
+            }
+
+            BasicGameLogic();    
+        }
+
+        private void BasicGameLogic()
         {
             stagePosition++;
 
@@ -332,59 +397,6 @@ namespace ShootingGame
             }
 
             player.Action();
-
-            //todo:敵の配置とか種類をいじるならここを修正。
-            //if (enemies.Count <= 0)
-            //{
-            //    int dw = (int)((Width - 200) / 5.0);
-            //    enemies.Add(new SplitEnemy(dw, 10, 1));
-            //    enemies.Add(new CycloneEnemy(2 * dw, 10, 1));
-            //    enemies.Add(new SplashEnemy(3 * dw, 10, 1));
-            //    enemies.Add(new HexagonEnemy(4 * dw, 10, 1));
-            //    enemies.Add(new BigEnemy(5 * dw, 10, 1));
-
-            //}
-
-            if (enemies.Count < 1)
-            {
-                enemies.Add(new LaserEnemy(500,0,1));
-            }
-
-            //if (enemies.Count < 2)
-            //{
-            //    enemies.Add(new CycloneEnemy(800, 10, 1));
-            //}
-
-            //for (int i = 0; i < stageData.Count; i++)
-            //{
-            //    var pair = stageData[i];
-
-            //    if (stagePosition < pair.Item1) break;
-
-            //    if (pair.Item2 == 0)
-            //    {
-            //        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3,pair.Item4, 0, 1));                  
-            //    }
-            //    else
-            //    {
-            //        items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
-            //    }
-            //    stageData.Remove(pair);
-            //}
-
-            //todo:アイテムの位置とか種類をいじるならここ。
-            //if (items.Count <= 0)
-            //{
-            //    int dw = (int)((Width - 200) / 7.0);
-            //    items.Add(new ClearEnemiesItem(dw, 30));
-            //    items.Add(new ExpOrb(2 * dw, 30));
-            //    items.Add(new HealingItem(3 * dw, 30));
-            //    items.Add(new InvincibleItem(4 * dw, 30));
-            //    items.Add(new ShotRateDownItem(5 * dw, 30));
-            //    items.Add(new SpeedDownItem(6 * dw, 30));
-            //    items.Add(new DestroyItem(7 * dw, 30));
-            //}
-
 
             for (int bi = bullets.Count; bi > 0; bi--)
             {
@@ -415,7 +427,7 @@ namespace ShootingGame
 
                         if (tmp_enemy.Hp <= 0)
                         {
-                            tmp_enemy.DeadAction(player,enemies,items);
+                            tmp_enemy.DeadAction(player, enemies, items);
                         }
                     }
                 }
@@ -477,6 +489,7 @@ namespace ShootingGame
                         break;
                     case WindowMode.STAGE1:
                     case WindowMode.STAGE1_BOSS:
+                    case WindowMode.DEBUG:
                         DrawGameWindow(drawingContext);
                         break;
                     case WindowMode.STAGE2:

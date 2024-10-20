@@ -12,5 +12,6 @@
         GAMEOVER,
         GAMECLEAR,
         LANKING,
+        DEBUG,
     }
 }

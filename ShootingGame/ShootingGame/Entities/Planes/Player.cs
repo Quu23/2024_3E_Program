@@ -89,6 +89,13 @@ namespace ShootingGame.Entities.Planes
             Hp += 2;
         }
 
+        public void LevelUp(int count)
+        {
+            if (count == 0) return;
+            LevelUp();
+            LevelUp(count-1);
+        }
+
         public void HeelFullOfHp()
         {
             Hp = MAX_HP;
