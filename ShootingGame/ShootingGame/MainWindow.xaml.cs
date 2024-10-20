@@ -320,7 +320,7 @@ namespace ShootingGame
                 enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
                 enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
                 enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-                enemies.Add(new HexagonEnemy(4 * dw + basicX, 10, 1));
+                enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
 
             }

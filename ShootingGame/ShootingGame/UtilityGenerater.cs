@@ -33,6 +33,8 @@ namespace ShootingGame
                     return new TurnBackEnemy(x, y, level);
                 case EnemyTypes.CYCLONE_ENEMY:
                     return new CycloneEnemy(x, y, level);
+                case EnemyTypes.LASER_ENEMY:
+                    return new LaserEnemy(x, y, level);
                 default:
                     throw new ArgumentException($"存在しないEnemyTypeです。enemyType={enemyType}");
             }

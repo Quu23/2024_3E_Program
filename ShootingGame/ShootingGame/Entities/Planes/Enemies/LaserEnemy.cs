@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class LaserEnemy : Enemy
     {
-        public LaserEnemy(int x, int y, int level) : base(x, y, 20, 1, Images.STRAIGHT_ENEMY_IMAGE, level, 1, Bullet.RADIUS_FOR_BIG, 100)
+        public LaserEnemy(int x, int y, int level) : base(x, y, 20, 1, Images.LASER_ENEMY_IMAGE, level, 1, Bullet.RADIUS_FOR_BIG, 100)
         {
         }
 
