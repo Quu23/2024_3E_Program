@@ -25,7 +25,7 @@ namespace ShootingGame.Entities.Planes
 
         private int weapon;
 
-        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/8, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
+        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             //最初は5にする？
             MAX_HP = 5;
@@ -201,11 +201,11 @@ namespace ShootingGame.Entities.Planes
             if (X < App.window.moveableLeftSidePosition) X = App.window.moveableLeftSidePosition;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            if (X + Img.Width < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3])
+            if (X + Radius * 2 < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3])
             {
                 X += Speed;
             }
-            if (X + Img.Width > App.window.moveableRightSidePosition) X = (int)(App.window.moveableRightSidePosition - Img.Width);
+            if (X + Radius * 2 > App.window.moveableRightSidePosition) X = (int)(App.window.moveableRightSidePosition - Radius * 2);
 
             if (Y > 0 && MainWindow.isKeyPresseds[0])
             {
@@ -213,11 +213,11 @@ namespace ShootingGame.Entities.Planes
             }
             if (Y < 0) Y = 0;
 
-            if (Y + Img.Height < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
+            if (Y + Radius * 2 < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
             {
                 Y += Speed;
             }
-            if (Y + Img.Height > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Img.Height);
+            if (Y + Radius * 2 > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Radius * 2);
         }
 
 
@@ -229,8 +229,8 @@ namespace ShootingGame.Entities.Planes
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
             {
-                Bullet destroyBullet = new Bullet(CenterX, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER); 
-                destroyBullet.Img = Images.DESTROY_ITEM_IMAGE;  
+                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER); 
+                destroyBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;  
                 bullets.Add(destroyBullet);
             }
             else

@@ -45,6 +45,8 @@ namespace ShootingGame
         /// </summary>
         public static readonly BitmapImage PLAYER_BULLET_BIG_IMAGE = new BitmapImage(UtilityUris.P_BULLET_BIG_URI);
 
+        public static readonly BitmapImage PLAYER_BULLET_DESTROY_IMAGE = new BitmapImage(UtilityUris.P_BULLET_DESTROY_URI);
+
         //敵キャラ
         public static readonly BitmapImage STRAIGHT_ENEMY_IMAGE     = new BitmapImage(UtilityUris.STRAIGHT_ENEMY_URI);
         public static readonly BitmapImage SNAKE_ENEMY_IMAGE        = new BitmapImage(UtilityUris.SNAKE_ENEMY_URI);

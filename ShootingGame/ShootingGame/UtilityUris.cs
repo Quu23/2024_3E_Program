@@ -32,8 +32,9 @@ namespace ShootingGame
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri P_BULLET_URI          = new Uri("../../../img/Player_Bullet.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri P_BULLET_SMALL_URI = new Uri("../../../img/Player_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri P_BULLET_BIG_URI = new Uri("../../../img/Player_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET_SMALL_URI    = new Uri("../../../img/Player_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET_BIG_URI      = new Uri("../../../img/Player_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri P_BULLET_DESTROY_URI  = new Uri("../../../img/Player_Destroy_Bullet.png", UriKind.RelativeOrAbsolute);
 
         //enemy
         public static readonly Uri STRAIGHT_ENEMY_URI    = new Uri("../../../img/StraightEnemy.png", UriKind.RelativeOrAbsolute);
