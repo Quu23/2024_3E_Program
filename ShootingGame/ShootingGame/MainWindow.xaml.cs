@@ -298,6 +298,24 @@ namespace ShootingGame
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
                     player.LevelUp(30);
+
+                    int w = 50;
+
+                    enemies.Add(new BigEnemy(moveableLeftSidePosition, 0, 1));
+                    enemies.Add(new CycloneEnemy(enemies[0].X + enemies[0].Radius + w, 0 ,1));
+                    enemies.Add(new GoldenEnemy(enemies[1].X + enemies[1].Radius + w, 0 ,1));
+                    enemies.Add(new HexagonEnemy(enemies[2].X + enemies[2].Radius + w, 0 ,1));
+                    enemies.Add(new LaserEnemy(enemies[3].X + enemies[3].Radius + w, 0 ,1));
+                    enemies.Add(new MissileEnemy(enemies[4].X + enemies[4].Radius + w, 0 ,1));
+                    enemies.Add(new ShotgunEnemy(enemies[5].X + enemies[5].Radius + w, 0 ,1));
+                    enemies.Add(new SnakeEnemy(enemies[6].X + enemies[6].Radius + w, 0 ,1));
+                    enemies.Add(new SplashEnemy(enemies[7].X + enemies[7].Radius + w, 0 ,1));
+                    enemies.Add(new SplitEnemy(enemies[8].X + enemies[8].Radius + w, 0 ,1));
+                    enemies.Add(new StraightEnemy(enemies[9].X + enemies[9].Radius + w, 0 ,1));
+                    enemies.Add(new TurnBackEnemy(enemies[10].X + enemies[10].Radius + w, 0 ,1));
+
+                    //player.status[StatusEffects.INVINCIBLE] = 9999;
+                    
                     return;
                 }
 
@@ -311,19 +329,19 @@ namespace ShootingGame
 
         private void DebugModeLoop()
         {
-            if (enemies.Count <= 0)
-            {
-                int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
+            //if (enemies.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
 
-                int basicX = moveableLeftSidePosition - 50;
+            //    int basicX = moveableLeftSidePosition - 50;
 
-                enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
-                enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
-                enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-                enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
-                enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+            //    enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
+            //    enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
+            //    enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
+            //    enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
+            //    enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
 
-            }
+            //}
 
             //if (items.Count <= 0)
             //{
