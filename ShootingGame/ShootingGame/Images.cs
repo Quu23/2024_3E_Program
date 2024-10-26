@@ -83,11 +83,11 @@ namespace ShootingGame
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
 
-        //武器アイコン(readonlyにしないのは透明度Opacityを変えるから)
-        public static BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
-        public static BitmapImage BOUND_ICON_IMAGE   = new BitmapImage(UtilityUris.BOUND_ICON_URI);
-        public static BitmapImage SHOTGUN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOTGUN_ICON_URI);
-        public static BitmapImage HOMING_ICON_IMAGE  = new BitmapImage(UtilityUris.HOMING_ICON_URI);
+        //武器アイコン
+        public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
+        public static readonly BitmapImage BOUND_ICON_IMAGE   = new BitmapImage(UtilityUris.BOUND_ICON_URI);
+        public static readonly BitmapImage SHOTGUN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOTGUN_ICON_URI);
+        public static readonly BitmapImage HOMING_ICON_IMAGE  = new BitmapImage(UtilityUris.HOMING_ICON_URI);
 
     }
 }
