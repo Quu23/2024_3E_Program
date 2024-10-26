@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class TurnBackEnemy : Enemy
     {
-        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUN_BACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 70)
+        public TurnBackEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.TRUN_BACK_ENEMY_IMAGE, /*LV=*/level, /*hp=*/2 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 70)
         {
         }
 

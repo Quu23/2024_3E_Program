@@ -85,8 +85,9 @@ namespace ShootingGame.Entities.Planes
         public void LevelUp()
         {
             Level++;
-            MAX_HP += 2;
-            Hp += 2;
+            MAX_HP += 1;
+            Hp += 1;
+            DecreaceBulletCoolTime += Level / 5;
         }
 
         public void LevelUp(int count)
@@ -244,7 +245,7 @@ namespace ShootingGame.Entities.Planes
         {
             if (Weapon == 0)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, Level, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
                 return;
             }
 
@@ -257,8 +258,8 @@ namespace ShootingGame.Entities.Planes
                 {
                     if (Level >= i)
                     {
-                        Bullet leftBullet  = new Bullet(CenterX - Radius, Y, bulletRadius, Speed + 5, -30 * (i / 5 + 1), Level, Enemies.EnemyTypes.PLAYER);
-                        Bullet rightBullet = new Bullet(CenterX + Radius, Y, bulletRadius, Speed + 5,  30 * (i / 5 + 1), Level, Enemies.EnemyTypes.PLAYER);
+                        Bullet leftBullet  = new Bullet(CenterX - Radius, Y, bulletRadius, Speed + 5, -30 * (i / 5 + 1), 2, Enemies.EnemyTypes.PLAYER);
+                        Bullet rightBullet = new Bullet(CenterX + Radius, Y, bulletRadius, Speed + 5,  30 * (i / 5 + 1), 2, Enemies.EnemyTypes.PLAYER);
 
                         bullets.Add(leftBullet);
                         bullets.Add(rightBullet);
@@ -272,15 +273,15 @@ namespace ShootingGame.Entities.Planes
             {
                 //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
                 //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, Level));
+                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 2));
+                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 2));
                 return;
             }
 
             //homing
             if (Weapon == 3)
             {
-                bullets.Add(new HomingBullet(CenterXForShotBullet, Y, Speed + 10, 0, Level));
+                bullets.Add(new HomingBullet(CenterXForShotBullet, Y, Speed + 10, 0));
                 return;
             }
 
@@ -328,7 +329,7 @@ namespace ShootingGame.Entities.Planes
     {
         private int homingTimer;
 
-        public HomingBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, damage, EnemyTypes.PLAYER)
+        public HomingBullet(int x, int y, int speed, int degree) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, 1, EnemyTypes.PLAYER)
         {
             homingTimer = 100;
         }

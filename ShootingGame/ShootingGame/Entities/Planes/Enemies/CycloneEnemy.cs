@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Planes.Enemies
     class CycloneEnemy : Enemy
     {
 
-        public CycloneEnemy(int x, int y, int level) : base(x, y, /*r=*/16, /*speed=*/3, Images.CYCLONE_ENEMY_IMAGE, level, level * 3, Bullet.RADIUS_FOR_MEDIUM, 200)
+        public CycloneEnemy(int x, int y, int level) : base(x, y, /*r=*/16, /*speed=*/3, Images.CYCLONE_ENEMY_IMAGE, level, level * 2, Bullet.RADIUS_FOR_MEDIUM, 400)
         {
         }
 
@@ -52,7 +52,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         CycloneEnemy parent;
 
-        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, CycloneEnemy en) : base(x, y, radius, 5, first_degree, damage, EnemyTypes.CYCLONE_ENEMY)
+        public CycloneBullet(int x, int y, int radius, int first_degree, int damage, CycloneEnemy en) : base(x, y, radius, 4, first_degree, damage, EnemyTypes.CYCLONE_ENEMY)
         {
             degree = 1;
             moveTime = 0;
@@ -81,9 +81,9 @@ namespace ShootingGame.Entities.Planes.Enemies
 
             degree+=5;
 
-            if ((degree > 90 && Speed >= 5 ) || (degree > 135 && Speed >= 4) || (degree > 150 && Speed >= 3) || (degree > 180 && Speed >= 2))
+            if ((degree > 90 && Speed >= 4 ) || (degree > 150 && Speed >= 3) || (degree > 180 && Speed >= 2))
             {
-                Speed--;
+                Speed = Speed-1;
             }
 
             ChangeRect(X, Y);

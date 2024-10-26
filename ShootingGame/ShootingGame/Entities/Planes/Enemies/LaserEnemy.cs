@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class LaserEnemy : Enemy
     {
-        public LaserEnemy(int x, int y, int level) : base(x, y, 20, 1, Images.LASER_ENEMY_IMAGE, level, 1, Bullet.RADIUS_FOR_BIG, 100)
+        public LaserEnemy(int x, int y, int level) : base(x, y, 20, 1, Images.LASER_ENEMY_IMAGE, level, 1, Bullet.RADIUS_FOR_BIG, 200)
         {
         }
 
@@ -15,14 +15,17 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         protected override List<Bullet> ShotBullet()
         {
-            return new List<Bullet>()
+            var bullets = new List<Bullet>()
             {
-                new LaserBullet(CenterXForShotBullet ,Y + Radius, LaserBullet.STRAIGHT_DEGREE,bulletRadius)
+                new LaserBullet(CenterXForShotBullet ,Y + Radius, LaserBullet.STRAIGHT_DEGREE,bulletRadius),
+                new Bullet(CenterXForShotBullet, Y+700,bulletRadius,80,LaserBullet.STRAIGHT_DEGREE,App.window.player.Hp/2,EnemyTypes.LASER_ENEMY)
             };
+            bullets[1].Img = null;
+            return bullets;
         }
         protected override void Move()
         {
-            X = X + Speed;
+            Y = Y-Speed;
         }
     }
 
@@ -32,12 +35,12 @@ namespace ShootingGame.Entities.Planes.Enemies
         public static readonly int LEFT_SIDE_DEGREE = 270;
         public static readonly int RIGHT_SIDE_DEGREE = 90;
 
-        public LaserBullet(int x, int y, int degree,int radius) : base(x, y, radius, 80, degree, 10000000, EnemyTypes.LASER_ENEMY)
+        public LaserBullet(int x, int y, int degree,int radius) : base(x, y, radius, 80, degree, App.window.player.Hp/2, EnemyTypes.LASER_ENEMY)
         {
             Rect tmp = Rect;
 
             tmp.Width  = 30;
-            tmp.Height = 1000;
+            tmp.Height = 700;
 
             if (degree == LEFT_SIDE_DEGREE || degree == RIGHT_SIDE_DEGREE)
             {

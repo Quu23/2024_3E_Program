@@ -5,7 +5,7 @@
         //sinカーブの軸(y軸)の座標
         private readonly int basicX;
 
-        public SnakeEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.SNAKE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/2 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 80)
+        public SnakeEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/5, Images.SNAKE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/1 +level, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 80)
         {
             basicX = x;
         }

@@ -12,6 +12,9 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 
+using SharpDX.DirectInput;
+
+
 namespace ShootingGame
 {
     /// <summary>
@@ -50,6 +53,8 @@ namespace ShootingGame
         ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT
         /// </summary>
         public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false };
+
+        private Joystick _joy;
 
         public Player player;
 
@@ -115,9 +120,62 @@ namespace ShootingGame
             updateTimer.Interval = TimeSpan.FromMilliseconds(1000 / FPS);
             updateTimer.Tick += Timer_Tick;
 
+            //キーコンフィグ
             KeyUp += DepressedKey;
             KeyDown += PressedKey;
             KeyDown += MessageInputKey;
+
+            // 入力周りの初期化
+            DirectInput dinput = new DirectInput();
+
+            // 使用するゲームパッドのID
+            var joystickGuid = Guid.Empty;
+
+            // ジョイスティックからゲームパッドを取得する
+            if (joystickGuid == Guid.Empty)
+            {
+                foreach (DeviceInstance device in dinput.GetDevices(DeviceType.Joystick, DeviceEnumerationFlags.AllDevices))
+                {
+                    joystickGuid = device.InstanceGuid;
+                    break;
+                }
+            }
+            // 見つかった場合
+            if (joystickGuid != Guid.Empty)
+            {
+                // パッド入力周りの初期化
+                _joy = new Joystick(dinput, joystickGuid);
+                if (_joy != null)
+                {
+                    // バッファサイズを指定
+                    _joy.Properties.BufferSize = 128;
+
+                    // 相対軸・絶対軸の最小値と最大値を
+                    // 指定した値の範囲に設定する
+                    foreach (DeviceObjectInstance deviceObject in _joy.GetObjects())
+                    {
+                        switch (deviceObject.ObjectId.Flags)
+                        {
+                            case DeviceObjectTypeFlags.Axis:
+                            // 絶対軸or相対軸
+                            case DeviceObjectTypeFlags.AbsoluteAxis:
+                            // 絶対軸
+                            case DeviceObjectTypeFlags.RelativeAxis:
+                                // 相対軸
+                                var ir = _joy.GetObjectPropertiesById(deviceObject.ObjectId);
+                                if (ir != null)
+                                {
+                                    try
+                                    {
+                                        ir.Range = new InputRange(-1000, 1000);
+                                    }
+                                    catch (Exception) { }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
 
             // BGM再生の設定
             musicPlayer = new MediaPlayer();
@@ -250,6 +308,8 @@ namespace ShootingGame
             spf = end - start;
             start = DateTime.Now;
 
+            UpdateForPad();
+
             // プレイヤーの移動速度とともに早くなる
             backgroundAnimationCounter += 5;
             if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
@@ -313,15 +373,15 @@ namespace ShootingGame
         {
             if (enemies.Count <= 0)
             {
-                int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
+                //int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
 
-                int basicX = moveableLeftSidePosition - 50;
+                //int basicX = moveableLeftSidePosition - 50;
 
-                enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
-                enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
-                enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-                enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
-                enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+                //enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
+                //enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
+                //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
+                enemies.Add(new LaserEnemy(500, 10, 1));
+                //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
 
             }
 
@@ -354,11 +414,13 @@ namespace ShootingGame
         private void GameLoop()
         {
 
-            for (int i = 0; i < stageData.Count; i++)
+            for (int i = stageData.Count -1; i > 0; i--)
             {
                 var pair = stageData[i];
 
                 if (stagePosition < pair.Item1) break;
+
+                if (pair.Item1 == -1) continue;
 
                 if (pair.Item2 == 0)
                 {
@@ -666,39 +728,39 @@ namespace ShootingGame
         {
             switch (e.Key)
             {
-                case Key.W:
+                case System.Windows.Input.Key.W:
                     isKeyPresseds[0] = true;
                     break;
-                case Key.A:
+                case System.Windows.Input.Key.A:
                     isKeyPresseds[1] = true;
                     break;
-                case Key.S:
+                case System.Windows.Input.Key.S:
                     isKeyPresseds[2] = true;
                     break;
-                case Key.D:
+                case System.Windows.Input.Key.D:
                     isKeyPresseds[3] = true;
                     break;
-                case Key.Space:
+                case System.Windows.Input.Key.Space:
                     isKeyPresseds[4] = true;
                     break;
-                case Key.Escape:
+                case System.Windows.Input.Key.Escape:
                     Environment.Exit(0);
                     break;
-                case Key.Enter:
+                case System.Windows.Input.Key.Enter:
                     isKeyPresseds[5] = true;
                     updateTimer.Interval = TimeSpan.FromMilliseconds(100);
                     break;
 
                 //デバック用
-                case Key.L:
+                case System.Windows.Input.Key.L:
                     player.Speed++;
                     break;
-                case Key.Tab:
+                case System.Windows.Input.Key.Tab:
                     isKeyPresseds[6] = true;
                     break;
                 default:
                     break;
-                case Key.RightShift:
+                case System.Windows.Input.Key.RightShift:
                     isKeyPresseds[7] = true;
                     break;
             }
@@ -707,30 +769,30 @@ namespace ShootingGame
         {
             switch (e.Key)
             {
-                case Key.W:
+                case System.Windows.Input.Key.W:
                     isKeyPresseds[0] = false;
                     break;
-                case Key.A:
+                case System.Windows.Input.Key.A:
                     isKeyPresseds[1] = false;
                     break;
-                case Key.S:
+                case System.Windows.Input.Key.S:
                     isKeyPresseds[2] = false;
                     break;
-                case Key.D:
+                case System.Windows.Input.Key.D:
                     isKeyPresseds[3] = false;
                     break;
-                case Key.Space:
+                case System.Windows.Input.Key.Space:
                     isKeyPresseds[4] = false;
                     break;
-                case Key.Enter:
+                case System.Windows.Input.Key.Enter:
                     isKeyPresseds[5] = false;
                     updateTimer.Interval = TimeSpan.FromMilliseconds(1000/FPS);
                     break;
 
-                case Key.Tab:
+                case System.Windows.Input.Key.Tab:
                     isKeyPresseds[6] = false;
                     break;
-                case Key.RightShift:
+                case System.Windows.Input.Key.RightShift:
                     isKeyPresseds[7] = false;
                     break;
                 default:
@@ -742,16 +804,81 @@ namespace ShootingGame
         {
             if (windowMode != WindowMode.START) return;
 
-            if (e.Key == Key.Back && message.Length > 0)message = message.Remove(message.Length - 1, 1);
+            if (e.Key == System.Windows.Input.Key.Back && message.Length > 0)message = message.Remove(message.Length - 1, 1);
             
             // 名前の文字数制限は8文字
             if (message.Length > 8) return;
 
-            if (e.Key >= Key.D0 && e.Key <= Key.D9) message　+= $"{e.Key - Key.D0}";
+            if (e.Key >= System.Windows.Input.Key.D0 && e.Key <= System.Windows.Input.Key.D9) message　+= $"{e.Key - System.Windows.Input.Key.D0}";
 
-            if (e.Key >= Key.A  && e.Key <= Key.Z) message += e.Key.ToString();
+            if (e.Key >= System.Windows.Input.Key.A  && e.Key <= System.Windows.Input.Key.Z) message += e.Key.ToString();
 
 
+
+        }
+
+        public void UpdateForPad()
+        {
+            // 初期化が出来ていない場合、処理終了
+            if (_joy == null) { return; }
+
+            // キャプチャするデバイスを取得
+            _joy.Acquire();
+            _joy.Poll();
+
+            // ゲームパッドのデータ取得
+            var jState = _joy.GetCurrentState();
+            // 取得できない場合、処理終了
+            if (jState == null) { return; }
+
+            // 以下の処理は挙動確認用
+
+            // 挙動確認用：押されたキーをタイトルバーに表示する
+            // アナログスティックの左右軸
+            bool inputX = true;
+            if (jState.X > 300)
+            {
+                isKeyPresseds[3] = true;
+            }
+            else if (jState.X < -300)
+            {
+                isKeyPresseds[1] = true;
+            }
+            else
+            {
+                inputX = false;
+            }
+
+            // アナログスティックの上下軸
+            bool inputY = true;
+            if (jState.Y > 300)
+            {
+                isKeyPresseds[2] = true;
+            }
+            else if (jState.Y < -300)
+            {
+                isKeyPresseds[0] = true;
+            }
+            else
+            {
+                inputY = false;
+            }
+            // 未入力だった場合
+            if (!inputX)
+            {
+                isKeyPresseds[1] = false;
+                isKeyPresseds[3] = false;
+            }
+
+            if (!inputY)
+            {
+                isKeyPresseds[0] = false;
+                isKeyPresseds[2] = false;
+            }
+
+            isKeyPresseds[4] = jState.Buttons[1]; //Space
+            isKeyPresseds[5] = jState.Buttons[2]; //Enter
+            isKeyPresseds[7] = jState.Buttons[3]; //R_Shift
 
         }
 
