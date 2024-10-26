@@ -274,6 +274,10 @@ namespace ShootingGame
                 for(int i = 0; i < 4; i++)
                 {
                     int temp2 = Convert.ToInt32(temp[i]);
+                    if (i == 3)
+                    {
+                        temp2 = (int)((SystemParameters.FullPrimaryScreenWidth /1600) * temp2);
+                    }
                     data[i] = temp2;
                 }
                 stageData.Add((data[0], data[1], data[2], data[3]));
