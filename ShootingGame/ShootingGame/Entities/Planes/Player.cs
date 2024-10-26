@@ -36,7 +36,7 @@ namespace ShootingGame.Entities.Planes
 
             increaseRateOfScore = 100;
 
-            Weapon = 2;
+            Weapon = 3;
 
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　         効果時間
