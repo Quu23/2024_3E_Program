@@ -68,7 +68,7 @@ namespace ShootingGame
 
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
-        private readonly BitmapImage backgroundImage;
+        private BitmapImage backgroundImage;
         private Rect backgroundRect;
 
         //タイトルなどのロゴ関係
@@ -266,6 +266,8 @@ namespace ShootingGame
                 default:
                     throw new ArgumentException($"nextModeにはSTAGE1,STAGE2,STAGE3のみが指定されるべきです。 nextMode={nextMode.ToString()}");
             }
+            path = @"../../../data/stages/stageForDebug.txt";
+
             // ファイル読み込み＆文字化け防止
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
 
@@ -428,7 +430,31 @@ namespace ShootingGame
 
         private void GameoverLoop()
         {
+            if (isKeyPresseds[5])
+            {
+                windowMode = WindowMode.START;
+                backgroundImage = Images.BACKGROUND_IMAGE;
+                
+                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+                {
+                    if (x > y) return -1;
+                    if (x < y) return 1;
+                    return 0;
+                }));
+                LoadRankingData();
 
+                stageData = new List<(int, int, int, int)>();
+                LoadStageData(WindowMode.STAGE1);
+
+                player = new Player("ななし");
+
+                score = 0;
+                stagePosition = 0;
+
+                enemies.Clear();
+                items.Clear();
+                bullets.Clear();
+            }
         }
 
         private void GameclearLoop()
