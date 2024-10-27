@@ -43,7 +43,7 @@ namespace ShootingGame.Entities
             ChangeRect(X, Y);
         }
 
-        public bool IsOutOfWindow()
+        public virtual bool IsOutOfWindow()
         {
             if (X < App.window.moveableLeftSidePosition - Radius * 2 || X > App.window.moveableRightSidePosition || Y < -Radius*2 || Y > SystemParameters.PrimaryScreenHeight) return true;
             return false;

@@ -13,6 +13,7 @@ using System.Text;
 using System.Diagnostics;
 
 using SharpDX.DirectInput;
+using ShootingGame.Entities.Planes.Enemies.Boss;
 
 
 namespace ShootingGame
@@ -77,8 +78,8 @@ namespace ShootingGame
         //GAMEOVERもしくはGAMECLEARになったときにインスタンスを代入する。
         private FormattedText scoreText = null;
 
-        private readonly Pen hpBarPen;
         private Rect hpBarRect;
+        private Rect bossHpBarRect;
 
         private readonly Point statusPoint;
         private readonly Point scorePoint;
@@ -108,6 +109,7 @@ namespace ShootingGame
                 moveableLeftSidePosition = (int)(Width / 4);
                 moveableRightSidePosition = (int)(Width - moveableLeftSidePosition);
                 unmoveableAreaRect = new Rect(0, 0, moveableLeftSidePosition, Height - 15);
+                bossHpBarRect = new Rect(moveableLeftSidePosition, 0, moveableRightSidePosition - moveableLeftSidePosition, 10);
             };
             unmoveableAreaPen = new Pen(Brushes.Yellow, 1);
 
@@ -199,7 +201,6 @@ namespace ShootingGame
             titleRect = new Rect((SystemParameters.PrimaryScreenWidth - Images.TITLE_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) / 8, 700, 100);//割る4ぐらいがちょうどいい（適当）
             modeSelectionTextRect = new Rect((SystemParameters.PrimaryScreenWidth - Images.MODE_SELECT_TEXT_IMAGE.Width) / 2, (SystemParameters.PrimaryScreenHeight - Images.MODE_SELECT_TEXT_IMAGE.Height) * 6 / 8, 700, 300);
 
-            hpBarPen = new Pen(Brushes.Black, 1);
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
             scorePoint  = new Point(30, 0);
@@ -367,22 +368,22 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(30);
+                    player.LevelUp(10);
 
-                    int w = 50;
+                    //int w = 50;
 
-                    enemies.Add(new BigEnemy(moveableLeftSidePosition, 0, 1));
-                    enemies.Add(new CycloneEnemy(enemies[0].X + enemies[0].Radius + w, 0 ,1));
-                    enemies.Add(new GoldenEnemy(enemies[1].X + enemies[1].Radius + w, 0 ,1));
-                    enemies.Add(new HexagonEnemy(enemies[2].X + enemies[2].Radius + w, 0 ,1));
-                    enemies.Add(new LaserEnemy(enemies[3].X + enemies[3].Radius + w, 0 ,1));
-                    enemies.Add(new MissileEnemy(enemies[4].X + enemies[4].Radius + w, 0 ,1));
-                    enemies.Add(new ShotgunEnemy(enemies[5].X + enemies[5].Radius + w, 0 ,1));
-                    enemies.Add(new SnakeEnemy(enemies[6].X + enemies[6].Radius + w, 0 ,1));
-                    enemies.Add(new SplashEnemy(enemies[7].X + enemies[7].Radius + w, 0 ,1));
-                    enemies.Add(new SplitEnemy(enemies[8].X + enemies[8].Radius + w, 0 ,1));
-                    enemies.Add(new StraightEnemy(enemies[9].X + enemies[9].Radius + w, 0 ,1));
-                    enemies.Add(new TurnBackEnemy(enemies[10].X + enemies[10].Radius + w, 0 ,1));
+                    //enemies.Add(new BigEnemy(moveableLeftSidePosition, 0, 1));
+                    //enemies.Add(new CycloneEnemy(enemies[0].X + enemies[0].Radius + w, 0 ,1));
+                    //enemies.Add(new GoldenEnemy(enemies[1].X + enemies[1].Radius + w, 0 ,1));
+                    //enemies.Add(new HexagonEnemy(enemies[2].X + enemies[2].Radius + w, 0 ,1));
+                    //enemies.Add(new LaserEnemy(enemies[3].X + enemies[3].Radius + w, 0 ,1));
+                    //enemies.Add(new MissileEnemy(enemies[4].X + enemies[4].Radius + w, 0 ,1));
+                    //enemies.Add(new ShotgunEnemy(enemies[5].X + enemies[5].Radius + w, 0 ,1));
+                    //enemies.Add(new SnakeEnemy(enemies[6].X + enemies[6].Radius + w, 0 ,1));
+                    //enemies.Add(new SplashEnemy(enemies[7].X + enemies[7].Radius + w, 0 ,1));
+                    //enemies.Add(new SplitEnemy(enemies[8].X + enemies[8].Radius + w, 0 ,1));
+                    //enemies.Add(new StraightEnemy(enemies[9].X + enemies[9].Radius + w, 0 ,1));
+                    //enemies.Add(new TurnBackEnemy(enemies[10].X + enemies[10].Radius + w, 0 ,1));
 
                     //player.status[StatusEffects.INVINCIBLE] = 9999;
                     
@@ -399,19 +400,22 @@ namespace ShootingGame
 
         private void DebugModeLoop()
         {
-            //if (enemies.Count <= 0)
-            //{
-            //    int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
+            if (enemies.Count <= 0)
+            {
+                //int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
 
-            //    int basicX = moveableLeftSidePosition - 50;
+                //int basicX = moveableLeftSidePosition - 50;
 
-            //    enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
-            //    enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
-            //    enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-            //    enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
-            //    enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+                //enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
+                //enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
+                //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
+                //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
+                //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+                enemies.Add(new Boss1());
+                Boss b = (Boss)enemies[0];
+                enemies.AddRange(b.GetFollowers());
 
-            //}
+            }
 
             //if (items.Count <= 0)
             //{
@@ -459,7 +463,31 @@ namespace ShootingGame
 
         private void GameclearLoop()
         {
+            if (isKeyPresseds[5])
+            {
+                windowMode = WindowMode.START;
+                backgroundImage = Images.BACKGROUND_IMAGE;
 
+                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+                {
+                    if (x > y) return -1;
+                    if (x < y) return 1;
+                    return 0;
+                }));
+                LoadRankingData();
+
+                stageData = new List<(int, int, int, int)>();
+                LoadStageData(WindowMode.STAGE1);
+
+                player = new Player("ななし");
+
+                score = 0;
+                stagePosition = 0;
+
+                enemies.Clear();
+                items.Clear();
+                bullets.Clear();
+            }
         }
 
         // TODO:ゲームループの実装
@@ -537,10 +565,16 @@ namespace ShootingGame
                     if (tmp_bullet.Type == EnemyTypes.PLAYER && tmp_enemy.IsHit(tmp_bullet))
                     {
                         tmp_enemy.Hp -= tmp_bullet.Damage;
+
                         bullets.Remove(tmp_bullet);
 
                         if (tmp_enemy.Hp <= 0)
                         {
+                            if (tmp_enemy is Follower)
+                            {
+                                Follower follower = (Follower) tmp_enemy;
+                                enemies[0].Hp -= follower.MAX_HP;
+                            }
                             tmp_enemy.DeadAction(player, enemies, items);
                         }
                     }
@@ -553,7 +587,7 @@ namespace ShootingGame
 
                 tmp_enemy.Action();
 
-                if (player.IsHit(tmp_enemy))
+                if (tmp_enemy.IsHit(player))
                 {
                     player.Hp = 0;
                 }
@@ -684,10 +718,20 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
+
             hpBarRect.Width = player.GetMaxHp * 10;
-            drawingContext.DrawRectangle(Brushes.White, hpBarPen, hpBarRect);
+            drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
             hpBarRect.Width = player.Hp >= 0 ? player.Hp * 10 : 0;
-            drawingContext.DrawRectangle(Brushes.Red, hpBarPen, hpBarRect);
+            drawingContext.DrawRectangle(Brushes.Red, null, hpBarRect);
+
+            if (enemies.Count > 0 && enemies[0] is Boss)
+            {
+                Boss b = (Boss) enemies[0];
+                bossHpBarRect.Width = b.MAX_HP;
+                drawingContext.DrawRectangle(Brushes.White, null, bossHpBarRect);
+                bossHpBarRect.Width = b.Hp >= 0 ? b.Hp : 0;
+                drawingContext.DrawRectangle(Brushes.Red, null, bossHpBarRect);
+            }
 
             foreach (var kvp in player.status)
             {
@@ -779,7 +823,15 @@ namespace ShootingGame
         {
             SolidColorBrush colorBrush = Brushes.ForestGreen.Clone();
             colorBrush.Opacity = 0.25;
-            dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(target.CenterX, target.CenterY), target.Radius, target.Radius);
+            if (target is Boss)
+            {
+                Boss targetBoss = (Boss)target;
+                dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(targetBoss.CenterX, targetBoss.CenterY), targetBoss.Width/2, targetBoss.Height/2);
+            }
+            else
+            {
+                dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(target.CenterX, target.CenterY), target.Radius, target.Radius);
+            }      
         }
 
         // BitmapImageの透明度を変更する。ピクセルデータを直接いじる。
