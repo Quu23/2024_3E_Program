@@ -11,6 +11,7 @@ namespace ShootingGame
     {
         //背景とタイトル
         public static readonly BitmapImage BACKGROUND_IMAGE         = new BitmapImage(UtilityUris.BACKGROUND_URI);
+        public static readonly BitmapImage BACKGROUND3_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND3_URI);
         public static readonly BitmapImage TITLE_IMAGE              = new BitmapImage(UtilityUris.TITLE_URI);
         public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_URI);
         public static readonly BitmapImage GAMEOVER_IMAGE           = new BitmapImage(UtilityUris.GAMEOVER_URI);
@@ -44,6 +45,8 @@ namespace ShootingGame
         /// プレイヤーの弾 Sサイズ : 32x32 (r=16)
         /// </summary>
         public static readonly BitmapImage PLAYER_BULLET_BIG_IMAGE = new BitmapImage(UtilityUris.P_BULLET_BIG_URI);
+
+        public static readonly BitmapImage PLAYER_BULLET_DESTROY_IMAGE = new BitmapImage(UtilityUris.P_BULLET_DESTROY_URI);
 
         //敵キャラ
         public static readonly BitmapImage STRAIGHT_ENEMY_IMAGE     = new BitmapImage(UtilityUris.STRAIGHT_ENEMY_URI);
@@ -79,6 +82,12 @@ namespace ShootingGame
         public static readonly BitmapImage SHOT_RATE_DOWN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ICON_URI);
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
+
+        //武器アイコン
+        public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
+        public static readonly BitmapImage BOUND_ICON_IMAGE   = new BitmapImage(UtilityUris.BOUND_ICON_URI);
+        public static readonly BitmapImage SHOTGUN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOTGUN_ICON_URI);
+        public static readonly BitmapImage HOMING_ICON_IMAGE  = new BitmapImage(UtilityUris.HOMING_ICON_URI);
 
     }
 }

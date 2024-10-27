@@ -85,6 +85,8 @@ namespace ShootingGame
 
         private Rect statusIconRect;
 
+        private Rect weaponIconRect;
+
         private readonly Typeface FONT_TYPEFACE;
 
         readonly DateTime GAME_START_TIME;
@@ -204,6 +206,8 @@ namespace ShootingGame
             statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
+
+            weaponIconRect = new Rect(0,0,32,32);
 
             FONT_TYPEFACE = new Typeface((FontFamily)Application.Current.Resources["dotfont"], FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
 
@@ -362,6 +366,24 @@ namespace ShootingGame
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
                     player.LevelUp(30);
+
+                    int w = 50;
+
+                    enemies.Add(new BigEnemy(moveableLeftSidePosition, 0, 1));
+                    enemies.Add(new CycloneEnemy(enemies[0].X + enemies[0].Radius + w, 0 ,1));
+                    enemies.Add(new GoldenEnemy(enemies[1].X + enemies[1].Radius + w, 0 ,1));
+                    enemies.Add(new HexagonEnemy(enemies[2].X + enemies[2].Radius + w, 0 ,1));
+                    enemies.Add(new LaserEnemy(enemies[3].X + enemies[3].Radius + w, 0 ,1));
+                    enemies.Add(new MissileEnemy(enemies[4].X + enemies[4].Radius + w, 0 ,1));
+                    enemies.Add(new ShotgunEnemy(enemies[5].X + enemies[5].Radius + w, 0 ,1));
+                    enemies.Add(new SnakeEnemy(enemies[6].X + enemies[6].Radius + w, 0 ,1));
+                    enemies.Add(new SplashEnemy(enemies[7].X + enemies[7].Radius + w, 0 ,1));
+                    enemies.Add(new SplitEnemy(enemies[8].X + enemies[8].Radius + w, 0 ,1));
+                    enemies.Add(new StraightEnemy(enemies[9].X + enemies[9].Radius + w, 0 ,1));
+                    enemies.Add(new TurnBackEnemy(enemies[10].X + enemies[10].Radius + w, 0 ,1));
+
+                    //player.status[StatusEffects.INVINCIBLE] = 9999;
+                    
                     return;
                 }
 
@@ -375,19 +397,19 @@ namespace ShootingGame
 
         private void DebugModeLoop()
         {
-            if (enemies.Count <= 0)
-            {
-                //int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
+            //if (enemies.Count <= 0)
+            //{
+            //    int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
 
-                //int basicX = moveableLeftSidePosition - 50;
+            //    int basicX = moveableLeftSidePosition - 50;
 
-                //enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
-                //enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
-                //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-                enemies.Add(new LaserEnemy(500, 10, 1));
-                //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
+            //    enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
+            //    enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
+            //    enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
+            //    enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
+            //    enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
 
-            }
+            //}
 
             //if (items.Count <= 0)
             //{
@@ -652,6 +674,33 @@ namespace ShootingGame
             statusIconRect.Y -= statusIconRect.Height * player.status.Count ;
 
 
+            BitmapImage[] weaponIconsImage = {Images.DEFAULT_ICON_IMAGE,Images.BOUND_ICON_IMAGE, Images.SHOTGUN_ICON_IMAGE, Images.HOMING_ICON_IMAGE };
+            BitmapSource[] weaponIconSource = new BitmapSource[weaponIconsImage.Length];
+
+            for (int i = 0; i < weaponIconsImage.Length; i++)
+            {
+                weaponIconSource[i] = i == player.Weapon ? AdjustImageOpacity(weaponIconsImage[i], 1.00) : AdjustImageOpacity(weaponIconsImage[i], 0.10);
+            }
+
+            weaponIconRect.X = moveableRightSidePosition + moveableLeftSidePosition / 4;
+            weaponIconRect.Y = hpBarRect.Y - 60;
+
+            drawingContext.DrawImage(weaponIconSource[0], weaponIconRect);
+
+            weaponIconRect.X += 40;
+
+            drawingContext.DrawImage(weaponIconSource[1], weaponIconRect);
+
+            weaponIconRect.Y -= 40;
+
+            drawingContext.DrawImage(weaponIconSource[2], weaponIconRect);
+
+            weaponIconRect.X -= 40;
+
+            drawingContext.DrawImage(weaponIconSource[3], weaponIconRect);
+
+
+
             if (isKeyPresseds[6])
             {
                 //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
@@ -705,6 +754,26 @@ namespace ShootingGame
             colorBrush.Opacity = 0.25;
             dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(target.CenterX, target.CenterY), target.Radius, target.Radius);
         }
+
+        // BitmapImageの透明度を変更する。ピクセルデータを直接いじる。
+        public BitmapSource AdjustImageOpacity(BitmapImage image, double opacity)
+        {
+            int width = image.PixelWidth;
+            int height = image.PixelHeight;
+            int stride = width * ((image.Format.BitsPerPixel + 7) / 8);
+            byte[] pixelData = new byte[height * stride];
+            image.CopyPixels(pixelData, stride, 0);
+
+            for (int i = 0; i < pixelData.Length; i += 4)
+            {
+                pixelData[i + 3] = (byte)(pixelData[i + 3] * opacity); // アルファチャネルを調整
+            }
+
+            WriteableBitmap wb = new WriteableBitmap(width, height, image.DpiX, image.DpiY, image.Format, null);
+            wb.WritePixels(new Int32Rect(0, 0, width, height), pixelData, stride, 0);
+            return wb;
+        }
+
 
         private BitmapImage GetStatusIconImage(StatusEffects effect)
         {
