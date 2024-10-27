@@ -473,7 +473,7 @@ namespace ShootingGame
             if (player.Hp <= 0)
             {
                 windowMode = WindowMode.GAMEOVER;
-                scoreText = new FormattedText($"SCORE = {score}"
+                scoreText = new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -729,7 +729,8 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
+            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
+            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
         }
 
         private void DrawGameclearWindow(DrawingContext drawingContext)

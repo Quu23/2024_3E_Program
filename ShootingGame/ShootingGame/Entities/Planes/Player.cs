@@ -180,14 +180,21 @@ namespace ShootingGame.Entities.Planes
         {
             Weapon++;
 
+
+            if (Weapon >= Math.Abs((int)MainWindow.windowMode))
+            {
+                weapon = 0;
+            }
+
+
             switch (weapon)
             {
                 case 0:
                     bulletRadius = Bullet.RADIUS_FOR_MEDIUM; break;
                 case 1:
-                    bulletRadius = Bullet.RADIUS_FOR_SMALL; break;
-                case 2:
                     bulletRadius = Bullet.RADIUS_FOR_BIG; break;
+                case 2:
+                    bulletRadius = Bullet.RADIUS_FOR_SMALL; break;
                 case 3:
                     bulletRadius = Bullet.RADIUS_FOR_MEDIUM;break;
             }
@@ -249,8 +256,19 @@ namespace ShootingGame.Entities.Planes
                 return;
             }
 
-            //shotgun
+
+            //bound
             if (Weapon == 1)
+            {
+                //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
+                //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
+                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 2));
+                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 2));
+                return;
+            }
+
+            //shotgun
+            if (Weapon == 2)
             {
                 bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, Level, Enemies.EnemyTypes.PLAYER));
 
@@ -265,16 +283,6 @@ namespace ShootingGame.Entities.Planes
                         bullets.Add(rightBullet);
                     }
                 }
-                return;
-            }
-
-            //bound
-            if (Weapon == 2)
-            {
-                //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
-                //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 2));
-                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 2));
                 return;
             }
 
