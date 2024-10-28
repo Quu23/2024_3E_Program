@@ -224,7 +224,8 @@ namespace ShootingGame
             LoadRankingData();
 
             stageData = new List<(int, int, int, int)>();
-            LoadStageData(WindowMode.STAGE1);
+            LoadStageData(WindowMode.STAGE2
+                );
 
             stagePosition = 0;
 
@@ -267,7 +268,7 @@ namespace ShootingGame
                 default:
                     throw new ArgumentException($"nextModeにはSTAGE1,STAGE2,STAGE3のみが指定されるべきです。 nextMode={nextMode.ToString()}");
             }
-            path = @"../../../data/stages/stageForDebug.txt";
+           // path = @"../../../data/stages/stageForDebug.txt";
 
             // ファイル読み込み＆文字化け防止
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
@@ -749,7 +750,7 @@ namespace ShootingGame
 
             for (int i = 0; i < weaponIconsImage.Length; i++)
             {
-                weaponIconSource[i] = i == player.Weapon ? AdjustImageOpacity(weaponIconsImage[i], 1.00) : AdjustImageOpacity(weaponIconsImage[i], 0.10);
+                weaponIconSource[i] = i == player.Weapon ? AdjustImageOpacity(weaponIconsImage[i], 1.00) : AdjustImageOpacity(weaponIconsImage[i], 0.50);
             }
 
             weaponIconRect.X = moveableRightSidePosition + moveableLeftSidePosition / 4;

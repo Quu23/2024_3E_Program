@@ -181,10 +181,10 @@ namespace ShootingGame.Entities.Planes
             Weapon++;
 
 
-            if (Weapon >= Math.Abs((int)MainWindow.windowMode))
-            {
-                weapon = 0;
-            }
+            //if (Weapon >= Math.Abs((int)MainWindow.windowMode))
+            //{
+            //    weapon = 0;
+            //}
 
 
             switch (weapon)
