@@ -1,1 +1,1 @@
-﻿0,DebugMode
+﻿1000,DebugMode

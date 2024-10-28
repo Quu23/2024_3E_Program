@@ -411,7 +411,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss2());
+                enemies.Add(new Boss3());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
