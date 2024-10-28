@@ -2,15 +2,16 @@
 {
     class Follower : Enemy
     {
-        private Enemy wrappedEnemy;
+        public Enemy wrappedEnemy;
 
         public readonly int MAX_HP;
 
-        public Follower(Enemy enemy) : base(enemy.X, enemy.Y, enemy.Radius, 0, enemy.Img, enemy.Level, 100, Bullet.RADIUS_FOR_SMALL, enemy.MaxBulletCoolTime)
+
+        public Follower(Enemy enemy,int MAX_HP) : base(enemy.X, enemy.Y, enemy.Radius, 0, enemy.Img, enemy.Level, 100, Bullet.RADIUS_FOR_SMALL, enemy.MaxBulletCoolTime)
         {
             wrappedEnemy = enemy;
             wrappedEnemy.Speed = 0;
-            MAX_HP = 100;
+            this.MAX_HP = MAX_HP;
         }
 
         public override void Action()

@@ -53,15 +53,6 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
             return list;
         }
 
-        public override void Action()
-        {
-            base.Action();
-            for (int i = followers.Count - 1; i > 0; i--)
-            {
-                Follower f = followers[i];
-                if (f.Hp <= 0) followers.Remove(f);
-            }
-        }
 
         public override void DeadAction(Player player, List<Enemy> enemies, List<Item> items)
         {

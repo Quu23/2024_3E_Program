@@ -13,21 +13,33 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
             return 50;
         }
 
+        public override void Action()
+        {
+            base.Action();
+
+            //BOSSだけの状態だったら
+            if (App.window.enemies.Count == 1)
+            {
+                App.window.enemies.Add(new SnakeEnemy(X +  50, 100, 1));
+                App.window.enemies.Add(new SnakeEnemy(X + 400, 100, 1));
+            }
+        }
+
         protected override List<Bullet> ShotBullet()
         {
             return new List<Bullet>
             {
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,30,180,1,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
             };
         }
 
         private static List<Follower> GenerateFollowers() 
         {
             return new List<Follower> {
-                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 100,100,1)),
-                new Follower(new ShotgunEnemy(App.window.moveableLeftSidePosition  + 150,100,1)),
-                new Follower(new ShotgunEnemy(App.window.moveableLeftSidePosition  + 400,100,1)),
-                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 450,100,1)),
+                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 100,100,1),100),
+                new Follower(new ShotgunEnemy(App.window.moveableLeftSidePosition  + 150,100,1),100),
+                new Follower(new ShotgunEnemy(App.window.moveableLeftSidePosition  + 400,100,1),100),
+                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 450,100,1),100),
             };
         }
 
@@ -42,6 +54,10 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                 Rect tmp = follower.Rect;
                 tmp.X = follower.X;
                 follower.Rect = tmp;
+
+                follower.wrappedEnemy.X += Speed;
+                follower.wrappedEnemy.Rect = tmp;
+                
             }
         }
 

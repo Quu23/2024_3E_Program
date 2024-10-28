@@ -88,6 +88,7 @@ namespace ShootingGame.Entities.Planes
             MAX_HP += 1;
             Hp += 1;
             DecreaceBulletCoolTime += Level / 5;
+            normalStatus[3] = DecreaceBulletCoolTime;
         }
 
         public void LevelUp(int count)
@@ -181,7 +182,7 @@ namespace ShootingGame.Entities.Planes
             Weapon++;
 
 
-            if (Weapon >= Math.Abs((int)MainWindow.windowMode))
+            if (Weapon > Math.Abs((int)MainWindow.windowMode))
             {
                 weapon = 0;
             }

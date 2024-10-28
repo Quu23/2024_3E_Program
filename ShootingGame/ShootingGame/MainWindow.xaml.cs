@@ -42,7 +42,7 @@ namespace ShootingGame
 
         public static int stagePosition;
 
-        public static int score = 0;
+        public static long score = 0;
 
         const int FPS = 60;
 
@@ -411,7 +411,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss1());
+                enemies.Add(new Boss2());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -727,9 +727,9 @@ namespace ShootingGame
             if (enemies.Count > 0 && enemies[0] is Boss)
             {
                 Boss b = (Boss) enemies[0];
-                bossHpBarRect.Width = b.MAX_HP;
+                bossHpBarRect.Width = (moveableRightSidePosition-moveableLeftSidePosition);
                 drawingContext.DrawRectangle(Brushes.White, null, bossHpBarRect);
-                bossHpBarRect.Width = b.Hp >= 0 ? b.Hp : 0;
+                bossHpBarRect.Width = b.Hp >= 0 ? b.Hp * (moveableRightSidePosition - moveableLeftSidePosition) / b.MAX_HP : 0;
                 drawingContext.DrawRectangle(Brushes.Red, null, bossHpBarRect);
             }
 
