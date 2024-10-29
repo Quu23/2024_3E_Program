@@ -271,7 +271,7 @@ namespace ShootingGame.Entities.Planes
             //shotgun
             if (Weapon == 2)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, Level, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 2, Enemies.EnemyTypes.PLAYER));
 
                 for (int i = 1; i < 100; i += 5)
                 {

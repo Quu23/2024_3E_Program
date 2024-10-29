@@ -116,7 +116,7 @@ namespace ShootingGame
 
             windowMode = WindowMode.START;
 
-            player = new Player("ななし");
+            player = new Player("unknown");
             Debug.WriteLine(player.X);
 
             //タイマーの設定 
@@ -189,7 +189,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = false;
+            musicPlayer.IsMuted = true;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -412,7 +412,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss2());
+                enemies.Add(new Boss3());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -664,17 +664,24 @@ namespace ShootingGame
 
         private void DrawStartWindow(DrawingContext drawingContext)
         {
-            drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
-            drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
+            if (isKeyPresseds[5])
+            {
+                //ランキングを描画する
+            }
+            else
+            {
+                drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
+                drawingContext.DrawImage(Images.MODE_SELECT_TEXT_IMAGE, modeSelectionTextRect);
 
-            drawingContext.DrawText(new FormattedText(
-                                     $"NAME = [{message}]"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 30
-                                    , Brushes.Yellow
-                                    , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
+                drawingContext.DrawText(new FormattedText(
+                                         $"NAME = [{message}]"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.Yellow
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
+            }
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)

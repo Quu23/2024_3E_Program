@@ -29,20 +29,28 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
 
         protected override List<Bullet> ShotBullet()
         {
-            return new List<Bullet>
-            {
-                new Bullet(CenterXForShotBullet-50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet-50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet-50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-
+            var bullets = new List<Bullet>
+            { 
                 new Bullet(CenterXForShotBullet,Y,bulletRadius,45,180,5,EnemyTypes.STRAIGHT_ENEMY),
                 new Bullet(CenterXForShotBullet,Y+2 * bulletRadius,bulletRadius,50,180,5,EnemyTypes.STRAIGHT_ENEMY),
                 new Bullet(CenterXForShotBullet,Y+4 * bulletRadius,bulletRadius,45,180,5,EnemyTypes.STRAIGHT_ENEMY),
-
-                new Bullet(CenterXForShotBullet+50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet+50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet+50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
             };
+
+
+            if ((double)Hp / MAX_HP < 0.5) 
+            {
+                bullets.AddRange(new List<Bullet>
+                {
+                    new Bullet(CenterXForShotBullet-50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet-50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet-50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                });
+            }
+
+            return bullets;
         }
 
         protected override void Move()
