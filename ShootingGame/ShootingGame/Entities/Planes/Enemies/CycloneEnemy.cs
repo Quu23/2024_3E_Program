@@ -23,10 +23,10 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             var bullets = new List<Bullet>()
             {
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  45, 1, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 135, 1, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 225, 1, this),
-                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 315, 1, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius,  45, Level, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 135, Level, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 225, Level, this),
+                new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 315, Level, this),
                 //new CycloneBullet(CenterXForShotBullet, Y, bulletRadius, 288, 1, Id.ENEMY, this),
             };
             

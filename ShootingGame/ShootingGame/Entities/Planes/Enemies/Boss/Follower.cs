@@ -1,4 +1,6 @@
-﻿namespace ShootingGame.Entities.Planes.Enemies.Boss
+﻿using ShootingGame.Entities.Items;
+
+namespace ShootingGame.Entities.Planes.Enemies.Boss
 {
     class Follower : Enemy
     {
@@ -12,6 +14,12 @@
             wrappedEnemy = enemy;
             wrappedEnemy.Speed = 0;
             this.MAX_HP = MAX_HP;
+        }
+
+        public override void DeadAction(Player player, List<Enemy> enemies, List<Item> items)
+        {
+            base.DeadAction(player, enemies, items);
+            wrappedEnemy.DeadAction(player, enemies, items);
         }
 
         public override void Action()

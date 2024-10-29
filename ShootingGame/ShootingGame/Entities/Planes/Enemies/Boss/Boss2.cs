@@ -8,6 +8,8 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
     {
         int actionCount = 0;
 
+        int followerAddCounter = 0;
+
         int patern;
 
         private const int PATERN_A = 0;
@@ -47,6 +49,26 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                     }
                     break;
             }
+            if (followers.Count == 0)
+            {
+                if (followerAddCounter <= 0)
+                {
+
+                    followers.AddRange(new List<Follower>()
+                    {
+                        new Follower(new SplitEnemy(X + 50 ,Y + 100,1), 50),
+                        new Follower(new StraightEnemy(CenterX-30,Y + 100,1), 50),
+                        new Follower(new SplitEnemy(X + 350,Y + 100,1), 50),
+                    });
+                    App.window.enemies.AddRange(followers);
+
+                    followerAddCounter = 100;
+                }
+                else
+                {
+                    followerAddCounter--;
+                }
+            }
         }
 
         protected override int GetEXP()
@@ -67,10 +89,10 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private static List<Follower> GenerateFollowers()
         {
             return new List<Follower> {
-                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 100,100,1), 100),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 50,100,1), 50),
                 new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 150,100,1), 150),
                 new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 400,100,1), 150),
-                new Follower(new StraightEnemy(App.window.moveableLeftSidePosition + 450,100,1), 150),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 450,100,1), 50),
             };
         }
 

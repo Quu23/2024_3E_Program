@@ -21,7 +21,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>() { 
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,180,3,EnemyTypes.BIG_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,180,Level+2,EnemyTypes.BIG_ENEMY),
             };
             return bullets;
         }

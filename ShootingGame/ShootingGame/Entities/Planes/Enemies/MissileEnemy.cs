@@ -24,7 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             return
             [
-                new(CenterXForShotBullet, Y ,bulletRadius, Speed+5,moveDirection,1, EnemyTypes.MISSILE_ENEMY)
+                new(CenterXForShotBullet, Y ,bulletRadius, Speed+5,moveDirection,Level, EnemyTypes.MISSILE_ENEMY)
             ];
         }
         protected override void Move()

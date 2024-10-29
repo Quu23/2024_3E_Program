@@ -15,7 +15,7 @@
         {
             return
             [
-                new(CenterXForShotBullet, Y, bulletRadius, Speed + 3, 180, 1,EnemyTypes.GOLDEN_ENEMY)
+                new(CenterXForShotBullet, Y, bulletRadius, Speed + 3, 180, Level,EnemyTypes.GOLDEN_ENEMY)
             ];
         
         }

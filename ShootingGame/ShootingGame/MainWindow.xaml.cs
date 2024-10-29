@@ -224,7 +224,7 @@ namespace ShootingGame
             LoadRankingData();
 
             stageData = new List<(int, int, int, int)>();
-            LoadStageData(WindowMode.STAGE2
+            LoadStageData(WindowMode.STAGE1
                 );
 
             stagePosition = 0;
@@ -412,7 +412,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss3());
+                enemies.Add(new Boss2());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -575,6 +575,8 @@ namespace ShootingGame
                             {
                                 Follower follower = (Follower) tmp_enemy;
                                 enemies[0].Hp -= follower.MAX_HP;
+                                Boss b = (Boss)enemies[0];
+                                b.followers.Remove(follower);
                             }
                             tmp_enemy.DeadAction(player, enemies, items);
                         }

@@ -45,7 +45,7 @@ namespace ShootingGame.Entities.Planes
                 { SHOT_RATE_UP            ,0},
                 { SHOT_RATE_DOWN          ,0},
                 { SCORE_BOOST             ,0},
-                { INVINCIBLE              ,0},
+                { INVINCIBLE              ,100000},
                 { DESTROY_MODE            ,0},
             };
 
@@ -253,7 +253,7 @@ namespace ShootingGame.Entities.Planes
         {
             if (Weapon == 0)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 100, Enemies.EnemyTypes.PLAYER));
                 return;
             }
 
