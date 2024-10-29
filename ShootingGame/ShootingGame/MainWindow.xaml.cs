@@ -42,7 +42,7 @@ namespace ShootingGame
 
         public static int stagePosition;
 
-        public static long score = 0;
+        public static int score = 0;
 
         const int FPS = 60;
 
@@ -737,6 +737,7 @@ namespace ShootingGame
             if (enemies.Count > 0 && enemies[0] is Boss)
             {
                 Boss b = (Boss) enemies[0];
+                bossHpBarRect.X = moveableLeftSidePosition;
                 bossHpBarRect.Width = (moveableRightSidePosition-moveableLeftSidePosition);
                 drawingContext.DrawRectangle(Brushes.White, null, bossHpBarRect);
                 bossHpBarRect.Width = b.Hp >= 0 ? b.Hp * (moveableRightSidePosition - moveableLeftSidePosition) / b.MAX_HP : 0;
