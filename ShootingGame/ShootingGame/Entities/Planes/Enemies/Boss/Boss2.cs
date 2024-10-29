@@ -37,15 +37,15 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                 case PATERN_B:
                     if (App.window.enemies.Count <= 5)
                     {
-                        App.window.enemies.Add(new MissileEnemy(X + 50, 100, 1));
-                        App.window.enemies.Add(new MissileEnemy(X + 400, 100, 1));
+                        App.window.enemies.Add(new MissileEnemy(X + 50 , 100, 2));
+                        App.window.enemies.Add(new MissileEnemy(X + 400, 100, 2));
                     }
                     break;
                 case PATERN_C:
                     if (App.window.enemies.Count == 1)
                     {
-                        App.window.enemies.Add(new SnakeEnemy(X + 50, 100, 1));
-                        App.window.enemies.Add(new SnakeEnemy(X + 400, 100, 1));
+                        App.window.enemies.Add(new SnakeEnemy(X + 50 , 100, 2));
+                        App.window.enemies.Add(new SnakeEnemy(X + 400, 100, 2));
                     }
                     break;
             }
@@ -89,10 +89,10 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private static List<Follower> GenerateFollowers()
         {
             return new List<Follower> {
-                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 50,100,1), 50),
-                new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 150,100,1), 150),
-                new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 400,100,1), 150),
-                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 450,100,1), 50),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 50,100,2), 50),
+                new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 150,100,2), 150),
+                new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 400,100,2), 150),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 450,100,2), 50),
             };
         }
 
@@ -163,6 +163,35 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                         actionCount = 0;
                         patern++;
                         patern %= 3;
+
+                    }
+                    break;
+                case PATERN_C:
+                    int dx = (int)((App.window.Width - Width) / 8 * Math.Sin(Math.PI / 20 * actionCount) + (App.window.Width - Width) / 2) - X;
+                    X += dx;
+                    if(Y > 2 + Speed)Y -= Speed;
+                    actionCount++;
+
+                    foreach (Follower follower in followers)
+                    {
+                        follower.X += dx;
+                        if (Y > 2 + Speed) follower.Y -= Speed;
+                        Rect tmp = follower.Rect;
+                        tmp.X = follower.X;
+                        tmp.Y = follower.Y;
+                        follower.Rect = tmp;
+
+                        follower.wrappedEnemy.X += dx;
+                        if (Y > 2 + Speed) follower.wrappedEnemy.Y -= Speed;
+                        follower.wrappedEnemy.Rect = tmp;
+                    }
+
+                    if (actionCount >= 400)
+                    {
+                        actionCount = 0;
+                        patern++; 
+                        patern %= 3;
+
                         Y = 2;
 
                         foreach (Follower follower in followers)
@@ -176,30 +205,6 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                             follower.wrappedEnemy.Rect = tmp;
 
                         }
-                    }
-                    break;
-                case PATERN_C:
-                    int dx = (int)((App.window.Width - Width) / 8 * Math.Sin(Math.PI / 20 * actionCount) + (App.window.Width - Width) / 2) - X;
-                    X += dx;
-                    actionCount++;
-
-                    foreach (Follower follower in followers)
-                    {
-                        follower.X += dx;
-                        Rect tmp = follower.Rect;
-                        tmp.X = follower.X;
-                        follower.Rect = tmp;
-
-                        follower.wrappedEnemy.X += dx;
-                        follower.wrappedEnemy.Rect = tmp;
-
-                    }
-
-                    if (actionCount >= 400)
-                    {
-                        actionCount = 0;
-                        patern++; 
-                        patern %= 3;
                     }
                     break;
             }
