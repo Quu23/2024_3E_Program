@@ -367,7 +367,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(10);
+                    player.LevelUp(100);
 
                     //int w = 50;
 
@@ -451,7 +451,7 @@ namespace ShootingGame
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
 
-                player = new Player("ななし");
+                player = new Player("unknown");
 
                 score = 0;
                 stagePosition = 0;
@@ -489,7 +489,7 @@ namespace ShootingGame
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
 
-                player = new Player("ななし");
+                player = new Player("unknown");
 
                 score = 0;
                 stagePosition = 0;
@@ -839,6 +839,8 @@ namespace ShootingGame
                 drawingContext.DrawRectangle(Brushes.White, null, bossHpBarRect);
                 bossHpBarRect.Width = b.Hp >= 0 ? b.Hp * (moveableRightSidePosition - moveableLeftSidePosition) / b.MAX_HP : 0;
                 drawingContext.DrawRectangle(Brushes.Red, null, bossHpBarRect);
+
+                //drawingContext.DrawEllipse(Brushes.White, null, new Point(b.CenterX, b.CenterY), 10, 10);
             }
 
             foreach (var kvp in player.status)

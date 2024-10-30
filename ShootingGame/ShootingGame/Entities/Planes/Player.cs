@@ -1,5 +1,6 @@
 ﻿using ShootingGame.Entities.Items;
 using ShootingGame.Entities.Planes.Enemies;
+using ShootingGame.Entities.Planes.Enemies.Boss;
 using System.Windows;
 using static ShootingGame.Entities.Items.StatusEffects;
 
@@ -359,21 +360,52 @@ namespace ShootingGame.Entities.Planes
                 List<Enemy> enemies = App.window.enemies;
 
                 int minDistanceEnemyIndex = 0;
-                int minSquareDistance = (X - enemies[minDistanceEnemyIndex].X) * (X - enemies[minDistanceEnemyIndex].X) + (Y - enemies[minDistanceEnemyIndex].Y) * (Y - enemies[minDistanceEnemyIndex].Y);
+                int minSquareDistance = (CenterX - enemies[minDistanceEnemyIndex].CenterX) * (CenterX - enemies[minDistanceEnemyIndex].CenterX) + (CenterY - enemies[minDistanceEnemyIndex].CenterY) * (CenterY - enemies[minDistanceEnemyIndex].CenterY);
+
+                if (enemies[minDistanceEnemyIndex] is Boss)
+                {
+                    Boss b = (Boss) enemies[minDistanceEnemyIndex];
+                    minSquareDistance = (CenterX - b.CenterX) * (CenterX - b.CenterX) + (CenterY - b.CenterY) * (CenterY - b.CenterY);
+                }
 
                 for (int i = 1; i < enemies.Count; i++)
                 {
-                    int squareDistance = (X - enemies[i].X) * (X - enemies[i].X) + (Y - enemies[i].Y) * (Y - enemies[i].Y); ;
+                    int squareDistance;
+
+                    if (enemies[i] is Boss)
+                    {
+                        Boss b = (Boss) enemies[i];
+                        squareDistance = (CenterX - b.CenterX) * (CenterX - b.CenterX) + (CenterY - b.CenterY) * (CenterY - b.CenterY);
+                    }
+                    else
+                    {
+                        squareDistance = (CenterX - enemies[i].CenterX) * (CenterX - enemies[i].CenterX) + (CenterY - enemies[i].CenterY) * (CenterY - enemies[i].CenterY);
+                    }
+
                     if (squareDistance < minSquareDistance)
                     {
                         minDistanceEnemyIndex = i;
+                        minSquareDistance = squareDistance;
                     }
                 }
 
                 Enemy target = enemies[minDistanceEnemyIndex];
 
-                int dx = target.X - X;
-                int dy = target.Y - Y;
+                int dx;
+                int dy;
+
+                if (target is Boss)
+                {
+                    Boss b = (Boss)target;
+
+                    dx = b.CenterX - CenterX;
+                    dy = b.CenterY - CenterY;   
+                }
+                else 
+                {
+                    dx = target.CenterX - CenterX;
+                    dy = target.CenterY - CenterY;
+                }
 
                 double radian = Math.PI - Math.Atan2(dx, dy);
 
