@@ -190,7 +190,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = false;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -225,8 +225,7 @@ namespace ShootingGame
             LoadRankingData();
 
             stageData = new List<(int, int, int, int)>();
-            LoadStageData(WindowMode.STAGE1
-                );
+            LoadStageData(WindowMode.STAGE1);
 
             stagePosition = 0;
 
@@ -413,7 +412,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss2());
+                enemies.Add(new Boss3());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -460,6 +459,15 @@ namespace ShootingGame
                 enemies.Clear();
                 items.Clear();
                 bullets.Clear();
+
+                musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
             }
         }
 
@@ -489,6 +497,15 @@ namespace ShootingGame
                 enemies.Clear();
                 items.Clear();
                 bullets.Clear();
+
+                musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
             }
         }
 
@@ -508,7 +525,7 @@ namespace ShootingGame
 
                     if (pair.Item2 == 0)
                     {
-                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, 1));
+                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, Math.Abs((int)windowMode)));
                     }
                     else
                     {
@@ -530,18 +547,29 @@ namespace ShootingGame
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
 
-                switch(windowMode)
+                switch (windowMode)
                 {
                     case WindowMode.STAGE1_BOSS:
                         enemies.Add(new Boss1());
+                        musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
                         break;
                     case WindowMode.STAGE2_BOSS:
                         enemies.Add(new Boss2());
+                        musicPlayer.Open(UtilityUris.BOSS2_BGM_URI);
                         break;
                     case WindowMode.STAGE3_BOSS:
                         enemies.Add(new Boss3());
+                        musicPlayer.Open(UtilityUris.BOSS3_BGM_URI);
                         break;
                 }
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
+
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -557,7 +585,17 @@ namespace ShootingGame
                     {
                         LoadStageData(windowMode);
                         stageLastPosition = stageData[0].Item1;
-                    }else if(windowMode == WindowMode.GAMECLEAR)
+
+                        musicPlayer.Open(UtilityUris.BGM1_URI);
+                        musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                        {
+                            musicPlayer.Position = TimeSpan.Zero;
+                        };
+                        musicPlayer.IsMuted = false;
+                        musicPlayer.Play();
+
+                    }
+                    else if(windowMode == WindowMode.GAMECLEAR)
                     {
                         scoreText = new FormattedText($"SCORE:{score}"
                                                     , CultureInfo.GetCultureInfo("en")
@@ -779,13 +817,14 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
-            drawingContext.DrawText(new FormattedText($"WINDOW MODE : {windowMode}"
+            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(10,Height - 80,16,16));
+            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}\n\n{windowMode}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 10
+                                    , 16
                                     , Brushes.White
-                                    , 12.5), new Point(0,Height - 40));
+                                    , 12.5), new Point(0,Height - 80));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
@@ -843,25 +882,37 @@ namespace ShootingGame
             if (isKeyPresseds[6])
             {
                 //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
-                drawingContext.DrawText(new FormattedText(
-                                    $"Width = {Width} / Height = {Height}\n" +
-                                    $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                    $"stagePosition = {stagePosition}\n" +
-                                    $"bullets.Count  = {bullets.Count}\n" +
-                                    $"enemies.Count  = {enemies.Count}\n" +
-                                    $"items.Count    = {items.Count}\n" +
-                                    $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                    $"fps = {1.0 / spf.TotalSeconds}\n" +
-                                    $"Speed = {player.Speed}\n" +
-                                    $"BGM Muted = {musicPlayer.IsMuted}\n" +
-                                    $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n" +
-                                    $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 12
-                                    , Brushes.White
-                                    , 12.5), new Point(10, 30));
+
+                string status = $"Width = {Width} / Height = {Height}\n" +
+                                $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                $"stagePosition = {stagePosition}\n" +
+                                $"bullets.Count  = {bullets.Count}\n" +
+                                $"enemies.Count  = {enemies.Count}\n" +
+                                $"items.Count    = {items.Count}\n" +
+                                $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
+                                $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                $"Speed = {player.Speed}\n" +
+                                $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}\n" +
+                                $"BGM Muted = {musicPlayer.IsMuted}\n";
+                               
+
+                if (musicPlayer.NaturalDuration.HasTimeSpan)
+                {
+                    status += $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n";
+                }
+                else
+                {
+                    status += "NaN\n";
+                }
+
+
+                drawingContext.DrawText(new FormattedText(status
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 12
+                                        , Brushes.White
+                                        , 12.5), new Point(10, 30));
             }
         }
 

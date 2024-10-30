@@ -140,12 +140,12 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                 });
             }
 
-            if (laserCounter >= 50 && patern == PATERN_F)
+            if (patern == PATERN_F)
             {
-                double loopCount = (App.window.moveableRightSidePosition - App.window.moveableLeftSidePosition) / Bullet.RADIUS_FOR_BIG;
+                double loopCount = (App.window.moveableRightSidePosition - App.window.moveableLeftSidePosition) / (double)Bullet.RADIUS_FOR_BIG;
                 for (int i = 0; i < loopCount; i++)
                 {
-                    bullets.Add(new Bullet(Bullet.RADIUS_FOR_BIG * i, (int)App.window.Height, bulletRadius, 2, 0,1,EnemyTypes.STRAIGHT_ENEMY));
+                    if (i % 10 < 4) bullets.Add(new Bullet(Bullet.RADIUS_FOR_BIG * i + App.window.moveableLeftSidePosition, (int)App.window.Height - 50, bulletRadius, 2, 0,1,EnemyTypes.STRAIGHT_ENEMY));
                 }
             }
 

@@ -25,6 +25,8 @@ namespace ShootingGame.Entities.Planes
 
         private int weapon;
 
+        public int orbCount;
+
         public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             //最初は5にする？
@@ -36,6 +38,8 @@ namespace ShootingGame.Entities.Planes
 
             increaseRateOfScore = 100;
 
+            orbCount = 0;
+
             Weapon = 3;
 
             status = new Dictionary<StatusEffects, int>() { 
@@ -46,7 +50,7 @@ namespace ShootingGame.Entities.Planes
                 { SHOT_RATE_DOWN          ,0},
                 { SCORE_BOOST             ,0},
                 { INVINCIBLE              ,0},
-                { DESTROY_MODE            ,1000000},
+                { DESTROY_MODE            ,0},
             };
 
             normalStatus = [
@@ -88,7 +92,7 @@ namespace ShootingGame.Entities.Planes
             MAX_HP += 1;
             Hp += 1;
             
-            normalStatus[3] += Level / 5;
+            if (Level % 5 == 0)normalStatus[3] ++;
         }
 
         public void LevelUp(int count)
@@ -185,6 +189,11 @@ namespace ShootingGame.Entities.Planes
             if (Weapon > Math.Abs((int)MainWindow.windowMode) - 1)
             {
                 weapon = 0;
+
+                if(orbCount >= 10)
+                {
+                    weapon = 3 ;
+                }
             }
 
 
