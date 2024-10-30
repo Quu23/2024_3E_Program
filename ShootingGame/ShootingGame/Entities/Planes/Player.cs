@@ -45,8 +45,8 @@ namespace ShootingGame.Entities.Planes
                 { SHOT_RATE_UP            ,0},
                 { SHOT_RATE_DOWN          ,0},
                 { SCORE_BOOST             ,0},
-                { INVINCIBLE              ,10000},
-                { DESTROY_MODE            ,0},
+                { INVINCIBLE              ,0},
+                { DESTROY_MODE            ,1000000},
             };
 
             normalStatus = [
@@ -87,8 +87,8 @@ namespace ShootingGame.Entities.Planes
             Level++;
             MAX_HP += 1;
             Hp += 1;
-            DecreaceBulletCoolTime += Level / 5;
-            normalStatus[3] = DecreaceBulletCoolTime;
+            
+            normalStatus[3] += Level / 5;
         }
 
         public void LevelUp(int count)
@@ -182,7 +182,7 @@ namespace ShootingGame.Entities.Planes
             Weapon++;
 
 
-            if (Weapon > Math.Abs((int)MainWindow.windowMode))
+            if (Weapon > Math.Abs((int)MainWindow.windowMode) - 1)
             {
                 weapon = 0;
             }

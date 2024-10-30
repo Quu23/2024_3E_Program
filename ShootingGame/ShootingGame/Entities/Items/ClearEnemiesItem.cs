@@ -13,7 +13,7 @@ namespace ShootingGame.Entities.Items
         {
             Boss b = null;
 
-            if (App.window.enemies[0] is Boss)
+            if (App.window.enemies.Count > 0 && App.window.enemies[0] is Boss)
             {
                 b = (Boss)App.window.enemies[0];
             }

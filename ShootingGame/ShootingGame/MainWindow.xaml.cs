@@ -41,6 +41,7 @@ namespace ShootingGame
         private List<(int, int, int, int)> stageData;
 
         public static int stagePosition;
+        public static int stageLastPosition = 0;
 
         public static int score = 0;
 
@@ -333,13 +334,11 @@ namespace ShootingGame
                     break;
                 case WindowMode.STAGE1:
                 case WindowMode.STAGE1_BOSS:
-                    GameLoop();
-                    break;
                 case WindowMode.STAGE2:
                 case WindowMode.STAGE2_BOSS:
-                    break;
                 case WindowMode.STAGE3:
                 case WindowMode.STAGE3_BOSS:
+                    GameLoop();
                     break;
                 case WindowMode.GAMEOVER:
                     GameoverLoop();
@@ -396,6 +395,8 @@ namespace ShootingGame
                 {
                     player = new Player(message);
                 }
+
+                stageLastPosition = stageData[0].Item1;
             }
         }
 
@@ -412,7 +413,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss3());
+                enemies.Add(new Boss2());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -495,31 +496,83 @@ namespace ShootingGame
         private void GameLoop()
         {
 
-            for (int i = stageData.Count -1; i > 0; i--)
+            if (windowMode > 0)
             {
-                var pair = stageData[i];
-
-                if (stagePosition < pair.Item1) break;
-
-                if (pair.Item1 == -1) continue;
-
-                if (pair.Item2 == 0)
+                for (int i = stageData.Count - 1; i > 0; i--)
                 {
-                    enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, 1));
+                    var pair = stageData[i];
+
+                    if (stagePosition < pair.Item1) break;
+
+                    if (pair.Item1 == -1) continue;
+
+                    if (pair.Item2 == 0)
+                    {
+                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, 1));
+                    }
+                    else
+                    {
+                        items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
+                    }
+                    stageData.Remove(pair);
                 }
-                else
-                {
-                    items.Add(UtilityGenerater.GenerateItem((ItemTypes)pair.Item3, pair.Item4, 0));
-                }
-                stageData.Remove(pair);
             }
+
 
             BasicGameLogic();    
         }
 
         private void BasicGameLogic()
         {
-            stagePosition++;
+            if (windowMode > 0) stagePosition++;
+
+            if (stagePosition > stageLastPosition + 500 && enemies.Count == 0)
+            {
+                windowMode = (WindowMode)(-1 * (int)windowMode);
+
+                switch(windowMode)
+                {
+                    case WindowMode.STAGE1_BOSS:
+                        enemies.Add(new Boss1());
+                        break;
+                    case WindowMode.STAGE2_BOSS:
+                        enemies.Add(new Boss2());
+                        break;
+                    case WindowMode.STAGE3_BOSS:
+                        enemies.Add(new Boss3());
+                        break;
+                }
+                Boss b = (Boss)enemies[0];
+                enemies.AddRange(b.GetFollowers());
+
+                stagePosition = 0;
+            }
+
+            if (windowMode < 0)
+            {
+                if (enemies.Count == 0)
+                {
+                    windowMode = (WindowMode)(-1 * (int)windowMode + 1);
+                    if (windowMode <= WindowMode.STAGE3)
+                    {
+                        LoadStageData(windowMode);
+                        stageLastPosition = stageData[0].Item1;
+                    }else if(windowMode == WindowMode.GAMECLEAR)
+                    {
+                        scoreText = new FormattedText($"SCORE:{score}"
+                                                    , CultureInfo.GetCultureInfo("en")
+                                                    , FlowDirection.LeftToRight
+                                                    , FONT_TYPEFACE
+                                                    , 100
+                                                    , Brushes.White
+                                                    , 12.5);
+
+                        WriteScore();
+                    }
+
+                    return;
+                }
+            }
 
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
@@ -641,13 +694,11 @@ namespace ShootingGame
                     case WindowMode.STAGE1:
                     case WindowMode.STAGE1_BOSS:
                     case WindowMode.DEBUG:
-                        DrawGameWindow(drawingContext);
-                        break;
                     case WindowMode.STAGE2:
                     case WindowMode.STAGE2_BOSS:
-                        break;
                     case WindowMode.STAGE3:
                     case WindowMode.STAGE3_BOSS:
+                        DrawGameWindow(drawingContext);
                         break;
                     case WindowMode.GAMEOVER:
                         DrawGameoverWindow(drawingContext);
@@ -728,6 +779,13 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
+            drawingContext.DrawText(new FormattedText($"WINDOW MODE : {windowMode}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 10
+                                    , Brushes.White
+                                    , 12.5), new Point(0,Height - 40));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
@@ -817,7 +875,8 @@ namespace ShootingGame
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
-            drawingContext.DrawText(scoreText, new Point(modeSelectionTextRect.X, modeSelectionTextRect.Y));
+            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
+            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？
