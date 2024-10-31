@@ -5,7 +5,7 @@ namespace ShootingGame.Entities.Items
 {
     internal class ClearEnemiesItem : Item
     {
-        public ClearEnemiesItem(int x, int y) : base(x, y, 16, 10, Images.CLEAR_ENEMIES_ITEM_IMAGE)
+        public ClearEnemiesItem(int x, int y) : base(x, y, 20, 10, Images.CLEAR_ENEMIES_ITEM_IMAGE)
         {
         }
 

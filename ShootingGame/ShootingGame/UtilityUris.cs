@@ -57,6 +57,8 @@ namespace ShootingGame
         public static readonly Uri BOSS2_URI = new Uri("../../../img/Boss2.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri BOSS3_URI = new Uri("../../../img/Boss3.png", UriKind.RelativeOrAbsolute);
 
+        public static readonly Uri FOLLOWER_URI = new Uri("../../../img/Follower.png", UriKind.RelativeOrAbsolute);
+
         //enemyの弾
         public static readonly Uri E_BULLET_SMALL_URI    = new Uri("../../../img/Enemy_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri E_BULLET_URI          = new Uri("../../../img/Enemy_Bullet.png", UriKind.RelativeOrAbsolute);
@@ -69,6 +71,7 @@ namespace ShootingGame
         public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Ratedown.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri INCINCIBLE_ICON_URI     = new Uri("../../../img/Icon_Invincible.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Scoreboost.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri DESTOROY_ICON_URI       = new Uri("../../../img/Icon_Destoroy.png", UriKind.RelativeOrAbsolute);
 
         //武器アイコン
         public static readonly Uri DEFAULT_ICON_URI = new Uri("../../../img/Icon_Default.png",UriKind.RelativeOrAbsolute);

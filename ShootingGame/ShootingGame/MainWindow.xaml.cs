@@ -390,7 +390,7 @@ namespace ShootingGame
         {
             if (enemies.Count <= 0)
             {
-                enemies.Add(new Boss1());
+                enemies.Add(new Boss3());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -434,6 +434,8 @@ namespace ShootingGame
                 };
                 musicPlayer.IsMuted = false;
                 musicPlayer.Play();
+
+                backgroundAnimationCounter = 0;
             }
         }
 
@@ -473,6 +475,8 @@ namespace ShootingGame
                 };
                 musicPlayer.IsMuted = false;
                 musicPlayer.Play();
+
+                backgroundAnimationCounter = 0;
             }
         }
 
@@ -510,7 +514,7 @@ namespace ShootingGame
         {
             if (windowMode > 0) stagePosition++;
 
-            if (stagePosition > stageLastPosition + 500 && enemies.Count == 0)
+            if (stagePosition > stageLastPosition + 300 && enemies.Count == 0)
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
 
@@ -785,7 +789,7 @@ namespace ShootingGame
                                         , FONT_TYPEFACE
                                         , 30
                                         , Brushes.Yellow
-                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - topranking.Length * 1.5, modeSelectionTextRect.Y - 40));
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - topranking.Length * 1.5, modeSelectionTextRect.Y - 150));
             }
             else
             {

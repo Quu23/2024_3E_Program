@@ -24,7 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_E = 4;
         private const int PATERN_F = 5;
 
-        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.STRAIGHT_ENEMY_IMAGE, 2000, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
+        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.BOSS3_IMAGE, 2000, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
         {
             defaultMoveableSidePositions = new int[2];
             defaultMoveableSidePositions[0] = App.window.moveableLeftSidePosition;

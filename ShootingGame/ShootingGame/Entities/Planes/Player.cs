@@ -96,7 +96,7 @@ namespace ShootingGame.Entities.Planes
             MAX_HP += 1;
             Hp += 1;
 
-            if (Level % 5 == 0)
+            if (Level % 3 == 0)
             {
                 normalStatus[3]++;
 

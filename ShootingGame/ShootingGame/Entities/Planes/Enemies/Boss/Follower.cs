@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         public readonly int MAX_HP;
 
 
-        public Follower(Enemy enemy,int MAX_HP) : base(enemy.X, enemy.Y, enemy.Radius, 0, enemy.Img, enemy.Level, 100, Bullet.RADIUS_FOR_SMALL, enemy.MaxBulletCoolTime)
+        public Follower(Enemy enemy,int MAX_HP) : base(enemy.X, enemy.Y, enemy.Radius, 0, Images.FOLLOWER_IMAGE, enemy.Level, 100, Bullet.RADIUS_FOR_SMALL, enemy.MaxBulletCoolTime)
         {
             wrappedEnemy = enemy;
             wrappedEnemy.Speed = 0;

@@ -16,7 +16,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_B = 1;
         private const int PATERN_C = 2;
 
-        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.STRAIGHT_ENEMY_IMAGE, 1000, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
+        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.BOSS2_IMAGE, 1000, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
         {
             patern = PATERN_A;
         }
@@ -89,10 +89,10 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private static List<Follower> GenerateFollowers()
         {
             return new List<Follower> {
-                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 50,100,2), 50),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 50,100,2), 25),
                 new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 150,100,2), 150),
                 new Follower(new HexagonEnemy(App.window.moveableLeftSidePosition  + 400,100,2), 150),
-                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 450,100,2), 50),
+                new Follower(new SplitEnemy(App.window.moveableLeftSidePosition + 450,100,2), 25),
             };
         }
 

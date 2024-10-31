@@ -69,6 +69,8 @@ namespace ShootingGame
         public static readonly BitmapImage BOSS2_IMAGE = new BitmapImage(UtilityUris.BOSS2_URI);
         public static readonly BitmapImage BOSS3_IMAGE = new BitmapImage(UtilityUris.BOSS3_URI);
 
+        public static readonly BitmapImage FOLLOWER_IMAGE = new BitmapImage(UtilityUris.FOLLOWER_URI);
+
         /// <summary>
         /// 敵の弾 Sサイズ :  8x 8 (r=4)
         /// </summary>
@@ -89,6 +91,7 @@ namespace ShootingGame
         public static readonly BitmapImage SHOT_RATE_DOWN_ICON_IMAGE = new BitmapImage(UtilityUris.SHOT_RATE_DOWN_ICON_URI);
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
+        public static readonly BitmapImage DESTOROY_ICON_IMAGE       = new BitmapImage(UtilityUris.DESTOROY_ICON_URI);
 
         //武器アイコン
         public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
