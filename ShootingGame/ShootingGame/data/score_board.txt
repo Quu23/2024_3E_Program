@@ -11,3 +11,9 @@
 88,wwwwwwww
 14800,unknown
 6000,unknown
+2100,unknown
+6100,unknown
+16400,unknown
+33500,unknown
+39800,unknown
+37750,D

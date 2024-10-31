@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         private int chaseTimer;
         private int moveDirection;
 
-        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/10, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/1 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/100)
+        public MissileEnemy(int x, int y, int level) : base(x, y, /*r=*/20,  /*speed=*/8, Images.MISSILE_ENEMY_IMAGE.Clone(), /*LV=*/level, /*hp=*/1 + level, /*bulletRadius=*/Bullet.RADIUS_FOR_SMALL, /*maxBulletCooltime=*/100)
         {
             //追尾時間設定。調整求。
             chaseTimer = 150;
