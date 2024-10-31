@@ -34,7 +34,8 @@ namespace ShootingGame
 
         private static string message = "";
 
-        private SortedDictionary<int, string> ranking;
+        //private SortedList<int, string> ranking;
+        private List<(int, string)> ranking;
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -190,7 +191,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = false;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -216,17 +217,17 @@ namespace ShootingGame
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
-            ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x,int y) =>
+            ranking = new List<(int, string)>();
+            LoadRankingData();
+            ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
             {
-                if (x > y) return -1;
-                if (x < y) return  1;
+                if (x.Item1 > y.Item1) return -1;
+                if (x.Item1 < y.Item1) return 1;
                 return 0;
             }));
-            LoadRankingData();
 
             stageData = new List<(int, int, int, int)>();
-            LoadStageData(WindowMode.STAGE1
-                );
+            LoadStageData(WindowMode.STAGE1);
 
             stagePosition = 0;
 
@@ -248,7 +249,7 @@ namespace ShootingGame
 
                 int temp2 = Convert.ToInt32(temp[0]);
 
-                ranking.Add(temp2,temp[1]);
+                ranking.Add((temp2,temp[1]));
             }
         }
 
@@ -301,7 +302,7 @@ namespace ShootingGame
             // ファイルを開く＆文字化け防止
             // 第二引数が「true」 → 追加書き込みOK
             // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
-            using(StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
             {
                 // score_board.txt に書き込み
                 file.WriteLine($"{score},{player.name}");
@@ -368,7 +369,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(10);
+                    player.LevelUp(100);
 
                     //int w = 50;
 
@@ -394,6 +395,7 @@ namespace ShootingGame
                 if (message.Length > 0)
                 {
                     player = new Player(message);
+                    message = "";
                 }
 
                 stageLastPosition = stageData[0].Item1;
@@ -413,7 +415,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss2());
+                enemies.Add(new Boss3());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -440,19 +442,19 @@ namespace ShootingGame
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.BACKGROUND_IMAGE;
-                
-                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+
+                ranking = new List<(int, string)>();
+                LoadRankingData();
+                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
                 {
-                    if (x > y) return -1;
-                    if (x < y) return 1;
+                    if (x.Item1 > y.Item1) return -1;
+                    if (x.Item1 < y.Item1) return 1;
                     return 0;
                 }));
-                LoadRankingData();
-
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
 
-                player = new Player("ななし");
+                player = new Player("unknown");
 
                 score = 0;
                 stagePosition = 0;
@@ -460,6 +462,15 @@ namespace ShootingGame
                 enemies.Clear();
                 items.Clear();
                 bullets.Clear();
+
+                musicPlayer.Open(UtilityUris.BGM2_URI);
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
             }
         }
 
@@ -470,18 +481,19 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.BACKGROUND_IMAGE;
 
-                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+                ranking = new List<(int, string)>();
+                LoadRankingData();
+                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
                 {
-                    if (x > y) return -1;
-                    if (x < y) return 1;
+                    if (x.Item1 > y.Item1) return -1;
+                    if (x.Item1 < y.Item1) return 1;
                     return 0;
                 }));
-                LoadRankingData();
 
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
 
-                player = new Player("ななし");
+                player = new Player("unknown");
 
                 score = 0;
                 stagePosition = 0;
@@ -489,6 +501,15 @@ namespace ShootingGame
                 enemies.Clear();
                 items.Clear();
                 bullets.Clear();
+
+                musicPlayer.Open(UtilityUris.BGM2_URI);
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
             }
         }
 
@@ -508,7 +529,7 @@ namespace ShootingGame
 
                     if (pair.Item2 == 0)
                     {
-                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, 1));
+                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, Math.Abs((int)windowMode)));
                     }
                     else
                     {
@@ -530,18 +551,29 @@ namespace ShootingGame
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
 
-                switch(windowMode)
+                switch (windowMode)
                 {
                     case WindowMode.STAGE1_BOSS:
                         enemies.Add(new Boss1());
+                        musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
                         break;
                     case WindowMode.STAGE2_BOSS:
                         enemies.Add(new Boss2());
+                        musicPlayer.Open(UtilityUris.BOSS2_BGM_URI);
                         break;
                     case WindowMode.STAGE3_BOSS:
                         enemies.Add(new Boss3());
+                        musicPlayer.Open(UtilityUris.BOSS3_BGM_URI);
                         break;
                 }
+
+                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                {
+                    musicPlayer.Position = TimeSpan.Zero;
+                };
+                musicPlayer.IsMuted = false;
+                musicPlayer.Play();
+
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -557,7 +589,17 @@ namespace ShootingGame
                     {
                         LoadStageData(windowMode);
                         stageLastPosition = stageData[0].Item1;
-                    }else if(windowMode == WindowMode.GAMECLEAR)
+
+                        musicPlayer.Open(UtilityUris.BGM1_URI);
+                        musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+                        {
+                            musicPlayer.Position = TimeSpan.Zero;
+                        };
+                        musicPlayer.IsMuted = false;
+                        musicPlayer.Play();
+
+                    }
+                    else if(windowMode == WindowMode.GAMECLEAR)
                     {
                         scoreText = new FormattedText($"SCORE:{score}"
                                                     , CultureInfo.GetCultureInfo("en")
@@ -715,9 +757,41 @@ namespace ShootingGame
 
         private void DrawStartWindow(DrawingContext drawingContext)
         {
-            if (isKeyPresseds[5])
+            if (isKeyPresseds[7])
             {
+                string topranking = "";
+                var rank = "";
+                string scores;
+                string playername;
+                int i = 1;
+                foreach (var rankingData in ranking)
+                {
+                    scores = rankingData.Item1.ToString();
+                    playername = rankingData.Item2;
+                    if (i > 9)
+                    {
+                        topranking += $"{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
+                    }
+                    else
+                    {
+                        topranking += $"{0}{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
+                    }
+                    //topranking += $"{i + 1}.{playername} , {scores}\n";
+
+                    
+                    i += 1;
+                    if (i > 10) break;
+                }
+
                 //ランキングを描画する
+                drawingContext.DrawText(new FormattedText(
+                                         topranking
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.Yellow
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - topranking.Length * 1.5, modeSelectionTextRect.Y - 40));
             }
             else
             {
@@ -779,13 +853,14 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
-            drawingContext.DrawText(new FormattedText($"WINDOW MODE : {windowMode}"
+            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(10,Height - 80,16,16));
+            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}\n\n{windowMode}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 10
+                                    , 16
                                     , Brushes.White
-                                    , 12.5), new Point(0,Height - 40));
+                                    , 12.5), new Point(0,Height - 80));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
@@ -800,6 +875,8 @@ namespace ShootingGame
                 drawingContext.DrawRectangle(Brushes.White, null, bossHpBarRect);
                 bossHpBarRect.Width = b.Hp >= 0 ? b.Hp * (moveableRightSidePosition - moveableLeftSidePosition) / b.MAX_HP : 0;
                 drawingContext.DrawRectangle(Brushes.Red, null, bossHpBarRect);
+
+                //drawingContext.DrawEllipse(Brushes.White, null, new Point(b.CenterX, b.CenterY), 10, 10);
             }
 
             foreach (var kvp in player.status)
@@ -829,39 +906,55 @@ namespace ShootingGame
             weaponIconRect.X += 40;
 
             drawingContext.DrawImage(weaponIconSource[1], weaponIconRect);
+            if(Math.Abs((int)windowMode) < (int)WindowMode.STAGE2)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
             weaponIconRect.Y -= 40;
 
             drawingContext.DrawImage(weaponIconSource[2], weaponIconRect);
+            if (Math.Abs((int)windowMode) < (int)WindowMode.STAGE3) drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
             weaponIconRect.X -= 40;
 
             drawingContext.DrawImage(weaponIconSource[3], weaponIconRect);
+            if (player.orbCount < 10)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
+
 
 
 
             if (isKeyPresseds[6])
             {
                 //hack:毎回newするのは効率悪いからDrawText()以外のいい方法が欲しい。
-                drawingContext.DrawText(new FormattedText(
-                                    $"Width = {Width} / Height = {Height}\n" +
-                                    $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                    $"stagePosition = {stagePosition}\n" +
-                                    $"bullets.Count  = {bullets.Count}\n" +
-                                    $"enemies.Count  = {enemies.Count}\n" +
-                                    $"items.Count    = {items.Count}\n" +
-                                    $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
-                                    $"fps = {1.0 / spf.TotalSeconds}\n" +
-                                    $"Speed = {player.Speed}\n" +
-                                    $"BGM Muted = {musicPlayer.IsMuted}\n" +
-                                    $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n" +
-                                    $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 12
-                                    , Brushes.White
-                                    , 12.5), new Point(10, 30));
+
+                string status = $"Width = {Width} / Height = {Height}\n" +
+                                $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
+                                $"stagePosition = {stagePosition}\n" +
+                                $"bullets.Count  = {bullets.Count}\n" +
+                                $"enemies.Count  = {enemies.Count}\n" +
+                                $"items.Count    = {items.Count}\n" +
+                                $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
+                                $"fps = {1.0 / spf.TotalSeconds}\n" +
+                                $"Speed = {player.Speed}\n" +
+                                $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}\n" +
+                                $"BGM Muted = {musicPlayer.IsMuted}\n";
+                               
+
+                if (musicPlayer.NaturalDuration.HasTimeSpan)
+                {
+                    status += $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n";
+                }
+                else
+                {
+                    status += "NaN\n";
+                }
+
+
+                drawingContext.DrawText(new FormattedText(status
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 12
+                                        , Brushes.White
+                                        , 12.5), new Point(10, 30));
             }
         }
 

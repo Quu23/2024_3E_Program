@@ -39,8 +39,8 @@ namespace ShootingGame.Entities.Planes.Enemies
             base.DeadAction(player, enemies, items);
             if (Radius > 10)
             {
-                enemies.Add(new SplitEnemy(X-Radius*2, Y, Level, Radius / 2));
-                enemies.Add(new SplitEnemy(X+Radius*2, Y, Level, Radius / 2));
+                enemies.Add(new SplitEnemy(X-Radius*2, Y, 1, Radius / 2));
+                enemies.Add(new SplitEnemy(X+Radius*2, Y, 1, Radius / 2));
             }
         }
     }
