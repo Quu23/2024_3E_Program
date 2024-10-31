@@ -26,7 +26,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>() {
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,Level+2,EnemyTypes.SPLASH_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,Level,EnemyTypes.SPLASH_ENEMY),
             };
 
             if (degree <= 150 )
