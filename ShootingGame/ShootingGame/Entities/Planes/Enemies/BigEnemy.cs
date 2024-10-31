@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class BigEnemy : Enemy
     {
-        public BigEnemy(int x, int y, int level) : base(x, y, 45, 1, Images.BIG_ENEMY_IMAGE, level, 10, Bullet.RADIUS_FOR_BIG, 150)
+        public BigEnemy(int x, int y, int level) : base(x, y, 45, 2, Images.BIG_ENEMY_IMAGE, level, 10, Bullet.RADIUS_FOR_BIG, 150)
         {
         }
 
@@ -21,7 +21,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>() { 
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,180,Level+2,EnemyTypes.BIG_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,180,Level,EnemyTypes.BIG_ENEMY),
             };
             return bullets;
         }
