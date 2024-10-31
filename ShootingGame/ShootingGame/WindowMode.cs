@@ -9,8 +9,8 @@
         STAGE2_BOSS = -2,
         STAGE3      =  3,
         STAGE3_BOSS = -3,
-        GAMEOVER    =  4,
-        GAMECLEAR   =  5,
+        GAMECLEAR   = 4,
+        GAMEOVER    =  5,
         LANKING     =  6,
         DEBUG       = 99,
     }

@@ -14,8 +14,8 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
 
         public List<Follower> followers;
 
-        public int Width { get => width; set => width = value; }
-        public int Height { get => height; set => height = value; }
+        public int Width { get => width; }
+        public int Height { get => height;}
 
         public new int CenterX { get => X + Width / 2; }
         public new int CenterY { get => Y + Height / 2; }

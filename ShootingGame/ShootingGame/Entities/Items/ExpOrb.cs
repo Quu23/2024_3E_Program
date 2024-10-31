@@ -11,6 +11,7 @@ namespace ShootingGame.Entities.Items
         public override void MakeEffect(Player player)
         {
             player.Exp += 50;
+            player.orbCount++;
         }
 
         protected override void Move()

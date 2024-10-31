@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Items
 {
     class ScoreBoosterItem : TransientItem
     {
-        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, Images.SCORE_BOOSTER_ITEM_IMAGE,StatusEffects.SCORE_BOOST, 30)
+        public ScoreBoosterItem(int x, int y) : base(x, y, 16, 7, Images.SCORE_BOOSTER_ITEM_IMAGE,StatusEffects.SCORE_BOOST, 100)
         {
         }
 
