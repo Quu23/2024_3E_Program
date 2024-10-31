@@ -16,3 +16,13 @@
 73700,DebugMode
 10900,DebugMode
 102150,unknown
+1400,HARUKI
+12000,TEST
+1100,HARU
+2200,unknown
+17550,GGG
+1300,unknown
+32000,unknown
+35500,unknown
+281900,AA
+34600,II
