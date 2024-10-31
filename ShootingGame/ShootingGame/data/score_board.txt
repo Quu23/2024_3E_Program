@@ -11,3 +11,8 @@
 88,wwwwwwww
 14800,unknown
 6000,unknown
+9000,DebugMode
+2900,unknown
+73700,DebugMode
+10900,DebugMode
+102150,unknown

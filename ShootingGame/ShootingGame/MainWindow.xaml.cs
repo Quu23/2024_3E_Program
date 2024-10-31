@@ -415,7 +415,7 @@ namespace ShootingGame
                 //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
                 //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
                 //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
-                enemies.Add(new Boss3());
+                enemies.Add(new Boss1());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
@@ -650,6 +650,8 @@ namespace ShootingGame
 
                 if (tmp_bullet.Type != EnemyTypes.PLAYER && player.IsHit(tmp_bullet))
                 {
+                    UtilitySE.PlayPlayerHitSE();
+
                     player.Hp -= tmp_bullet.Damage;
                     bullets.Remove(tmp_bullet);
                     continue;
@@ -659,13 +661,23 @@ namespace ShootingGame
                 {
                     Enemy tmp_enemy = enemies[ei - 1];
                     if (tmp_bullet.Type == EnemyTypes.PLAYER && tmp_enemy.IsHit(tmp_bullet))
-                    {
+                    { 
+                        UtilitySE.PlayEnemyHitSE();
                         tmp_enemy.Hp -= tmp_bullet.Damage;
 
                         bullets.Remove(tmp_bullet);
 
                         if (tmp_enemy.Hp <= 0)
                         {
+                            if (tmp_enemy is Boss)
+                            {
+                                UtilitySE.PlayBossDeadSE();
+                            }
+                            else
+                            {
+                                UtilitySE.PlayEnemyDeadSE();
+                            }
+
                             if (tmp_enemy is Follower)
                             {
                                 Follower follower = (Follower) tmp_enemy;
@@ -703,6 +715,15 @@ namespace ShootingGame
                 tmp_item.Action();
                 if (player.IsHit(tmp_item))
                 {
+                    if (tmp_item is ExpOrb) 
+                    {
+                        UtilitySE.PlayGetOrbSE();
+                    }
+                    else
+                    {
+                        UtilitySE.PlayGetItemSE();
+                    }
+
                     tmp_item.MakeEffect(player);
                     items.Remove(tmp_item);
                     continue;

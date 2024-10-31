@@ -70,7 +70,11 @@ namespace ShootingGame.Entities.Planes
                     base.Hp = value;
                     return;
                 }
-                if (status[INVINCIBLE] <= 0) base.Hp = value; 
+                if (status[INVINCIBLE] <= 0)
+                {
+                    UtilitySE.PlayPlayerHitSE();
+                    base.Hp = value;
+                }
             } 
         }
 
@@ -92,8 +96,16 @@ namespace ShootingGame.Entities.Planes
             Level++;
             MAX_HP += 1;
             Hp += 1;
-            
-            if (Level % 5 == 0)normalStatus[3] ++;
+
+            if (Level % 5 == 0)
+            {
+                normalStatus[3]++;
+
+                if (status[SHOT_RATE_DOWN] == 0 && status[SHOT_RATE_UP] == 0)
+                {
+                    DecreaceBulletCoolTime = normalStatus[3];
+                }
+            }
         }
 
         public void LevelUp(int count)
@@ -244,6 +256,8 @@ namespace ShootingGame.Entities.Planes
         // TODO:弾の画像設定
         protected override List<Bullet> ShotBullet()
         {
+            UtilitySE.PlayShotSE();
+
             //弾の追加を行うかもしれないからListはこの書き方のままでいい。
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
