@@ -41,7 +41,7 @@ namespace ShootingGame.Entities.Planes
 
             orbCount = 0;
 
-            Weapon = 3;
+            Weapon = 0;
 
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　         効果時間
@@ -72,7 +72,6 @@ namespace ShootingGame.Entities.Planes
                 }
                 if (status[INVINCIBLE] <= 0)
                 {
-                    UtilitySE.PlayPlayerHitSE();
                     base.Hp = value;
                 }
             } 

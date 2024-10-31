@@ -10,7 +10,9 @@ namespace ShootingGame
         //画像のURI
 
         //ゲームタイトルなど
-        public static readonly Uri BACKGROUND_URI        = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
+        public static readonly Uri START_BACKGROUND_URI  = new Uri("../../../img/start.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND1_URI       = new Uri("../../../img/background0.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND2_URI       = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
         public static readonly Uri BACKGROUND3_URI       = new Uri("../../../img/background3.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri TITLE_URI             = new Uri("../../../img/Title.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MODE_SELECT_TEXT_URI  = new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
@@ -50,6 +52,10 @@ namespace ShootingGame
         public static readonly Uri SPLASH_ENEMY_URI      = new Uri("../../../img/Splash_Enemy.png",UriKind.RelativeOrAbsolute);
         public static readonly Uri CYCLONE_ENEMY_URI     = new Uri("../../../img/Cyclone_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri LASER_ENEMY_URI       = new Uri("../../../img/Laser_Enemy.png", UriKind.RelativeOrAbsolute);
+
+        public static readonly Uri BOSS1_URI = new Uri("../../../img/Boss1.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BOSS2_URI = new Uri("../../../img/Boss2.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BOSS3_URI = new Uri("../../../img/Boss3.png", UriKind.RelativeOrAbsolute);
 
         //enemyの弾
         public static readonly Uri E_BULLET_SMALL_URI    = new Uri("../../../img/Enemy_Bullet_SMALL.png", UriKind.RelativeOrAbsolute);

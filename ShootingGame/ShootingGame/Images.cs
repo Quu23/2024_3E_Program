@@ -10,7 +10,10 @@ namespace ShootingGame
     static class Images
     {
         //背景とタイトル
-        public static readonly BitmapImage BACKGROUND_IMAGE         = new BitmapImage(UtilityUris.BACKGROUND_URI);
+        public static readonly BitmapImage START_BACKGROUND_IMAGE   = new BitmapImage(UtilityUris.START_BACKGROUND_URI);
+
+        public static readonly BitmapImage BACKGROUND1_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND1_URI);
+        public static readonly BitmapImage BACKGROUND2_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND2_URI);  
         public static readonly BitmapImage BACKGROUND3_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND3_URI);
         public static readonly BitmapImage TITLE_IMAGE              = new BitmapImage(UtilityUris.TITLE_URI);
         public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_URI);
@@ -61,6 +64,10 @@ namespace ShootingGame
         public static readonly BitmapImage SPLASH_ENEMY_IMAGE       = new BitmapImage(UtilityUris.SPLASH_ENEMY_URI);
         public static readonly BitmapImage CYCLONE_ENEMY_IMAGE      = new BitmapImage(UtilityUris.CYCLONE_ENEMY_URI);
         public static readonly BitmapImage LASER_ENEMY_IMAGE        = new BitmapImage(UtilityUris.LASER_ENEMY_URI);
+
+        public static readonly BitmapImage BOSS1_IMAGE = new BitmapImage(UtilityUris.BOSS1_URI);
+        public static readonly BitmapImage BOSS2_IMAGE = new BitmapImage(UtilityUris.BOSS2_URI);
+        public static readonly BitmapImage BOSS3_IMAGE = new BitmapImage(UtilityUris.BOSS3_URI);
 
         /// <summary>
         /// 敵の弾 Sサイズ :  8x 8 (r=4)

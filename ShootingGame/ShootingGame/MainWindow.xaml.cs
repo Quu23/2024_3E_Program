@@ -196,7 +196,7 @@ namespace ShootingGame
 
             //背景アニメーション設定
             // https://qiita.com/tera1707/items/15fd23cab641c75945b9
-            backgroundImage = Images.BACKGROUND_IMAGE;
+            backgroundImage = Images.START_BACKGROUND_IMAGE;
             backgroundRect = new Rect(0, 0, SystemParameters.PrimaryScreenWidth, SystemParameters.PrimaryScreenHeight);
 
             //タイトルロゴ等の設定
@@ -324,9 +324,11 @@ namespace ShootingGame
 
             UpdateForPad();
 
-            // プレイヤーの移動速度とともに早くなる
-            backgroundAnimationCounter += 5;
-            if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
+            if (windowMode != WindowMode.START)
+            {
+                backgroundAnimationCounter += 5;
+                if (backgroundAnimationCounter > SystemParameters.PrimaryScreenHeight) backgroundAnimationCounter = 0;
+            }
 
             switch (windowMode)
             {
@@ -357,9 +359,6 @@ namespace ShootingGame
             // 画面の再描画
             visuals.Clear();
             visuals.Add(CreateDrawingVisual());
-
-            //Debug.WriteLine(1.0 / spf.TotalSeconds);
-
         }
 
         private void StartLoop()
@@ -370,23 +369,6 @@ namespace ShootingGame
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
                     player.LevelUp(100);
-
-                    //int w = 50;
-
-                    //enemies.Add(new BigEnemy(moveableLeftSidePosition, 0, 1));
-                    //enemies.Add(new CycloneEnemy(enemies[0].X + enemies[0].Radius + w, 0 ,1));
-                    //enemies.Add(new GoldenEnemy(enemies[1].X + enemies[1].Radius + w, 0 ,1));
-                    //enemies.Add(new HexagonEnemy(enemies[2].X + enemies[2].Radius + w, 0 ,1));
-                    //enemies.Add(new LaserEnemy(enemies[3].X + enemies[3].Radius + w, 0 ,1));
-                    //enemies.Add(new MissileEnemy(enemies[4].X + enemies[4].Radius + w, 0 ,1));
-                    //enemies.Add(new ShotgunEnemy(enemies[5].X + enemies[5].Radius + w, 0 ,1));
-                    //enemies.Add(new SnakeEnemy(enemies[6].X + enemies[6].Radius + w, 0 ,1));
-                    //enemies.Add(new SplashEnemy(enemies[7].X + enemies[7].Radius + w, 0 ,1));
-                    //enemies.Add(new SplitEnemy(enemies[8].X + enemies[8].Radius + w, 0 ,1));
-                    //enemies.Add(new StraightEnemy(enemies[9].X + enemies[9].Radius + w, 0 ,1));
-                    //enemies.Add(new TurnBackEnemy(enemies[10].X + enemies[10].Radius + w, 0 ,1));
-
-                    //player.status[StatusEffects.INVINCIBLE] = 9999;
                     
                     return;
                 }
@@ -399,6 +381,8 @@ namespace ShootingGame
                 }
 
                 stageLastPosition = stageData[0].Item1;
+
+                backgroundImage = Images.BACKGROUND1_IMAGE;
             }
         }
 
@@ -406,32 +390,11 @@ namespace ShootingGame
         {
             if (enemies.Count <= 0)
             {
-                //int dw = (int)((Width - 2 * moveableLeftSidePosition) / 5.0);
-
-                //int basicX = moveableLeftSidePosition - 50;
-
-                //enemies.Add(new SplitEnemy(dw + basicX, 10, 1));
-                //enemies.Add(new CycloneEnemy(2 * dw + basicX, 10, 1));
-                //enemies.Add(new SplashEnemy(3 * dw + basicX, 10, 1));
-                //enemies.Add(new LaserEnemy(4 * dw + basicX, 10, 1));
-                //enemies.Add(new BigEnemy(5 * dw + basicX, 10, 1));
                 enemies.Add(new Boss1());
                 Boss b = (Boss)enemies[0];
                 enemies.AddRange(b.GetFollowers());
 
             }
-
-            //if (items.Count <= 0)
-            //{
-            //    int dw = (int)((Width - 200) / 7.0);
-            //    items.Add(new ClearEnemiesItem(dw, 30));
-            //    items.Add(new ExpOrb(2 * dw, 30));
-            //    items.Add(new HealingItem(3 * dw, 30));
-            //    items.Add(new InvincibleItem(4 * dw, 30));
-            //    items.Add(new ShotRateDownItem(5 * dw, 30));
-            //    items.Add(new SpeedDownItem(6 * dw, 30));
-            //    items.Add(new DestroyItem(7 * dw, 30));
-            //}
 
             BasicGameLogic();
         }
@@ -441,7 +404,7 @@ namespace ShootingGame
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.START;
-                backgroundImage = Images.BACKGROUND_IMAGE;
+                backgroundImage = Images.START_BACKGROUND_IMAGE;
 
                 ranking = new List<(int, string)>();
                 LoadRankingData();
@@ -479,7 +442,7 @@ namespace ShootingGame
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.START;
-                backgroundImage = Images.BACKGROUND_IMAGE;
+                backgroundImage = Images.START_BACKGROUND_IMAGE;
 
                 ranking = new List<(int, string)>();
                 LoadRankingData();
@@ -597,6 +560,16 @@ namespace ShootingGame
                         };
                         musicPlayer.IsMuted = false;
                         musicPlayer.Play();
+
+                        switch (windowMode) 
+                        {
+                            case WindowMode.STAGE2:
+                                backgroundImage = Images.BACKGROUND2_IMAGE;
+                                break;
+                            case WindowMode.STAGE3:
+                                backgroundImage = Images.BACKGROUND3_IMAGE;
+                                break;
+                        }
 
                     }
                     else if(windowMode == WindowMode.GAMECLEAR)
@@ -867,7 +840,7 @@ namespace ShootingGame
                                     , Brushes.White
                                     , 12.5), scorePoint);
 
-            drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}\nWEAPON:{player.Weapon}"
+            drawingContext.DrawText(new FormattedText($"EXP:{player.Exp}\nLV_:{player.Level}\n{player.name}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
