@@ -1,1 +1,12 @@
-﻿0,DebugMode
+﻿34,DebugMode
+20850,JFALJ
+19200,FJJ
+600,unknown
+2000,ななし
+1500,ななし
+0,11bannme
+90,hjk
+6979,hkjfg
+8789,hkjk
+88,wwwwwwww
+14800,unknown

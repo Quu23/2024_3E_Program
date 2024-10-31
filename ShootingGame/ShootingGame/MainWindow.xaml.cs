@@ -34,7 +34,8 @@ namespace ShootingGame
 
         private static string message = "";
 
-        private SortedDictionary<int, string> ranking;
+        //private SortedList<int, string> ranking;
+        private List<(int, string)> ranking;
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -215,13 +216,14 @@ namespace ShootingGame
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
-            ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x,int y) =>
+            ranking = new List<(int, string)>();
+            LoadRankingData();
+            ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
             {
-                if (x > y) return -1;
-                if (x < y) return  1;
+                if (x.Item1 > y.Item1) return -1;
+                if (x.Item1 < y.Item1) return 1;
                 return 0;
             }));
-            LoadRankingData();
 
             stageData = new List<(int, int, int, int)>();
             LoadStageData(WindowMode.STAGE1
@@ -247,7 +249,7 @@ namespace ShootingGame
 
                 int temp2 = Convert.ToInt32(temp[0]);
 
-                ranking.Add(temp2,temp[1]);
+                ranking.Add((temp2,temp[1]));
             }
         }
 
@@ -300,7 +302,7 @@ namespace ShootingGame
             // ファイルを開く＆文字化け防止
             // 第二引数が「true」 → 追加書き込みOK
             // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
-            using(StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
             {
                 // score_board.txt に書き込み
                 file.WriteLine($"{score},{player.name}");
@@ -439,15 +441,15 @@ namespace ShootingGame
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.BACKGROUND_IMAGE;
-                
-                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+
+                ranking = new List<(int, string)>();
+                LoadRankingData();
+                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
                 {
-                    if (x > y) return -1;
-                    if (x < y) return 1;
+                    if (x.Item1 > y.Item1) return -1;
+                    if (x.Item1 < y.Item1) return 1;
                     return 0;
                 }));
-                LoadRankingData();
-
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
 
@@ -469,13 +471,14 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.BACKGROUND_IMAGE;
 
-                ranking = new SortedDictionary<int, string>(Comparer<int>.Create((int x, int y) =>
+                ranking = new List<(int, string)>();
+                LoadRankingData();
+                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
                 {
-                    if (x > y) return -1;
-                    if (x < y) return 1;
+                    if (x.Item1 > y.Item1) return -1;
+                    if (x.Item1 < y.Item1) return 1;
                     return 0;
                 }));
-                LoadRankingData();
 
                 stageData = new List<(int, int, int, int)>();
                 LoadStageData(WindowMode.STAGE1);
@@ -664,9 +667,41 @@ namespace ShootingGame
 
         private void DrawStartWindow(DrawingContext drawingContext)
         {
-            if (isKeyPresseds[5])
+            if (isKeyPresseds[7])
             {
+                string topranking = "";
+                var rank = "";
+                string scores;
+                string playername;
+                int i = 1;
+                foreach (var rankingData in ranking)
+                {
+                    scores = rankingData.Item1.ToString();
+                    playername = rankingData.Item2;
+                    if (i > 9)
+                    {
+                        topranking += $"{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
+                    }
+                    else
+                    {
+                        topranking += $"{0}{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
+                    }
+                    //topranking += $"{i + 1}.{playername} , {scores}\n";
+
+                    
+                    i += 1;
+                    if (i > 10) break;
+                }
+
                 //ランキングを描画する
+                drawingContext.DrawText(new FormattedText(
+                                         topranking
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.Yellow
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - topranking.Length * 1.5, modeSelectionTextRect.Y - 40));
             }
             else
             {
