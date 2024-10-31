@@ -395,6 +395,7 @@ namespace ShootingGame
                 if (message.Length > 0)
                 {
                     player = new Player(message);
+                    message = "";
                 }
 
                 stageLastPosition = stageData[0].Item1;
@@ -462,7 +463,7 @@ namespace ShootingGame
                 items.Clear();
                 bullets.Clear();
 
-                musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
+                musicPlayer.Open(UtilityUris.BGM2_URI);
 
                 musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
                 {
@@ -501,7 +502,7 @@ namespace ShootingGame
                 items.Clear();
                 bullets.Clear();
 
-                musicPlayer.Open(UtilityUris.BOSS1_BGM_URI);
+                musicPlayer.Open(UtilityUris.BGM2_URI);
 
                 musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
                 {
@@ -905,14 +906,18 @@ namespace ShootingGame
             weaponIconRect.X += 40;
 
             drawingContext.DrawImage(weaponIconSource[1], weaponIconRect);
+            if(Math.Abs((int)windowMode) < (int)WindowMode.STAGE2)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
             weaponIconRect.Y -= 40;
 
             drawingContext.DrawImage(weaponIconSource[2], weaponIconRect);
+            if (Math.Abs((int)windowMode) < (int)WindowMode.STAGE3) drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
             weaponIconRect.X -= 40;
 
             drawingContext.DrawImage(weaponIconSource[3], weaponIconRect);
+            if (player.orbCount < 10)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
+
 
 
 
