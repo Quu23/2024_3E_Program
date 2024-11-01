@@ -758,7 +758,6 @@ namespace ShootingGame
             if (isKeyPresseds[7])
             {
                 string topranking = "";
-                var rank = "";
                 string scores;
                 string playername;
                 int i = 1;
@@ -780,6 +779,8 @@ namespace ShootingGame
                     i += 1;
                     if (i > 10) break;
                 }
+                //背景の描画
+                drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 4 - 90 , SystemParameters.FullPrimaryScreenHeight / 4 -45), new Size(SystemParameters.FullPrimaryScreenWidth / 2 + 150, SystemParameters.FullPrimaryScreenHeight / 2 + 100)));
 
                 //ランキングを描画する
                 drawingContext.DrawText(new FormattedText(
