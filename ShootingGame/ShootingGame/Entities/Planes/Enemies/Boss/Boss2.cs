@@ -16,7 +16,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_B = 1;
         private const int PATERN_C = 2;
 
-        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.BOSS2_IMAGE, 700, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
+        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.BOSS2_IMAGE, 500, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
         {
             patern = PATERN_A;
         }
@@ -62,7 +62,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                     });
                     App.window.enemies.AddRange(followers);
 
-                    followerAddCounter = 100;
+                    followerAddCounter = 200;
                 }
                 else
                 {
@@ -80,9 +80,9 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         {
             return new List<Bullet>
             {
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,30,180,2,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y+2 * bulletRadius,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y+4 * bulletRadius,bulletRadius,30,180,2,EnemyTypes.STRAIGHT_ENEMY),
             };
         }
 

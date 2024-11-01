@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-
-namespace ShootingGame.Entities.Planes.Enemies
+﻿namespace ShootingGame.Entities.Planes.Enemies
 {
     class SplashEnemy : Enemy
     {
@@ -26,7 +19,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         protected override List<Bullet> ShotBullet()
         {
             var bullets = new List<Bullet>() {
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,Level,EnemyTypes.SPLASH_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,Speed+5,degree,1,EnemyTypes.SPLASH_ENEMY),
             };
 
             if (degree <= 150 )

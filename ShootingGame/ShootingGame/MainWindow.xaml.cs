@@ -368,7 +368,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(100);
+                    player.LevelUp(20);
                     
                     return;
                 }
@@ -514,7 +514,7 @@ namespace ShootingGame
         {
             if (windowMode > 0) stagePosition++;
 
-            if (stagePosition > stageLastPosition + 100 && enemies.Count == 0)
+            if (stagePosition > stageLastPosition + 200 && enemies.Count == 0)
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
 
@@ -547,6 +547,7 @@ namespace ShootingGame
                 stagePosition = 0;
             }
 
+            // BOSSのとき
             if (windowMode < 0)
             {
                 if (enemies.Count == 0)
@@ -554,6 +555,7 @@ namespace ShootingGame
                     windowMode = (WindowMode)(-1 * (int)windowMode + 1);
                     if (windowMode <= WindowMode.STAGE3)
                     {
+                        stageData.Clear();
                         LoadStageData(windowMode);
                         stageLastPosition = stageData[0].Item1;
 
@@ -792,6 +794,10 @@ namespace ShootingGame
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - topranking.Length * 1.5, modeSelectionTextRect.Y - 150));
             }
+            else if (isKeyPresseds[2])
+            {
+                drawingContext.DrawImage(Images.STUFF_CREDIT_IMAGE, new Rect(0,0,Width , Height));
+            }
             else
             {
                 drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
@@ -926,7 +932,7 @@ namespace ShootingGame
 
                 string status = $"Width = {Width} / Height = {Height}\n" +
                                 $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                $"stagePosition = {stagePosition}\n" +
+                                $"stagePosition = {stagePosition} / lastPosition = {stageLastPosition}\n" +
                                 $"bullets.Count  = {bullets.Count}\n" +
                                 $"enemies.Count  = {enemies.Count}\n" +
                                 $"items.Count    = {items.Count}\n" +

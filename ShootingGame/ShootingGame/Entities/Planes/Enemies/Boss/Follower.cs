@@ -14,6 +14,8 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
             wrappedEnemy = enemy;
             wrappedEnemy.Speed = 0;
             this.MAX_HP = MAX_HP;
+
+            dropProb = 100;
         }
 
         public override void DeadAction(Player player, List<Enemy> enemies, List<Item> items)
