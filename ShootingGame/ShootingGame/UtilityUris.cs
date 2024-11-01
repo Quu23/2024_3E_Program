@@ -18,6 +18,7 @@ namespace ShootingGame
         public static readonly Uri MODE_SELECT_TEXT_URI  = new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
         public static readonly Uri GAMEOVER_URI          = new Uri("../../../img/Gameover.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri GAMECLEAR_URI         = new Uri("../../../img/Gameclear.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri STUFF_CREDIT_URI      = new Uri("../../../img/Stuff_Credit.png", UriKind.RelativeOrAbsolute);
 
 
         //アイテム

@@ -19,6 +19,7 @@ namespace ShootingGame
         public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_URI);
         public static readonly BitmapImage GAMEOVER_IMAGE           = new BitmapImage(UtilityUris.GAMEOVER_URI);
         public static readonly BitmapImage GAMECLEAR_IMAGE          = new BitmapImage(UtilityUris.GAMECLEAR_URI);
+        public static readonly BitmapImage STUFF_CREDIT_IMAGE       = new BitmapImage(UtilityUris.STUFF_CREDIT_URI);
 
 
         //アイテム
