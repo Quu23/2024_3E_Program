@@ -111,7 +111,7 @@ namespace ShootingGame
                 moveableLeftSidePosition = (int)(Width / 4);
                 moveableRightSidePosition = (int)(Width - moveableLeftSidePosition);
                 unmoveableAreaRect = new Rect(0, 0, moveableLeftSidePosition, Height - 15);
-                bossHpBarRect = new Rect(moveableLeftSidePosition, 0, moveableRightSidePosition - moveableLeftSidePosition, 10);
+                bossHpBarRect = new Rect(moveableLeftSidePosition, 0, moveableRightSidePosition - moveableLeftSidePosition, 15);
             };
             unmoveableAreaPen = new Pen(Brushes.Yellow, 1);
 
@@ -1182,7 +1182,7 @@ namespace ShootingGame
                 isKeyPresseds[1] = false;
                 isKeyPresseds[3] = false;
             }
-
+            
             if (!inputY)
             {
                 isKeyPresseds[0] = false;
@@ -1190,8 +1190,12 @@ namespace ShootingGame
             }
 
             isKeyPresseds[4] = jState.Buttons[1]; //Space
-            isKeyPresseds[5] = jState.Buttons[2]; //Enter
-            isKeyPresseds[7] = jState.Buttons[3]; //R_Shift
+            isKeyPresseds[7] = jState.Buttons[2]; //R_Shift
+
+            if (jState.Buttons[3]) player.Weapon = 0;
+            if (jState.Buttons[4] && Math.Abs((int) windowMode) >= (int) WindowMode.STAGE2) player.Weapon = 1; 
+            if (jState.Buttons[5] && Math.Abs((int) windowMode) >= (int) WindowMode.STAGE3) player.Weapon = 2;
+            if (jState.Buttons[6] && player.orbCount >= 10) player.Weapon = 3;
 
         }
 

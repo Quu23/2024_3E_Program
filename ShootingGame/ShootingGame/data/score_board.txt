@@ -67,3 +67,14 @@
 13200,TINNNNN
 3600,PPAP
 397800,unknown
+1594200,TEST
+102900,unknown
+39000,unknown
+6700,unknown
+53200,unknown
+5500,KJ
+95800,unknown
+249600,unknown
+90600,HIROSHI
+370900,unknown
+0,DebugMode
