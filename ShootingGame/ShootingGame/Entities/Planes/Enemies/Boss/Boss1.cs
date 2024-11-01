@@ -4,7 +4,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
 {
     class Boss1 : Boss
     {
-        public Boss1() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 1, Images.BOSS1_IMAGE, 500, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
+        public Boss1() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 1, Images.BOSS1_IMAGE, 400, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
         {
         }
 

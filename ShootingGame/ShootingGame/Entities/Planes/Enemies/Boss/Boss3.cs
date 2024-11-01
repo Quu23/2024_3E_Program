@@ -24,7 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_E = 4;
         private const int PATERN_F = 5;
 
-        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.BOSS3_IMAGE, 2000, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
+        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.BOSS3_IMAGE, 1000, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
         {
             defaultMoveableSidePositions = new int[2];
             defaultMoveableSidePositions[0] = App.window.moveableLeftSidePosition;
@@ -121,9 +121,9 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         {
             var bullets = new List<Bullet>
             { 
-                new Bullet(CenterXForShotBullet,Y,bulletRadius,45,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet,Y+2 * bulletRadius,bulletRadius,50,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                new Bullet(CenterXForShotBullet,Y+4 * bulletRadius,bulletRadius,45,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y,bulletRadius,45,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y+2 * bulletRadius,bulletRadius,50,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                new Bullet(CenterXForShotBullet,Y+4 * bulletRadius,bulletRadius,45,180,3,EnemyTypes.STRAIGHT_ENEMY),
             };
 
 
@@ -131,12 +131,12 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
             {
                 bullets.AddRange(new List<Bullet>
                 {
-                    new Bullet(CenterXForShotBullet-50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                    new Bullet(CenterXForShotBullet-50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                    new Bullet(CenterXForShotBullet-50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                    new Bullet(CenterXForShotBullet+50,Y,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                    new Bullet(CenterXForShotBullet+50,Y+2 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
-                    new Bullet(CenterXForShotBullet+50,Y+4 * bulletRadius,bulletRadius,30,180,5,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet-50,Y,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet-50,Y+2 * bulletRadius,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet-50,Y+4 * bulletRadius,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y+2 * bulletRadius,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
+                    new Bullet(CenterXForShotBullet+50,Y+4 * bulletRadius,bulletRadius,30,180,3,EnemyTypes.STRAIGHT_ENEMY),
                 });
             }
 

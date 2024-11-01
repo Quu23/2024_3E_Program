@@ -78,3 +78,16 @@
 90600,HIROSHI
 370900,unknown
 0,DebugMode
+1200,unknown
+3300,unknown
+41300,unknown
+29100,unknown
+12200,unknown
+52700,unknown
+1200,unknown
+183200,unknown
+73000,unknown
+343600,unknown
+81000,unknown
+0,DFGHJ
+300,unknown

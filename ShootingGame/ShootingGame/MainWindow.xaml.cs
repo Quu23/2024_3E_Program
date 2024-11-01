@@ -208,7 +208,7 @@ namespace ShootingGame
             scorePoint  = new Point(30, 0);
             statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 32  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 32 * (player.status.Count + 1), 32, 32);
+            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 64  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 1), 64, 64);
 
             weaponIconRect = new Rect(0,0,32,32);
 
@@ -1030,7 +1030,7 @@ namespace ShootingGame
                 case StatusEffects.INVINCIBLE:
                     return Images.INCINCIBLE_ICON_IMAGE;
                 case StatusEffects.DESTROY_MODE:
-                    return Images.DESTROY_ITEM_IMAGE;
+                    return Images.DESTOROY_ICON_IMAGE;
                 case StatusEffects.SCORE_BOOST:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 default:

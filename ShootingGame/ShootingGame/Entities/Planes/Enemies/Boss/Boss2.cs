@@ -16,7 +16,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_B = 1;
         private const int PATERN_C = 2;
 
-        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.BOSS2_IMAGE, 1000, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
+        public Boss2() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 3, Images.BOSS2_IMAGE, 700, Bullet.RADIUS_FOR_BIG, 200, GenerateFollowers())
         {
             patern = PATERN_A;
         }
