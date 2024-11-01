@@ -514,7 +514,7 @@ namespace ShootingGame
         {
             if (windowMode > 0) stagePosition++;
 
-            if (stagePosition > stageLastPosition + 300 && enemies.Count == 0)
+            if (stagePosition > stageLastPosition + 100 && enemies.Count == 0)
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
 
