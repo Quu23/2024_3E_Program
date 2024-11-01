@@ -368,7 +368,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(100);
+                    player.LevelUp(20);
                     
                     return;
                 }

@@ -24,7 +24,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private const int PATERN_E = 4;
         private const int PATERN_F = 5;
 
-        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.BOSS3_IMAGE, 1000, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
+        public Boss3() : base(App.window.moveableLeftSidePosition + 50, 2, 500, 100, 5, Images.BOSS3_IMAGE, 700, Bullet.RADIUS_FOR_BIG, 50, GenerateFollowers())
         {
             defaultMoveableSidePositions = new int[2];
             defaultMoveableSidePositions[0] = App.window.moveableLeftSidePosition;
@@ -36,12 +36,12 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
         private static List<Follower> GenerateFollowers()
         {
             return new List<Follower> {
-                new Follower(new SplashEnemy(App.window.moveableLeftSidePosition + 100,100,1), 300),
-                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 150,100,1), 150),
-                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 250,100,1), 150),
-                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 300,100,1), 150),
-                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 400,100,1), 150),
-                new Follower(new SplashEnemy(App.window.moveableLeftSidePosition + 450,100,1), 300),
+                new Follower(new SplashEnemy(App.window.moveableLeftSidePosition + 100,100,1), 100),
+                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 150,100,1), 50),
+                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 250,100,1), 50),
+                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 300,100,1), 50),
+                new Follower(new CycloneEnemy(App.window.moveableLeftSidePosition  + 400,100,1), 50),
+                new Follower(new SplashEnemy(App.window.moveableLeftSidePosition + 450,100,1), 100),
             };
         }
 

@@ -34,13 +34,15 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         private readonly int totalWeightOfProb;
         private readonly Random random;
-
+        protected int dropProb;
 
         public Enemy(int x, int y, int radius, int speed, BitmapImage img, int level, int hp, int bulletRadius, int maxBulletCoolTime) : base(x, y, radius, speed, img, level, hp, bulletRadius, maxBulletCoolTime)
         {
             random = new Random();
 
             SortedDictionary<int, ItemTypes> weightsProb = GetWeightedProbsOfDropItem;
+
+            dropProb = 50;
 
             foreach (var item in weightsProb)
             {
@@ -64,7 +66,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             MainWindow.score += player.increaseRateOfScore * GetEXP();
 
             // 50/100でドロップ
-            if (random.Next(100) >= 50)
+            if (random.Next(100) <= dropProb)
             {
                 items.Add(DropItem());
             }
