@@ -18,7 +18,7 @@ namespace ShootingGame.Entities.Planes
         /// 状態異常やダッシュ状態を抜きにした（つまり平常状態の）ステータス <br/>
         /// r , defaultSpeed , maxhp , decreaceBulletCool , increaceRateOfScore
         /// </summary>
-        private int[] normalStatus;
+        public int[] normalStatus;
 
         public Dictionary<StatusEffects, int> status;
 

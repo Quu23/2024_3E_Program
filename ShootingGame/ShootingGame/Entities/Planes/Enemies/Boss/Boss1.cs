@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
 
         protected override int GetEXP()
         {
-            return 50;
+            return 100;
         }
 
         public override void Action()
@@ -24,6 +24,14 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                 App.window.enemies.Add(new SnakeEnemy(X + 400, 100, 1));
             }
         }
+
+
+
+
+
+
+
+
 
         protected override List<Bullet> ShotBullet()
         {
