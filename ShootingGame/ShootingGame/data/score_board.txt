@@ -54,13 +54,3 @@
 139900,ABC
 603000,AIUEO
 1326400,UU
-20000,DebugMode
-0,DebugMode
-43000,DebugMode
-2000,DebugMode
-20000,DebugMode
-30000,DebugMode
-32000,DebugMode
-0,DebugMode
-27000,DebugMode
-65000,DebugMode
