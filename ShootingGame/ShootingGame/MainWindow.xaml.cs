@@ -921,7 +921,7 @@ namespace ShootingGame
             weaponIconRect.X -= 40;
 
             drawingContext.DrawImage(weaponIconSource[3], weaponIconRect);
-            if (player.orbCount < 10)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
+            if (player.orbCount < 5)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
 
 
@@ -1202,7 +1202,7 @@ namespace ShootingGame
             if (jState.Buttons[3]) player.Weapon = 0;
             if (jState.Buttons[4] && Math.Abs((int) windowMode) >= (int) WindowMode.STAGE2) player.Weapon = 1; 
             if (jState.Buttons[5] && Math.Abs((int) windowMode) >= (int) WindowMode.STAGE3) player.Weapon = 2;
-            if (jState.Buttons[6] && player.orbCount >= 10) player.Weapon = 3;
+            if (jState.Buttons[6] && player.orbCount >= 5) player.Weapon = 3;
 
         }
 

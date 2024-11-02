@@ -30,8 +30,7 @@ namespace ShootingGame.Entities.Planes
 
         public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
-            //最初は5にする？
-            MAX_HP = 5;
+            MAX_HP = 10;
 
             this.name = name;
 
@@ -202,7 +201,7 @@ namespace ShootingGame.Entities.Planes
             {
                 weapon = 0;
 
-                if(orbCount >= 10)
+                if(orbCount >= 5)
                 {
                     weapon = 3 ;
                 }

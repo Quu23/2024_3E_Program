@@ -122,7 +122,8 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
 
                     }
 
-                    if (actionCount >= 4)
+                    //恐らく本番の画面は開発画面より小さいので、相対的に敵が大きくなってしまう。結果、AからBへの移行がかなり早くなっているので修正しとく。（2倍！！）
+                    if (actionCount >= 8)
                     {
                         actionCount = 0;
                         patern++;
