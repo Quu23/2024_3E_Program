@@ -28,9 +28,9 @@ namespace ShootingGame.Entities.Planes
 
         public int orbCount;
 
-        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/5, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
+        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
-            MAX_HP = 10;
+            MAX_HP = Hp;
 
             this.name = name;
 
@@ -186,6 +186,9 @@ namespace ShootingGame.Entities.Planes
                 case INVINCIBLE:
                     //無敵になったからステータスが上がってるとかはないからなんも書かん。
                     ;
+                    break;
+                case SCORE_BOOST:
+                    increaseRateOfScore = normalStatus[4];
                     break;
                 default:
                     break;

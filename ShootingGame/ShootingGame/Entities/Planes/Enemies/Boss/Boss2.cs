@@ -28,7 +28,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
             switch (patern)
             {
                 case PATERN_A:
-                    if (actionCount == 3 && App.window.player.status[StatusEffects.INVINCIBLE] == 0 && App.window.items.Count <=2)
+                    if (actionCount == 7 && App.window.player.status[StatusEffects.INVINCIBLE] == 0 && App.window.items.Count <=2)
                     {
                         int randX = new Random().Next(App.window.moveableLeftSidePosition + 30, App.window.moveableRightSidePosition - 30);
                         App.window.items.Add(new InvincibleItem(randX,300));
@@ -62,7 +62,7 @@ namespace ShootingGame.Entities.Planes.Enemies.Boss
                     });
                     App.window.enemies.AddRange(followers);
 
-                    followerAddCounter = 200;
+                    followerAddCounter = 1000;
                 }
                 else
                 {

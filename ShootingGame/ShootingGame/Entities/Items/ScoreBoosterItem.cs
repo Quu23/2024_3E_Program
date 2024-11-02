@@ -13,7 +13,7 @@ namespace ShootingGame.Entities.Items
 
         protected override void Effect(Player player)
         {
-            player.increaseRateOfScore = 300;
+            player.increaseRateOfScore *= 3;
         }
 
         protected override void Move()

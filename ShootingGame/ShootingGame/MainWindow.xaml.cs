@@ -390,10 +390,17 @@ namespace ShootingGame
         {
             if (enemies.Count <= 0)
             {
-                enemies.Add(new Boss3());
-                Boss b = (Boss)enemies[0];
-                enemies.AddRange(b.GetFollowers());
+                //enemies.Add(new Boss3());
+                //Boss b = (Boss)enemies[0];
+                //enemies.AddRange(b.GetFollowers());
 
+                enemies.Add(new StraightEnemy(player.X, 0,1));
+
+            }
+
+            if (items.Count <= 0)
+            {
+                items.Add(new ScoreBoosterItem(player.X, 0));
             }
 
             BasicGameLogic();
@@ -414,7 +421,7 @@ namespace ShootingGame
                     if (x.Item1 < y.Item1) return 1;
                     return 0;
                 }));
-                stageData = new List<(int, int, int, int)>();
+                stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
 
                 player = new Player("unknown");
@@ -455,7 +462,7 @@ namespace ShootingGame
                     return 0;
                 }));
 
-                stageData = new List<(int, int, int, int)>();
+                stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
 
                 player = new Player("unknown");
@@ -585,7 +592,7 @@ namespace ShootingGame
                                                     , FlowDirection.LeftToRight
                                                     , FONT_TYPEFACE
                                                     , 100
-                                                    , Brushes.White
+                                                    , Brushes.Yellow
                                                     , 12.5);
 
                         WriteScore();
@@ -932,20 +939,20 @@ namespace ShootingGame
 
                 string status = $"Width = {Width} / Height = {Height}\n" +
                                 $"backgroundAnimationCounter={backgroundAnimationCounter}\n" +
-                                $"stagePosition = {stagePosition} / lastPosition = {stageLastPosition}\n" +
+                                $"Pos = {stagePosition} / lastPos = {stageLastPosition}\n" +
                                 $"bullets.Count  = {bullets.Count}\n" +
                                 $"enemies.Count  = {enemies.Count}\n" +
                                 $"items.Count    = {items.Count}\n" +
                                 $"program uptime = {(DateTime.Now - GAME_START_TIME).TotalSeconds}\n" +
                                 $"fps = {1.0 / spf.TotalSeconds}\n" +
                                 $"Speed = {player.Speed}\n" +
-                                $"cooltime = {player.BulletCoolTime},decreace = {player.DecreaceBulletCoolTime}\n" +
+                                $"cooltime = {player.BulletCoolTime} / decreace = {player.DecreaceBulletCoolTime}\n" +
                                 $"BGM Muted = {musicPlayer.IsMuted}\n";
                                
 
                 if (musicPlayer.NaturalDuration.HasTimeSpan)
                 {
-                    status += $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds}\n";
+                    status += $"BGM Seconds = {musicPlayer.Position.Minutes}:{musicPlayer.Position.Seconds} / {musicPlayer.NaturalDuration.TimeSpan.Minutes}:{musicPlayer.NaturalDuration.TimeSpan.Seconds:00}\n";
                 }
                 else
                 {
@@ -1153,7 +1160,6 @@ namespace ShootingGame
 
             // 以下の処理は挙動確認用
 
-            // 挙動確認用：押されたキーをタイトルバーに表示する
             // アナログスティックの左右軸
             bool inputX = true;
             if (jState.X > 300)
