@@ -159,3 +159,6 @@
 300,DebugMode
 9900,DebugMode
 300,DebugMode
+300,DebugMode
+1200,DebugMode
+2000002400,DebugMode

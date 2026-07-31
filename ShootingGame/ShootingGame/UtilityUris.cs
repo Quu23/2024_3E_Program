@@ -54,6 +54,7 @@ namespace ShootingGame
         public static readonly Uri SPLASH_ENEMY_URI      = new Uri("../../../img/Splash_Enemy.png",UriKind.RelativeOrAbsolute);
         public static readonly Uri CYCLONE_ENEMY_URI     = new Uri("../../../img/Cyclone_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri LASER_ENEMY_URI       = new Uri("../../../img/Laser_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SAMPLE_ENEMY_URI      = new Uri("../../../img/Sample_Enemy.png", UriKind.RelativeOrAbsolute);
 
         public static readonly Uri BOSS1_URI = new Uri("../../../img/Boss1.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri BOSS2_URI = new Uri("../../../img/Boss2.png", UriKind.RelativeOrAbsolute);
