@@ -30,7 +30,7 @@ namespace ShootingGame.Entities
             Y = y;
             Radius = radius;
             Speed = speed;
-            Rect = new Rect(X, Y, 2*Radius , 2*Radius);
+            Rect = new Rect(X, Y, 2 * Radius, 2 * Radius);
             Img = img;
         }
 
@@ -45,7 +45,7 @@ namespace ShootingGame.Entities
 
         public virtual bool IsOutOfWindow()
         {
-            if (X < App.window.moveableLeftSidePosition - Radius * 2 || X > App.window.moveableRightSidePosition || Y < -Radius*2 || Y > SystemParameters.PrimaryScreenHeight) return true;
+            if (X < App.window.moveableLeftSidePosition - Radius * 2 || X > App.window.moveableRightSidePosition || Y < -Radius * 2 || Y > SystemParameters.PrimaryScreenHeight) return true;
             return false;
         }
 
@@ -53,17 +53,17 @@ namespace ShootingGame.Entities
         public override bool Equals(object obj)
         {
 
-            if (obj == null || GetType() != obj.GetType())return false;
-            
+            if (obj == null || GetType() != obj.GetType()) return false;
+
             Entity e = (Entity)obj;
-            if( e.X != X || e.Y != Y || e.Radius != Radius || e.Speed != Speed)return false;
+            if (e.X != X || e.Y != Y || e.Radius != Radius || e.Speed != Speed) return false;
 
             return base.Equals(obj);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(X, Y , Radius , Speed);
+            return HashCode.Combine(X, Y, Radius, Speed);
         }
 
         protected abstract void Move();

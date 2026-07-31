@@ -400,7 +400,7 @@ namespace ShootingGame
 
             if (items.Count <= 0)
             {
-                items.Add(new ScoreBoosterItem(player.X, 0));
+                items.Add(new SampleItem(player.X, 0));
             }
 
             BasicGameLogic();

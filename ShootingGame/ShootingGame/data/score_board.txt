@@ -156,3 +156,6 @@
 38500,GOOD
 544600,GOMI
 -1779537596,unknown
+300,DebugMode
+9900,DebugMode
+300,DebugMode
