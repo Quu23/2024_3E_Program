@@ -253,8 +253,49 @@ namespace ShootingGame
             }
         }
 
+        // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
+
+        private void SetUpStage(WindowMode nextMode)
+        {
+            LoadStageData(nextMode);
+
+            switch (nextMode)
+            {
+                case WindowMode.STAGE1:
+                    // すでにスタート画面でBGMが流れているので、BGMを再生する必要はない。
+                    if (musicPlayer.Position == TimeSpan.Zero) musicPlayer.Open(UtilityUris.BGM2_URI);
+                    break;
+                case WindowMode.STAGE2:
+                case WindowMode.STAGE3:
+                    musicPlayer.Open(UtilityUris.BGM1_URI);
+                    break;
+            }
+            musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
+            {
+                musicPlayer.Position = TimeSpan.Zero;
+            };
+            musicPlayer.IsMuted = false;
+            musicPlayer.Play();
+
+            switch (nextMode)
+            {
+                case WindowMode.STAGE1:
+                    backgroundImage = Images.BACKGROUND1_IMAGE;
+                    break;
+                case WindowMode.STAGE2:
+                    backgroundImage = Images.BACKGROUND2_IMAGE;
+                    break;
+                case WindowMode.STAGE3:
+                    backgroundImage = Images.BACKGROUND3_IMAGE;
+                    break;
+            }
+        }
+
+        // ステージデータファイルよりステージデータを読み込む。
         private void LoadStageData(WindowMode nextMode)
         {
+            stageData.Clear();
+
             string path;
             switch (nextMode)
             {
@@ -292,6 +333,9 @@ namespace ShootingGame
                 }
                 stageData.Add((data[0], data[1], data[2], data[3]));
             }
+
+            stagePosition = 0;
+            stageLastPosition = stageData[0].Item1;
         }
 
         private void WriteScore()
@@ -379,10 +423,8 @@ namespace ShootingGame
                     player = new Player(message);
                     message = "";
                 }
-
-                stageLastPosition = stageData[0].Item1;
-
-                backgroundImage = Images.BACKGROUND1_IMAGE;
+                
+                SetUpStage(windowMode);
             }
         }
 
@@ -563,28 +605,7 @@ namespace ShootingGame
                     windowMode = (WindowMode)(-1 * (int)windowMode + 1);
                     if (windowMode <= WindowMode.STAGE3)
                     {
-                        stageData.Clear();
-                        LoadStageData(windowMode);
-                        stageLastPosition = stageData[0].Item1;
-
-                        musicPlayer.Open(UtilityUris.BGM1_URI);
-                        musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
-                        {
-                            musicPlayer.Position = TimeSpan.Zero;
-                        };
-                        musicPlayer.IsMuted = false;
-                        musicPlayer.Play();
-
-                        switch (windowMode) 
-                        {
-                            case WindowMode.STAGE2:
-                                backgroundImage = Images.BACKGROUND2_IMAGE;
-                                break;
-                            case WindowMode.STAGE3:
-                                backgroundImage = Images.BACKGROUND3_IMAGE;
-                                break;
-                        }
-
+                        SetUpStage(windowMode);
                     }
                     else if(windowMode == WindowMode.GAMECLEAR)
                     {
@@ -1090,6 +1111,9 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.RightShift:
                     isKeyPresseds[7] = true;
+                    break;
+                case System.Windows.Input.Key.I:
+                    player.status[StatusEffects.INVINCIBLE] = 9999;
                     break;
             }
         }
