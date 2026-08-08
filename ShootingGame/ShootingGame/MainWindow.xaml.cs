@@ -417,13 +417,22 @@ namespace ShootingGame
                     return;
                 }
 
+                if (message.Equals("AUTO"))
+                {
+                    player = new Player("AutoMode");
+                    player.isAuto = true;
+                    player.LevelUp(20);
+                    player.status[StatusEffects.INVINCIBLE] = 1000000;
+                    message = "";
+                }
+
                 windowMode = WindowMode.STAGE1;
                 if (message.Length > 0)
                 {
                     player = new Player(message);
                     message = "";
                 }
-                
+             
                 SetUpStage(windowMode);
             }
         }
@@ -953,6 +962,17 @@ namespace ShootingGame
             if (player.orbCount < 5)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
 
+
+            if (player.isAuto)
+            {
+                drawingContext.DrawText(new FormattedText($"AUTO"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 32
+                                    , Brushes.Red
+                                    , 12.5), new Point(Width - 320, 80));
+            }
 
 
             if (isKeyPresseds[6])

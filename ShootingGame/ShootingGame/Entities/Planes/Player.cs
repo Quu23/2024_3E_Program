@@ -28,7 +28,10 @@ namespace ShootingGame.Entities.Planes
 
         public int orbCount;
 
-        public Player(string name) : base(/*x=*/700, /*y=*/500, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
+        public bool isAuto;
+        private long timeForAuto; // AUTO時に行動を決めるためのタイマー
+
+        public Player(string name) : base(/*x=*/700, /*y=*/700, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             MAX_HP = Hp;
 
@@ -56,6 +59,9 @@ namespace ShootingGame.Entities.Planes
             normalStatus = [
                 Radius, defaultSpeed, MAX_HP, DecreaceBulletCoolTime, 100,
             ];
+
+            isAuto = false;
+            timeForAuto = 0;
 
         }
 
@@ -158,6 +164,14 @@ namespace ShootingGame.Entities.Planes
                 App.window.bullets.AddRange(ShotBullet());
                 BulletCoolTime = MaxBulletCoolTime;
             }
+
+            if (isAuto)
+            {
+                timeForAuto++;
+                if (timeForAuto > 1000000) timeForAuto = 0;
+
+                if(timeForAuto % 10 == 0) App.window.bullets.AddRange(ShotBullet());
+            }
         }
 
         /// <summary>
@@ -226,6 +240,12 @@ namespace ShootingGame.Entities.Planes
 
         protected override void Move()
         {
+            if (isAuto)
+            {
+                X += (int)(Math.Sin(timeForAuto * 0.05) * 3.0 * Speed);
+                return;
+            }
+
             if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1])
             {
                 X -= Speed;
