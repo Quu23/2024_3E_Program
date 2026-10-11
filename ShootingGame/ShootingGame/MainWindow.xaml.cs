@@ -820,7 +820,8 @@ namespace ShootingGame
                     if (i > 10) break;
                 }
                 //背景の描画
-                drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 4 - 90 , SystemParameters.FullPrimaryScreenHeight / 4 - 45), new Size(SystemParameters.FullPrimaryScreenWidth / 2 + 150, SystemParameters.FullPrimaryScreenHeight / 2 + 100)));
+                drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 5.5 , SystemParameters.FullPrimaryScreenHeight / 4.5), new Size(SystemParameters.FullPrimaryScreenWidth / 1.5, SystemParameters.FullPrimaryScreenHeight / 1.64)));
+                                                                                     // new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 4 - 90 , SystemParameters.FullPrimaryScreenHeight / 4 - 45), new Size(SystemParameters.FullPrimaryScreenWidth / 2 + 150, SystemParameters.FullPrimaryScreenHeight / 2 + 100))
 
                 //ランキングを描画する
                 drawingContext.DrawText(new FormattedText(
@@ -830,7 +831,7 @@ namespace ShootingGame
                                         , FONT_TYPEFACE
                                         , 30
                                         , Brushes.Yellow
-                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4 - 55, modeSelectionTextRect.Y - 150));
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.8, modeSelectionTextRect.Y / 1.7));
             }
             else if (isKeyPresseds[2])
             {
