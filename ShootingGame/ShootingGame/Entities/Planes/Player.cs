@@ -31,6 +31,9 @@ namespace ShootingGame.Entities.Planes
         public bool isAuto;
         private long timeForAuto; // AUTO時に行動を決めるためのタイマー
 
+        public int lives; //残機数
+        public const int MAX_LIVES = 3; //最大残機数
+
         public Player(string name) : base(/*x=*/700, /*y=*/700, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             MAX_HP = Hp;
@@ -63,6 +66,19 @@ namespace ShootingGame.Entities.Planes
             isAuto = false;
             timeForAuto = 0;
 
+            lives = MAX_LIVES;
+        }
+
+        /// <summary>
+        /// プレイヤーのHPや座標などをリセットする。残機がまだあるときに死んだとき用。
+        /// </summary>
+        public void Refresh()
+        {
+            X = 700;
+            Y = 700;
+            Hp = MAX_HP;
+            Weapon = 0;
+            ResetStatus(NORMALE);
         }
 
         public override int Hp 
@@ -94,7 +110,7 @@ namespace ShootingGame.Entities.Planes
         /// </summary>
         public int Weapon { get => weapon; set => weapon = value % 4;}
 
-        //TODO:レベルアップした時の処理を考える
+
         public void LevelUp()
         {
             Level++;

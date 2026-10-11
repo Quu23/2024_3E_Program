@@ -274,7 +274,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = false;
+            musicPlayer.IsMuted = true;
             musicPlayer.Play();
 
             switch (nextMode)
@@ -639,6 +639,7 @@ namespace ShootingGame
             //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
             if (player.Hp <= 0)
             {
+                player.lives--;
                 windowMode = WindowMode.GAMEOVER;
                 scoreText = new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
@@ -904,6 +905,14 @@ namespace ShootingGame
                                     , 16
                                     , Brushes.White
                                     , 12.5), new Point(0,Height - 80));
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(10, Height - 120, 16, 16));
+            drawingContext.DrawText(new FormattedText($"  ×{player.lives}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 16
+                                    , Brushes.White
+                                    , 12.5), new Point(0, Height - 120));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
