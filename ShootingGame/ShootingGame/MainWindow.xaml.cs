@@ -830,9 +830,9 @@ namespace ShootingGame
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , FONT_TYPEFACE
-                                        , 30
+                                        , 30 / SystemParameters.FullPrimaryScreenWidth * 1250
                                         , Brushes.Yellow
-                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.8, modeSelectionTextRect.Y / 1.7));
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.5, modeSelectionTextRect.Y / 1.7));
             }
             else if (isKeyPresseds[2])
             {
@@ -848,7 +848,7 @@ namespace ShootingGame
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , FONT_TYPEFACE
-                                        , 30 / SystemParameters.FullPrimaryScreenWidth * 30
+                                        , 30
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
             }
