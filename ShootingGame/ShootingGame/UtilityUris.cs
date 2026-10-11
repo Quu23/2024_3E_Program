@@ -83,6 +83,7 @@ namespace ShootingGame
         public static readonly Uri HOMING_ICON_URI  = new Uri("../../../img/Icon_Homing.png", UriKind.RelativeOrAbsolute);
 
         public static readonly Uri PROHIBITED_ICON_URI = new Uri("../../../img/Prohibited.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri LIFE_ICON_URI       = new Uri("../../../img/Icon_life.png", UriKind.RelativeOrAbsolute);
 
 
 

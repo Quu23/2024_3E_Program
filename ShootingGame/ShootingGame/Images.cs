@@ -103,6 +103,7 @@ namespace ShootingGame
         public static readonly BitmapImage HOMING_ICON_IMAGE  = new BitmapImage(UtilityUris.HOMING_ICON_URI);
 
         public static readonly BitmapImage PROHIBITED_ICON_IMAGE = new BitmapImage(UtilityUris.PROHIBITED_ICON_URI);
+        public static readonly BitmapImage LIFE_ICON_IMAGE = new BitmapImage(UtilityUris.LIFE_ICON_URI);
 
     }
 }
