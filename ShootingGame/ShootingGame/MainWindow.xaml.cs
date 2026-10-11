@@ -821,8 +821,7 @@ namespace ShootingGame
                 }
                 //背景の描画
                 drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 5.5 , SystemParameters.FullPrimaryScreenHeight / 4.5), new Size(SystemParameters.FullPrimaryScreenWidth / 1.5, SystemParameters.FullPrimaryScreenHeight / 1.64)));
-                                                                                     // new Rect(new Point(SystemParameters.FullPrimaryScreenWidth / 4 - 90 , SystemParameters.FullPrimaryScreenHeight / 4 - 45), new Size(SystemParameters.FullPrimaryScreenWidth / 2 + 150, SystemParameters.FullPrimaryScreenHeight / 2 + 100))
-
+                                                                                     
                 //ランキングを描画する
                 drawingContext.DrawText(new FormattedText(
                                          topranking
@@ -847,7 +846,7 @@ namespace ShootingGame
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , FONT_TYPEFACE
-                                        , 30
+                                        , 30 / SystemParameters.FullPrimaryScreenWidth * 30
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
             }
