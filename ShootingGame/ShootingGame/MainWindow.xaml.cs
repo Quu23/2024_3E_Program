@@ -492,7 +492,7 @@ namespace ShootingGame
                 {
                     musicPlayer.Position = TimeSpan.Zero;
                 };
-                musicPlayer.IsMuted = false;
+                musicPlayer.IsMuted = isMusicMuted;
                 musicPlayer.Play();
 
                 backgroundAnimationCounter = 0;
@@ -533,7 +533,7 @@ namespace ShootingGame
                 {
                     musicPlayer.Position = TimeSpan.Zero;
                 };
-                musicPlayer.IsMuted = false;
+                musicPlayer.IsMuted = isMusicMuted;
                 musicPlayer.Play();
 
                 backgroundAnimationCounter = 0;
@@ -598,7 +598,7 @@ namespace ShootingGame
                 {
                     musicPlayer.Position = TimeSpan.Zero;
                 };
-                musicPlayer.IsMuted = false;
+                musicPlayer.IsMuted = isMusicMuted;
                 musicPlayer.Play();
 
                 Boss b = (Boss)enemies[0];
