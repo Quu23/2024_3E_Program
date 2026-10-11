@@ -68,6 +68,7 @@ namespace ShootingGame
         public List<Item> items = new List<Item>();
 
         private MediaPlayer musicPlayer;
+        private bool isMusicMuted = true;
 
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
@@ -191,7 +192,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = false;
+            musicPlayer.IsMuted = isMusicMuted;
             musicPlayer.Play();
 
             //背景アニメーション設定
@@ -274,7 +275,7 @@ namespace ShootingGame
             {
                 musicPlayer.Position = TimeSpan.Zero;
             };
-            musicPlayer.IsMuted = true;
+            musicPlayer.IsMuted = isMusicMuted;
             musicPlayer.Play();
 
             switch (nextMode)
