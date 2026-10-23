@@ -50,7 +50,7 @@ namespace ShootingGame
                     return new DestroyItem(x, y);
                 case ItemTypes.EXP_ORB:
                     return new ExpOrb(x, y);
-                case ItemTypes.HEALING_ITEM:
+                case ItemTypes.LARGE_HEAL_ITEM:
                     return new LargeHealItem(x, y);
                 case ItemTypes.INVINCIBLE_ITEM:
                     return new InvincibleItem(x, y);

@@ -167,3 +167,7 @@
 0,unknown
 0,unknown
 0,unknown
+2100,AAAA
+125100,AAAA
+300,DebugMode
+500000300,DebugMode
