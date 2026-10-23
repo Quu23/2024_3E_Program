@@ -3,9 +3,9 @@ using ShootingGame.Entities.Planes;
 
 namespace ShootingGame.Entities.Items
 {
-    class HealingItem : Item
+    class LargeHealItem : Item
     {
-        public HealingItem(int x, int y) : base(x, y, 16, 6, Images.HEALING_ITEM_IMAGE)
+        public LargeHealItem(int x, int y) : base(x, y, 16, 6, Images.HEALING_ITEM_IMAGE)
         {
 
         }

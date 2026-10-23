@@ -413,7 +413,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
-                    player.LevelUp(20);
+                    player.LevelUp(3);
                     
                     return;
                 }
