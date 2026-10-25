@@ -45,6 +45,7 @@ namespace ShootingGame
         public static int stageLastPosition = 0;
 
         public static int score = 0;
+        const int GRAZE_BONUS = 500;
 
         const int FPS = 60;
 
@@ -60,6 +61,7 @@ namespace ShootingGame
         private Joystick _joy;
 
         public Player player;
+        public GrazeEntity grazeEntityForPlayer;
 
         public List<Enemy> enemies = new List<Enemy>();
 
@@ -120,6 +122,8 @@ namespace ShootingGame
             windowMode = WindowMode.START;
 
             player = new Player("unknown");
+            grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
+
             Debug.WriteLine(player.X);
 
             //タイマーの設定 
@@ -413,6 +417,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.DEBUG;
                     player = new Player("DebugMode");
+                    grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
                     player.LevelUp(3);
                     
                     return;
@@ -421,6 +426,7 @@ namespace ShootingGame
                 if (message.Equals("AUTO"))
                 {
                     player = new Player("AutoMode");
+                    grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
                     player.isAuto = true;
                     player.LevelUp(20);
                     player.status[StatusEffects.INVINCIBLE] = 1000000;
@@ -431,6 +437,7 @@ namespace ShootingGame
                 if (message.Length > 0)
                 {
                     player = new Player(message);
+                    grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
                     message = "";
                 }
              
@@ -478,6 +485,7 @@ namespace ShootingGame
                 LoadStageData(WindowMode.STAGE1);
 
                 player = new Player("unknown");
+                grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
 
                 score = 0;
                 stagePosition = 0;
@@ -519,6 +527,7 @@ namespace ShootingGame
                 LoadStageData(WindowMode.STAGE1);
 
                 player = new Player("unknown");
+                grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
 
                 score = 0;
                 stagePosition = 0;
@@ -654,6 +663,7 @@ namespace ShootingGame
             }
 
             player.Action();
+            grazeEntityForPlayer.Action();
 
             for (int bi = bullets.Count; bi > 0; bi--)
             {
@@ -674,6 +684,11 @@ namespace ShootingGame
                     player.Hp -= tmp_bullet.Damage;
                     bullets.Remove(tmp_bullet);
                     continue;
+                }
+                else if(tmp_bullet.Type != EnemyTypes.PLAYER && grazeEntityForPlayer.IsHit(tmp_bullet))
+                {
+                    score += GRAZE_BONUS;
+                    UtilitySE.PlayGrazeSE();
                 }
 
                 for (int ei = enemies.Count; ei > 0; ei--)
@@ -716,9 +731,12 @@ namespace ShootingGame
 
                 tmp_enemy.Action();
 
-                if (tmp_enemy.IsHit(player))
+                if (player.IsHit(tmp_enemy))
                 {
                     player.Hp = 0;
+                }else if (grazeEntityForPlayer.IsHit(tmp_enemy)){
+                    score += GRAZE_BONUS;
+                    UtilitySE.PlayGrazeSE();
                 }
                 if (tmp_enemy.IsOutOfWindow())
                 {
@@ -863,7 +881,11 @@ namespace ShootingGame
             unmoveableAreaRect.X = 0;
 
             drawingContext.DrawImage(player.Img, player.Rect);
-            if (isKeyPresseds[6]) DrawHitRange(drawingContext, player);
+            if (isKeyPresseds[6])
+            {
+                DrawHitRange(drawingContext, player);
+                DrawHitRange(drawingContext, grazeEntityForPlayer);
+            }
 
             foreach (var bullet in bullets)
             {
@@ -1054,6 +1076,11 @@ namespace ShootingGame
             {
                 Boss targetBoss = (Boss)target;
                 dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(targetBoss.CenterX, targetBoss.CenterY), targetBoss.Width/2, targetBoss.Height/2);
+            }
+            else if (target is GrazeEntity)
+            {
+                GrazeEntity targetGrazeEntity = (GrazeEntity)target;
+                dc.DrawEllipse(colorBrush, new Pen(Brushes.DarkGreen, 1), new Point(targetGrazeEntity.CenterX, targetGrazeEntity.CenterY), targetGrazeEntity.Width / 2, targetGrazeEntity.Height / 2);
             }
             else
             {
