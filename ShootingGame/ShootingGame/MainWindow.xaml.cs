@@ -830,7 +830,7 @@ namespace ShootingGame
                                         , CultureInfo.GetCultureInfo("en")
                                         , FlowDirection.LeftToRight
                                         , FONT_TYPEFACE
-                                        , 30 / SystemParameters.FullPrimaryScreenWidth * 1250
+                                        , 30
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.5, modeSelectionTextRect.Y / 1.7));
             }
