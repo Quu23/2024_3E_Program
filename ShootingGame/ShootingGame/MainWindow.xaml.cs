@@ -656,7 +656,7 @@ namespace ShootingGame
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 100
+                                    , 90
                                     , Brushes.White
                                     , 12.5);
 
@@ -1048,7 +1048,7 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            double fixedLeft = Width / 2 - 550;
+            double fixedLeft = Width / 2 - 600;
             scoreText.TextAlignment = System.Windows.TextAlignment.Left;
             drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
         }
