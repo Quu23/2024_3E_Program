@@ -581,7 +581,7 @@ namespace ShootingGame
 
         private void BasicGameLogic()
         {
-            if (windowMode > 0) stagePosition++;
+            if (windowMode > 0) stagePosition+=1;
 
             if (stagePosition > stageLastPosition + 200 && enemies.Count == 0)
             {
@@ -731,10 +731,10 @@ namespace ShootingGame
 
                 tmp_enemy.Action();
 
-                if (player.IsHit(tmp_enemy))
+                if (tmp_enemy.IsHit(player))
                 {
                     player.Hp = 0;
-                }else if (grazeEntityForPlayer.IsHit(tmp_enemy)){
+                }else if (!(tmp_enemy is Boss)&&grazeEntityForPlayer.IsHit(tmp_enemy)){
                     score += GRAZE_BONUS;
                     UtilitySE.PlayGrazeSE();
                 }
