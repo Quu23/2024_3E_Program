@@ -651,7 +651,8 @@ namespace ShootingGame
             {
                 player.lives--;
                 windowMode = WindowMode.GAMEOVER;
-                scoreText = new FormattedText($"SCORE:{score}"
+
+                scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -1047,15 +1048,19 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
-            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
+            double fixedLeft = Width / 2 - 550;
+            scoreText.TextAlignment = System.Windows.TextAlignment.Left;
+            drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
         }
 
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
-            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
-            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
+            double fixedLeft = Width / 2 - 550;
+            scoreText.TextAlignment = System.Windows.TextAlignment.Left;
+            drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
+            //double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
+            //drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？
