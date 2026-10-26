@@ -5,7 +5,7 @@
         CLEAR_ENEMIES_ITEM,
         DESTROY_ITEM,
         EXP_ORB,
-        HEALING_ITEM,
+        LARGE_HEAL_ITEM,
         INVINCIBLE_ITEM,
         SCORE_BOOSTER_ITEM,
         SHOT_RATE_DOWN_ITEM,

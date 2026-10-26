@@ -8,13 +8,14 @@ namespace ShootingGame
     /// </summary>
     public class UtilitySE
     {
-        private static SoundPlayer ENEMY_HIT_SE = new SoundPlayer("../../../music/se/bullet_hit.wav");
+        private static SoundPlayer ENEMY_HIT_SE  = new SoundPlayer("../../../music/se/bullet_hit.wav");
         private static SoundPlayer PLAYER_HIT_SE = new SoundPlayer("../../../music/se/player_hit.wav");
         private static SoundPlayer ENEMY_DEAD_SE = new SoundPlayer("../../../music/se/enemy_dead.wav");
         private static SoundPlayer BOSS_DEAD_SE  = new SoundPlayer("../../../music/se/boss_dead.wav");
         private static SoundPlayer GET_ITEM_SE   = new SoundPlayer("../../../music/se/get_item.wav");
         private static SoundPlayer GET_ORB_SE    = new SoundPlayer("../../../music/se/get_orb.wav");
         private static SoundPlayer SHOT_SE       = new SoundPlayer("../../../music/se/shot.wav");
+        private static SoundPlayer GRAZE_SE      = new SoundPlayer("../../../music/se/graze.wav");
 
         public static void PlayEnemyHitSE()
         {
@@ -43,6 +44,10 @@ namespace ShootingGame
         public static void PlayShotSE()
         {
             SHOT_SE.Play();
+        }
+        public static void PlayGrazeSE()
+        {
+            GRAZE_SE.Play();
         }
 
     }
