@@ -46,7 +46,7 @@ namespace ShootingGame
 
         public static int score = 0;
         public static int rank;
-        const int GRAZE_BONUS = 500;
+        const int GRAZE_BONUS = 50;
 
         const int FPS = 60;
 
