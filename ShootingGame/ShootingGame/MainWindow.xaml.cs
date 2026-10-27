@@ -263,38 +263,46 @@ namespace ShootingGame
 
         private void DrawResultWindow(DrawingContext drawingContext)
         {
-            LoadRankingData();
-            ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+            List<(int rank, int score, string name)> displayList = new List<(int rank, int score, string name)>();
 
-            // ★ 全データに実際の順位（1位〜）を付与したリストを作成
-            var rankedList = ranking
-                .Select((r, index) => (Rank: index + 1, Score: r.Item2, Name: r.Item3))
-                .ToList();
-
-            // 1. トップ9を抽出
-            var displayList = rankedList.Take(9).ToList();
-
-            // 2. トップ9の中に「自分」が含まれているかチェック
-            bool isMeInTop9 = displayList.Any(r => r.Score == score && r.Name == player.name);
-
-            if (isMeInTop9)
+            int topCount = Math.Min(9, ranking.Count);
+            for (int i = 0; i < topCount; i++)
             {
-                // 自分がトップ9にいる場合はトップ10を取得
-                displayList = rankedList.Take(10).ToList();
+                displayList.Add(ranking[i]);
             }
-            else
+            // トップ9の中に自分が含まれているかチェック
+            bool isMeInTop9 = false;
+            foreach (var item in displayList)
             {
-                // 自分がトップ9にいない場合、全体から実際の順位を持った自分のデータを10行目に追加
-                var myData = rankedList.FirstOrDefault(r => r.Score == score && r.Name == player.name);
-                if (myData != default)
+                if (item.score == score && item.name == player.name)
                 {
-                    displayList.Add(myData); // 15位なら Rank = 15 のデータが入る
+                    isMeInTop9 = true;
+                    break;
                 }
             }
 
-            // 枠とテキストの描画
+            if (isMeInTop9)
+            {
+                // 自分がトップ9にいる場合、10件目のデータがあればそのまま追加
+                if (ranking.Count >= 10)
+                {
+                    displayList.Add(ranking[9]);
+                }
+            }
+            else
+            {
+                // 自分がトップ9にいない場合、全体のデータから自分を探して10件目に追加
+                foreach (var item in ranking)
+                {
+                    if (item.Item2 == score && item.Item3 == player.name)
+                    {
+                        displayList.Add(item);
+                        break; // 最初に見つかった自分のスコアを追加して抜ける
+                    }
+                }
+            }
             Rect windowRect = ShowRanking(drawingContext);
-            Point textOrigin = new Point(windowRect.Left + 40, windowRect.Top + 40);
+            Point textOrigin = new Point(windowRect.Left + 35, windowRect.Top + 30);
             WriteResult(drawingContext, displayList, textOrigin);
         }
         private Rect ShowRanking(DrawingContext drawingContext)
@@ -308,26 +316,27 @@ namespace ShootingGame
             return windowRect;
         }
 
-        private void WriteResult(DrawingContext drawingContext, List<(int Rank, int Score, string Name)> displayList, Point origin)
+        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin)
         {
-            double lineSpacing = 40;
+            const double fontSize = 30;
+            const double lineSpacing = 50;
 
             for (int i = 0; i < displayList.Count; i++)
             {
                 var item = displayList[i];
 
-                bool isMe = (item.Score == score && item.Name == player.name);
+                // 自分のデータなら白、他人は黄色にブラッシング切り替え
+                bool isMe = (item.score == score && item.name == player.name);
                 Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
 
-                // ★ i + 1 ではなく、実際の順位 (item.Rank) を表示する
-                string lineText = $"{item.Rank,2}.  {item.Name,-12}  {item.Score,6} pts";
+                string lineText = $"{item.rank,2}.  {item.name,-12}  {item.score,8} pts";
 
                 var formattedText = new FormattedText(
                     lineText,
                     CultureInfo.GetCultureInfo("en"),
                     FlowDirection.LeftToRight,
                     FONT_TYPEFACE,
-                    30,
+                    fontSize,
                     textBrush,
                     12.5
                 );
@@ -575,6 +584,7 @@ namespace ShootingGame
                 LoadRankingData();
                 ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
                 SaveRankingDate(ranking);
+                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
@@ -586,13 +596,13 @@ namespace ShootingGame
                 LoadRankingData();
                 ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
                 SaveRankingDate(ranking);
+                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
 
         private void ResultLoop()
         {
-            // RESULT画面でEnterキーが押されたらタイトルに戻る
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.START;
