@@ -34,6 +34,8 @@ namespace ShootingGame.Entities.Planes
         public int lives; //残機数
         public const int MAX_LIVES = 3; //最大残機数
 
+        public int animationCounter; //残機減らしたときのアニメーションのためのカウンター
+
         public Player(string name) : base(/*x=*/700, /*y=*/700, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
             MAX_HP = Hp;
@@ -68,6 +70,8 @@ namespace ShootingGame.Entities.Planes
             timeForAuto = 0;
 
             lives = MAX_LIVES;
+
+            animationCounter = 0;
         }
 
         /// <summary>
@@ -147,9 +151,27 @@ namespace ShootingGame.Entities.Planes
             return false;
         }
 
+        public void StartAnimation()
+        {
+            animationCounter = 20;
+        }
+
         public override void Action()
         {
             if (BulletCoolTime > 0) BulletCoolTime -= DecreaceBulletCoolTime;
+
+            if(animationCounter > 0)
+            {
+                animationCounter--;
+                if (animationCounter % 2 == 0 && animationCounter != 0)
+                {
+                    this.Img = null;
+                }
+                else
+                {
+                    this.Img = Images.PLAYER_IMAGE;
+                }
+            }
 
             if (MainWindow.isKeyPresseds[5]) RotateWeapon();
 

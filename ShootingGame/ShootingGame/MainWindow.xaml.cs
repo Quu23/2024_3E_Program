@@ -729,6 +729,8 @@ namespace ShootingGame
             if (player.Hp <= 0)
             {
                 player.lives--;
+                UtilitySE.PlayReliveSE();
+                player.StartAnimation();
                 if (player.lives == 0)
                 {
                     windowMode = WindowMode.GAMEOVER;
