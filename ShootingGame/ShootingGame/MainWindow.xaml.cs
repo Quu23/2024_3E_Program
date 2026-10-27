@@ -1125,6 +1125,8 @@ namespace ShootingGame
                     return Images.DESTOROY_ICON_IMAGE;
                 case StatusEffects.SCORE_BOOST:
                     return Images.SCORE_BOOST_ICON_IMAGE;
+                case StatusEffects.REVERSE_CONTROLS:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();
             }

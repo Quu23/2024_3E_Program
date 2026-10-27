@@ -187,3 +187,14 @@
 14380,unknown
 16600,unknown
 22700,unknown
+41200,HI
+162900,A
+24200,TENSAI
+800,DebugMode
+500001100,DebugMode
+800,DebugMode
+4100,DebugMode
+300,DebugMode
+300,DebugMode
+300,DebugMode
+300,DebugMode
