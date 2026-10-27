@@ -259,6 +259,18 @@ namespace ShootingGame
 
                 ranking.Add((temp2, temp3, temp[2]));
             }
+
+            for (int i = 0; i < ranking.Count - 1; i++)
+            {
+                for (int j = i + 1; j < ranking.Count; j++)
+                {if (ranking[i].Item2 < ranking[j].Item2)
+                    {
+                        var temp = ranking[i];
+                        ranking[i] = ranking[j];
+                        ranking[j] = temp;
+                    }
+                }
+            }
         }
 
         private void DrawResultWindow(DrawingContext drawingContext)
@@ -582,7 +594,6 @@ namespace ShootingGame
             if (isKeyPresseds[5])
             {
                 LoadRankingData();
-                ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
                 SaveRankingDate(ranking);
                 LoadRankingData();
                 windowMode = WindowMode.RESULT;
@@ -594,7 +605,6 @@ namespace ShootingGame
             if (isKeyPresseds[5])
             {
                 LoadRankingData();
-                ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
                 SaveRankingDate(ranking);
                 LoadRankingData();
                 windowMode = WindowMode.RESULT;
