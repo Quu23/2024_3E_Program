@@ -57,6 +57,7 @@ namespace ShootingGame.Entities.Planes
                 { SCORE_BOOST             ,0},
                 { INVINCIBLE              ,0},
                 { DESTROY_MODE            ,0},
+                { REVERSE_CONTROLS        ,0},
             };
 
             normalStatus = [
@@ -262,28 +263,44 @@ namespace ShootingGame.Entities.Planes
                 return;
             }
 
-            if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1])
+            if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 X -= Speed;
+            }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[1]) 
+            {
+                X += Speed;
             }
             if (X < App.window.moveableLeftSidePosition) X = App.window.moveableLeftSidePosition;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            if (X + Radius * 2 < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3])
+            if (X + Radius * 2 < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 X += Speed;
             }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[3])
+            {
+                X -= Speed;
+            }
             if (X + Radius * 2 > App.window.moveableRightSidePosition) X = (int)(App.window.moveableRightSidePosition - Radius * 2);
 
-            if (Y > 0 && MainWindow.isKeyPresseds[0])
+            if (Y > 0 && MainWindow.isKeyPresseds[0] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 Y -= Speed;
             }
-            if (Y < 0) Y = 0;
-
-            if (Y + Radius * 2 < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[0])
             {
                 Y += Speed;
+            }
+            if (Y < 0) Y = 0;
+
+            if (Y + Radius * 2 < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2] && 0 == status[StatusEffects.REVERSE_CONTROLS])
+            {
+                Y += Speed;
+            }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[2])
+            {
+                Y -= Speed;
             }
             if (Y + Radius * 2 > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Radius * 2);
         }

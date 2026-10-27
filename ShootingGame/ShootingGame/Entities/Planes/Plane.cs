@@ -3,7 +3,7 @@ using System.Windows.Media.Imaging;
 namespace ShootingGame.Entities.Planes
 {
     /// <summary>
-    /// ©‹@‚â“G‹@‚È‚Ç‚ğŠÜ‚ß‚½’ŠÛ“I‚Èí“¬‹@ƒNƒ‰ƒX
+    /// ï¿½ï¿½ï¿½@ï¿½ï¿½Gï¿½@ï¿½È‚Ç‚ï¿½Ü‚ß‚ï¿½ï¿½ï¿½ï¿½Û“Iï¿½Èí“¬ï¿½@ï¿½Nï¿½ï¿½ï¿½X
     /// </summary>
     abstract public class Plane : Entity
     {
@@ -29,7 +29,7 @@ namespace ShootingGame.Entities.Planes
         }
 
         /// <summary>
-        /// ’e‚ğo‚·‚Æ‚«—p‚ÉA’e‚Ì‰æ‘œ‚ÌƒTƒCƒY‚Æ‚©‚ğl—¶‚µ‚½^‚ñ’†‚ÌXÀ•W‚ğ•Ô‚·B
+        /// ï¿½eï¿½ï¿½oï¿½ï¿½ï¿½Æ‚ï¿½ï¿½pï¿½ÉAï¿½eï¿½Ì‰æ‘œï¿½ÌƒTï¿½Cï¿½Yï¿½Æ‚ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½ñ’†‚ï¿½Xï¿½ï¿½ï¿½Wï¿½ï¿½Ô‚ï¿½ï¿½B
         /// </summary>
         public int CenterXForShotBullet
         {
@@ -68,9 +68,9 @@ namespace ShootingGame.Entities.Planes
         }
 
         /// <summary>
-        /// ©•ª‚Ì”òs‹@‚Ì’e‚ğ¶¬‚·‚éƒƒ\ƒbƒhB
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½sï¿½@ï¿½Ì’eï¿½ğ¶ï¿½ï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½hï¿½B
         /// </summary>
-        /// <returns>¶¬‚µ‚½Bullet‚ÌƒŠƒXƒg‚ğ•Ô‚·B‚±‚ê‚ğbullets‚Éadd‚·‚éŒ`‚Åg‚¤B</returns>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bulletï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½Ô‚ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½bulletsï¿½ï¿½addï¿½ï¿½ï¿½ï¿½`ï¿½Ågï¿½ï¿½ï¿½B</returns>
         protected abstract List<Bullet> ShotBullet();
     }
 }

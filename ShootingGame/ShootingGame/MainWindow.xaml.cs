@@ -225,8 +225,6 @@ namespace ShootingGame
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
             ranking = new List<(int, int,string)>();
             LoadRankingData();
-            //ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
-            //過去プログラム保存
             ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
                 if (x.Item2 > y.Item2) return -1;
@@ -1203,6 +1201,8 @@ namespace ShootingGame
                 case StatusEffects.DESTROY_MODE:
                     return Images.DESTOROY_ICON_IMAGE;
                 case StatusEffects.SCORE_BOOST:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
+                case StatusEffects.REVERSE_CONTROLS:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();
