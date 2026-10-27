@@ -35,7 +35,7 @@ namespace ShootingGame
         private static string message = "";
 
         //private SortedList<int, string> ranking;
-        private List<(int, string)> ranking;
+        private List<(int, int, string)> ranking;
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -45,6 +45,7 @@ namespace ShootingGame
         public static int stageLastPosition = 0;
 
         public static int score = 0;
+        public static int rank;
         const int GRAZE_BONUS = 500;
 
         const int FPS = 60;
@@ -222,12 +223,14 @@ namespace ShootingGame
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
-            ranking = new List<(int, string)>();
+            ranking = new List<(int, int,string)>();
             LoadRankingData();
-            ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+            //ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+            //過去プログラム保存
+            ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
-                if (x.Item1 > y.Item1) return -1;
-                if (x.Item1 < y.Item1) return 1;
+                if (x.Item2 > y.Item2) return -1;
+                if (x.Item2 < y.Item2) return 1;
                 return 0;
             }));
 
@@ -253,10 +256,29 @@ namespace ShootingGame
                 string[] temp = line.Split(',');
 
                 int temp2 = Convert.ToInt32(temp[0]);
+                int temp3 = Convert.ToInt32(temp[1]);
 
-                ranking.Add((temp2,temp[1]));
+                ranking.Add((temp2, temp3, temp[2]));
             }
         }
+
+        //private void SaveRankingData()
+        //{
+        //    string path = @"../../../data/score_board.txt";
+
+        //    スコアで降順ソート
+        //    ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+
+
+        //    List<string> lines = new List<string>();
+        //    for (int i = 0; i < ranking.Count; i++)
+        //    {
+        //        lines.Add($"{ranking[i].Item1},{ranking[i].Item2}");
+        //    }
+
+        //    上書き保存
+        //    File.WriteAllLines(path, lines, Encoding.UTF8);
+        //}
 
         // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
 
@@ -347,6 +369,7 @@ namespace ShootingGame
         {
             // 書き込むファイルの絶対パス
             string path = @"../../../data/score_board.txt";
+            rank = 0;
 
             // ファイルを開く＆文字化け防止
             // 第二引数が「true」 → 追加書き込みOK
@@ -354,7 +377,7 @@ namespace ShootingGame
             using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
             {
                 // score_board.txt に書き込み
-                file.WriteLine($"{score},{player.name}");
+                file.WriteLine($"{rank},{score},{player.name}");
             }
             
 
@@ -362,6 +385,26 @@ namespace ShootingGame
             Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
         }
 
+        private void SaveRankingDate(List<(int, int, string)> ranking)
+        {
+            // 書き込むファイルの絶対パス
+            string path = @"../../../data/score_board.txt";
+            int rank = 1;
+
+            // ファイルを開く＆文字化け防止
+            // 第二引数が「true」 → 追加書き込みOK
+            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+            using (StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            {
+             foreach (var data in ranking)
+                {
+                    // score_board.txt に書き込み
+                    file.WriteLine($"{rank},{data.Item2},{data.Item3}");
+                    rank++;
+                }
+            }
+        }
+        
         private DateTime start;
         private DateTime end;
 
@@ -473,14 +516,18 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
 
-                ranking = new List<(int, string)>();
+                ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+                //SaveRankingData();
+                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
                 {
-                    if (x.Item1 > y.Item1) return -1;
-                    if (x.Item1 < y.Item1) return 1;
+                    if (x.Item2 > y.Item2) return -1;
+                    if (x.Item2 < y.Item2) return 1;
                     return 0;
                 }));
+
+                SaveRankingDate(ranking);
+
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
 
@@ -514,14 +561,16 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
 
-                ranking = new List<(int, string)>();
+                ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
                 {
-                    if (x.Item1 > y.Item1) return -1;
-                    if (x.Item1 < y.Item1) return 1;
+                    if (x.Item2 > y.Item2) return -1;
+                    if (x.Item2 < y.Item2) return 1;
                     return 0;
                 }));
+
+                SaveRankingDate(ranking);
 
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
@@ -824,8 +873,8 @@ namespace ShootingGame
                 int i = 1;
                 foreach (var rankingData in ranking)
                 {
-                    scores = rankingData.Item1.ToString();
-                    playername = rankingData.Item2;
+                    scores = rankingData.Item2.ToString();
+                    playername = rankingData.Item3;
                     if (i > 9)
                     {
                         topranking += $"{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
@@ -1056,7 +1105,7 @@ namespace ShootingGame
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
-            double fixedLeft = Width / 2 - 550;
+            double fixedLeft = Width / 2 - 600;
             scoreText.TextAlignment = System.Windows.TextAlignment.Left;
             drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
             //double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
