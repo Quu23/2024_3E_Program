@@ -11,6 +11,7 @@
         STAGE3_BOSS = -3,
         GAMECLEAR   =  4,
         GAMEOVER    =  5,
+        RESULT      =  6,
         LANKING     = 80,
         DEBUG       = 99,
     }

@@ -35,7 +35,7 @@ namespace ShootingGame
         private static string message = "";
 
         //private SortedList<int, string> ranking;
-        private List<(int, string)> ranking;
+        private List<(int, int, string)> ranking;
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -45,6 +45,7 @@ namespace ShootingGame
         public static int stageLastPosition = 0;
 
         public static int score = 0;
+        public static int rank;
         const int GRAZE_BONUS = 500;
 
         const int FPS = 60;
@@ -222,12 +223,12 @@ namespace ShootingGame
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
-            ranking = new List<(int, string)>();
+            ranking = new List<(int, int,string)>();
             LoadRankingData();
-            ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+            ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
-                if (x.Item1 > y.Item1) return -1;
-                if (x.Item1 < y.Item1) return 1;
+                if (x.Item2 > y.Item2) return -1;
+                if (x.Item2 < y.Item2) return 1;
                 return 0;
             }));
 
@@ -253,11 +254,13 @@ namespace ShootingGame
                 string[] temp = line.Split(',');
 
                 int temp2 = Convert.ToInt32(temp[0]);
+                int temp3 = Convert.ToInt32(temp[1]);
 
-                ranking.Add((temp2,temp[1]));
+                ranking.Add((temp2, temp3, temp[2]));
             }
         }
 
+      
         // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
 
         private void SetUpStage(WindowMode nextMode)
@@ -347,6 +350,7 @@ namespace ShootingGame
         {
             // 書き込むファイルの絶対パス
             string path = @"../../../data/score_board.txt";
+            rank = 0;
 
             // ファイルを開く＆文字化け防止
             // 第二引数が「true」 → 追加書き込みOK
@@ -354,7 +358,7 @@ namespace ShootingGame
             using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
             {
                 // score_board.txt に書き込み
-                file.WriteLine($"{score},{player.name}");
+                file.WriteLine($"{rank},{score},{player.name}");
             }
             
 
@@ -362,6 +366,26 @@ namespace ShootingGame
             Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
         }
 
+        private void SaveRankingDate(List<(int, int, string)> ranking)
+        {
+            // 書き込むファイルの絶対パス
+            string path = @"../../../data/score_board.txt";
+            int rank = 1;
+
+            // ファイルを開く＆文字化け防止
+            // 第二引数が「true」 → 追加書き込みOK
+            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+            using (StreamWriter file = new StreamWriter(path, false, Encoding.GetEncoding("UTF-8")))
+            {
+             foreach (var data in ranking)
+                {
+                    // score_board.txt に書き込み
+                    file.WriteLine($"{rank},{data.Item2},{data.Item3}");
+                    rank++;
+                }
+            }
+        }
+        
         private DateTime start;
         private DateTime end;
 
@@ -473,14 +497,17 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
 
-                ranking = new List<(int, string)>();
+                ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
                 {
-                    if (x.Item1 > y.Item1) return -1;
-                    if (x.Item1 < y.Item1) return 1;
+                    if (x.Item2 > y.Item2) return -1;
+                    if (x.Item2 < y.Item2) return 1;
                     return 0;
                 }));
+
+                SaveRankingDate(ranking);
+
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
 
@@ -514,14 +541,16 @@ namespace ShootingGame
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
 
-                ranking = new List<(int, string)>();
+                ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                ranking.Sort(Comparer<(int, string)>.Create(((int, string) x, (int, string) y) =>
+                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
                 {
-                    if (x.Item1 > y.Item1) return -1;
-                    if (x.Item1 < y.Item1) return 1;
+                    if (x.Item2 > y.Item2) return -1;
+                    if (x.Item2 < y.Item2) return 1;
                     return 0;
                 }));
+
+                SaveRankingDate(ranking);
 
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
@@ -581,7 +610,7 @@ namespace ShootingGame
 
         private void BasicGameLogic()
         {
-            if (windowMode > 0) stagePosition++;
+            if (windowMode > 0) stagePosition+=1;
 
             if (stagePosition > stageLastPosition + 200 && enemies.Count == 0)
             {
@@ -651,11 +680,12 @@ namespace ShootingGame
             {
                 player.lives--;
                 windowMode = WindowMode.GAMEOVER;
-                scoreText = new FormattedText($"SCORE:{score}"
+
+                scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 100
+                                    , 90
                                     , Brushes.White
                                     , 12.5);
 
@@ -731,10 +761,10 @@ namespace ShootingGame
 
                 tmp_enemy.Action();
 
-                if (player.IsHit(tmp_enemy))
+                if (tmp_enemy.IsHit(player))
                 {
                     player.Hp = 0;
-                }else if (grazeEntityForPlayer.IsHit(tmp_enemy)){
+                }else if (!(tmp_enemy is Boss)&&grazeEntityForPlayer.IsHit(tmp_enemy)){
                     score += GRAZE_BONUS;
                     UtilitySE.PlayGrazeSE();
                 }
@@ -823,8 +853,8 @@ namespace ShootingGame
                 int i = 1;
                 foreach (var rankingData in ranking)
                 {
-                    scores = rankingData.Item1.ToString();
-                    playername = rankingData.Item2;
+                    scores = rankingData.Item2.ToString();
+                    playername = rankingData.Item3;
                     if (i > 9)
                     {
                         topranking += $"{i}.{playername.PadRight(10)} , {scores.PadLeft(8)}\n";
@@ -1047,15 +1077,19 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
-            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
+            double fixedLeft = Width / 2 - 600;
+            scoreText.TextAlignment = System.Windows.TextAlignment.Left;
+            drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
         }
 
         private void DrawGameclearWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMECLEAR_IMAGE, titleRect);
-            double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
-            drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
+            double fixedLeft = Width / 2 - 600;
+            scoreText.TextAlignment = System.Windows.TextAlignment.Left;
+            drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
+            //double leftWidth = (Width - scoreText.Text.Length * 100) / 2;
+            //drawingContext.DrawText(scoreText, new Point(leftWidth, modeSelectionTextRect.Y));
         }
 
         //VisualCollection用にoverrideした。多分使うのかな？
