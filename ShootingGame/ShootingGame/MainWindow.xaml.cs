@@ -225,8 +225,6 @@ namespace ShootingGame
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
             ranking = new List<(int, int,string)>();
             LoadRankingData();
-            //ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
-            //過去プログラム保存
             ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
                 if (x.Item2 > y.Item2) return -1;
@@ -262,24 +260,7 @@ namespace ShootingGame
             }
         }
 
-        //private void SaveRankingData()
-        //{
-        //    string path = @"../../../data/score_board.txt";
-
-        //    スコアで降順ソート
-        //    ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
-
-
-        //    List<string> lines = new List<string>();
-        //    for (int i = 0; i < ranking.Count; i++)
-        //    {
-        //        lines.Add($"{ranking[i].Item1},{ranking[i].Item2}");
-        //    }
-
-        //    上書き保存
-        //    File.WriteAllLines(path, lines, Encoding.UTF8);
-        //}
-
+      
         // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
 
         private void SetUpStage(WindowMode nextMode)
@@ -518,7 +499,6 @@ namespace ShootingGame
 
                 ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                //SaveRankingData();
                 ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
                 {
                     if (x.Item2 > y.Item2) return -1;
