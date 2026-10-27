@@ -246,6 +246,7 @@ namespace ShootingGame
         private void LoadRankingData()
         {
             string path = @"../../../data/score_board.txt";
+            ranking.Clear();
 
             // ファイル読み込み＆文字化け防止
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
@@ -262,25 +263,81 @@ namespace ShootingGame
             }
         }
 
-        //private void SaveRankingData()
-        //{
-        //    string path = @"../../../data/score_board.txt";
+        private void DrawResultWindow(DrawingContext drawingContext)
+        {
+            LoadRankingData();
+            ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
 
-        //    スコアで降順ソート
-        //    ranking.Sort((x, y) => y.Item1.CompareTo(x.Item1));
+            // ★ 全データに実際の順位（1位〜）を付与したリストを作成
+            var rankedList = ranking
+                .Select((r, index) => (Rank: index + 1, Score: r.Item2, Name: r.Item3))
+                .ToList();
 
+            // 1. トップ9を抽出
+            var displayList = rankedList.Take(9).ToList();
 
-        //    List<string> lines = new List<string>();
-        //    for (int i = 0; i < ranking.Count; i++)
-        //    {
-        //        lines.Add($"{ranking[i].Item1},{ranking[i].Item2}");
-        //    }
+            // 2. トップ9の中に「自分」が含まれているかチェック
+            bool isMeInTop9 = displayList.Any(r => r.Score == score && r.Name == player.name);
 
-        //    上書き保存
-        //    File.WriteAllLines(path, lines, Encoding.UTF8);
-        //}
+            if (isMeInTop9)
+            {
+                // 自分がトップ9にいる場合はトップ10を取得
+                displayList = rankedList.Take(10).ToList();
+            }
+            else
+            {
+                // 自分がトップ9にいない場合、全体から実際の順位を持った自分のデータを10行目に追加
+                var myData = rankedList.FirstOrDefault(r => r.Score == score && r.Name == player.name);
+                if (myData != default)
+                {
+                    displayList.Add(myData); // 15位なら Rank = 15 のデータが入る
+                }
+            }
 
-        // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
+            // 枠とテキストの描画
+            Rect windowRect = ShowRanking(drawingContext);
+            Point textOrigin = new Point(windowRect.Left + 40, windowRect.Top + 40);
+            WriteResult(drawingContext, displayList, textOrigin);
+        }
+        private Rect ShowRanking(DrawingContext drawingContext)
+        {
+            Rect windowRect = new Rect(
+                new Point(SystemParameters.FullPrimaryScreenWidth / 5.5, SystemParameters.FullPrimaryScreenHeight / 4.5),
+                new Size(SystemParameters.FullPrimaryScreenWidth / 1.5, SystemParameters.FullPrimaryScreenHeight / 1.64)
+            );
+
+            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect);
+            return windowRect;
+        }
+
+        private void WriteResult(DrawingContext drawingContext, List<(int Rank, int Score, string Name)> displayList, Point origin)
+        {
+            double lineSpacing = 40;
+
+            for (int i = 0; i < displayList.Count; i++)
+            {
+                var item = displayList[i];
+
+                bool isMe = (item.Score == score && item.Name == player.name);
+                Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
+
+                // ★ i + 1 ではなく、実際の順位 (item.Rank) を表示する
+                string lineText = $"{item.Rank,2}.  {item.Name,-12}  {item.Score,6} pts";
+
+                var formattedText = new FormattedText(
+                    lineText,
+                    CultureInfo.GetCultureInfo("en"),
+                    FlowDirection.LeftToRight,
+                    FONT_TYPEFACE,
+                    30,
+                    textBrush,
+                    12.5
+                );
+
+                Point linePosition = new Point(origin.X, origin.Y + (i * lineSpacing));
+                drawingContext.DrawText(formattedText, linePosition);
+            }
+        }
 
         private void SetUpStage(WindowMode nextMode)
         {
@@ -441,6 +498,9 @@ namespace ShootingGame
                 case WindowMode.GAMECLEAR:
                     GameclearLoop();
                     break;
+                case WindowMode.RESULT:
+                    ResultLoop();
+                    break;
                 case WindowMode.LANKING:
                     break;
                 case WindowMode.DEBUG:
@@ -509,48 +569,15 @@ namespace ShootingGame
             BasicGameLogic();
         }
 
+        
         private void GameoverLoop()
         {
             if (isKeyPresseds[5])
             {
-                windowMode = WindowMode.START;
-                backgroundImage = Images.START_BACKGROUND_IMAGE;
-
-                ranking = new List<(int, int, string)>();
                 LoadRankingData();
-                //SaveRankingData();
-                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
-                {
-                    if (x.Item2 > y.Item2) return -1;
-                    if (x.Item2 < y.Item2) return 1;
-                    return 0;
-                }));
-
+                ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
                 SaveRankingDate(ranking);
-
-                stageData.Clear();
-                LoadStageData(WindowMode.STAGE1);
-
-                player = new Player("unknown");
-                grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
-
-                score = 0;
-                stagePosition = 0;
-
-                enemies.Clear();
-                items.Clear();
-                bullets.Clear();
-
-                musicPlayer.Open(UtilityUris.BGM2_URI);
-
-                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
-                {
-                    musicPlayer.Position = TimeSpan.Zero;
-                };
-                musicPlayer.IsMuted = isMusicMuted;
-                musicPlayer.Play();
-
-                backgroundAnimationCounter = 0;
+                windowMode = WindowMode.RESULT;
             }
         }
 
@@ -558,19 +585,20 @@ namespace ShootingGame
         {
             if (isKeyPresseds[5])
             {
+                LoadRankingData();
+                ranking.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+                SaveRankingDate(ranking);
+                windowMode = WindowMode.RESULT;
+            }
+        }
+
+        private void ResultLoop()
+        {
+            // RESULT画面でEnterキーが押されたらタイトルに戻る
+            if (isKeyPresseds[5])
+            {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
-
-                ranking = new List<(int, int, string)>();
-                LoadRankingData();
-                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
-                {
-                    if (x.Item2 > y.Item2) return -1;
-                    if (x.Item2 < y.Item2) return 1;
-                    return 0;
-                }));
-
-                SaveRankingDate(ranking);
 
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
@@ -586,12 +614,6 @@ namespace ShootingGame
                 bullets.Clear();
 
                 musicPlayer.Open(UtilityUris.BGM2_URI);
-
-                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
-                {
-                    musicPlayer.Position = TimeSpan.Zero;
-                };
-                musicPlayer.IsMuted = isMusicMuted;
                 musicPlayer.Play();
 
                 backgroundAnimationCounter = 0;
@@ -705,7 +727,7 @@ namespace ShootingGame
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 90
+                                    , 50
                                     , Brushes.White
                                     , 12.5);
 
@@ -855,6 +877,9 @@ namespace ShootingGame
                         break;
                     case WindowMode.GAMECLEAR:
                         DrawGameclearWindow(drawingContext);
+                        break;
+                    case WindowMode.RESULT:
+                        DrawResultWindow(drawingContext);
                         break;
                     case WindowMode.LANKING:
                         break;
@@ -1097,7 +1122,7 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            double fixedLeft = Width / 2 - 600;
+            double fixedLeft = Width / 2 - 300;
             scoreText.TextAlignment = System.Windows.TextAlignment.Left;
             drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
         }
