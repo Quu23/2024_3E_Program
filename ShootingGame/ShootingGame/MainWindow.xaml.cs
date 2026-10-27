@@ -675,21 +675,32 @@ namespace ShootingGame
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
 
-            //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
+            //playerのHP0のときの処理
             if (player.Hp <= 0)
             {
                 player.lives--;
-                windowMode = WindowMode.GAMEOVER;
+                if (player.lives == 0)
+                {
+                    windowMode = WindowMode.GAMEOVER;
 
-                scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 90
-                                    , Brushes.White
-                                    , 12.5);
+                    scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 90
+                                        , Brushes.White
+                                        , 12.5);
 
-                WriteScore();
+                    WriteScore();
+                }
+                else
+                {
+                    player.X= (int)(SystemParameters.FullPrimaryScreenWidth / 2);
+                    player.Y = (int)(SystemParameters.FullPrimaryScreenHeight * 3 / 4);
+                    player.HeelFullOfHp();
+                    player.status[StatusEffects.INVINCIBLE] = 30;
+                }
+                
             }
 
             player.Action();
