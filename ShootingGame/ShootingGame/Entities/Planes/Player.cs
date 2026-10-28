@@ -58,6 +58,7 @@ namespace ShootingGame.Entities.Planes
                 { INVINCIBLE              ,0},
                 { DESTROY_MODE            ,0},
                 { REVERSE_CONTROLS        ,0},
+                { SUMI                    ,0},
             };
 
             normalStatus = [

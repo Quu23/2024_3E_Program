@@ -1025,6 +1025,7 @@ namespace ShootingGame
 
 
 
+
             if (player.isAuto)
             {
                 drawingContext.DrawText(new FormattedText($"AUTO"
