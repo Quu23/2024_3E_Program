@@ -31,7 +31,7 @@ namespace ShootingGame.Entities.Planes
         public bool isAuto;
         private long timeForAuto; // AUTO時に行動を決めるためのタイマー
 
-        public int lives; //残機数
+        public int lives; //残機数 0->3, 1->1
         public const int MAX_LIVES = 3; //最大残機数
 
         public int animationCounter; //残機減らしたときのアニメーションのためのカウンター
