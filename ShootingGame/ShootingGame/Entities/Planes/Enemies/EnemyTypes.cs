@@ -17,5 +17,6 @@
         TURNBACK_ENEMY,
         CYCLONE_ENEMY,
         LASER_ENEMY,
+        WARP_ENEMY,
     }
 }

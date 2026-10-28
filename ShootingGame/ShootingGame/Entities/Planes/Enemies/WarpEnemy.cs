@@ -10,7 +10,7 @@ namespace ShootingGame.Entities.Planes.Enemies
     class WarpEnemy : Enemy
     {
         private int count = 2;
-        public WarpEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/3, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 200)
+        public WarpEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/1, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 200)
         {
         }
 
@@ -23,7 +23,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         {
             var bullets = new List<Bullet>
             {
-                new(CenterXForShotBullet, Y, Bullet.RADIUS_FOR_MEDIUM,Speed + 5, 180, Level, EnemyTypes.STRAIGHT_ENEMY)
+                new(CenterXForShotBullet, Y, Bullet.RADIUS_FOR_MEDIUM,Speed + 5, 180, Level, EnemyTypes.WARP_ENEMY)
             };
             return bullets;
         }
