@@ -11,9 +11,10 @@ namespace ShootingGame
 
         //ゲームタイトルなど
         public static readonly Uri START_BACKGROUND_URI  = new Uri("../../../img/start.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri BACKGROUND1_URI       = new Uri("../../../img/background0.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri BACKGROUND2_URI       = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND1_URI       = new Uri("../../../img/background1.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND2_URI       = new Uri("../../../img/background2.png" , UriKind.RelativeOrAbsolute);
         public static readonly Uri BACKGROUND3_URI       = new Uri("../../../img/background3.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND4_URI       = new Uri("../../../img/background4.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri TITLE_URI             = new Uri("../../../img/Title.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MODE_SELECT_TEXT_URI  = new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
         public static readonly Uri GAMEOVER_URI          = new Uri("../../../img/Gameover.png", UriKind.RelativeOrAbsolute);

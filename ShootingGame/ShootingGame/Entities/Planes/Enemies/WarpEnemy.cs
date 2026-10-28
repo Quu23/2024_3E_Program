@@ -43,8 +43,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             Random random = new Random();
             count--;
             if (count > 0)
-            {
-                
+            {     
                 X = random.Next(App.window.moveableLeftSidePosition, App.window.moveableRightSidePosition);
                 enemies.Add(new WarpEnemy(X, Y, 1, count));
             }

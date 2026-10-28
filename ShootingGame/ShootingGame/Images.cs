@@ -15,6 +15,7 @@ namespace ShootingGame
         public static readonly BitmapImage BACKGROUND1_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND1_URI);
         public static readonly BitmapImage BACKGROUND2_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND2_URI);  
         public static readonly BitmapImage BACKGROUND3_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND3_URI);
+        public static readonly BitmapImage BACKGROUND4_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND4_URI);
         public static readonly BitmapImage TITLE_IMAGE              = new BitmapImage(UtilityUris.TITLE_URI);
         public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_URI);
         public static readonly BitmapImage GAMEOVER_IMAGE           = new BitmapImage(UtilityUris.GAMEOVER_URI);
