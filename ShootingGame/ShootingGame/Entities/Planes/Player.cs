@@ -64,7 +64,7 @@ namespace ShootingGame.Entities.Planes
             };
 
             normalStatus = [
-                Radius, defaultSpeed, MAX_HP, DecreaceBulletCoolTime, 100,
+                Radius, defaultSpeed, MAX_HP, DecreaceBulletCoolTime, increaseRateOfScore,
             ];
 
             isAuto = false;
