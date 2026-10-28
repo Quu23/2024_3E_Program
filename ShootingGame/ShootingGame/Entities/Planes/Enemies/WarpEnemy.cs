@@ -9,9 +9,16 @@ namespace ShootingGame.Entities.Planes.Enemies
 {
     class WarpEnemy : Enemy
     {
-        private int count = 2;
+        private int count = 3;
+        private readonly int basicY;
         public WarpEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/1, Images.SHOTGUN_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 200)
         {
+        }
+
+        public WarpEnemy(int x, int y, int level, int count) : base(x, y, /*r=*/20, /*speed=*/ 3, Images.SAMPLE_ENEMY_IMAGE, /*LV=*/level, /*hp=*/1 + level, Bullet.RADIUS_FOR_MEDIUM, 200)
+        {
+            basicY = y;
+            this.count = count;
         }
 
         protected override int GetEXP()
@@ -38,10 +45,8 @@ namespace ShootingGame.Entities.Planes.Enemies
             {
                 count--;
                 X = random.Next(App.window.moveableLeftSidePosition, App.window.moveableRightSidePosition);
-                enemies.Add(new WarpEnemy(X, Y, 1));
+                enemies.Add(new WarpEnemy(X, Y, 1, count));
             }
-            
         }
-    }
-        
+    }   
 }
