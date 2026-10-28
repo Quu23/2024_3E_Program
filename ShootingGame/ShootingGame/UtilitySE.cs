@@ -16,6 +16,7 @@ namespace ShootingGame
         private static SoundPlayer GET_ORB_SE    = new SoundPlayer("../../../music/se/get_orb.wav");
         private static SoundPlayer SHOT_SE       = new SoundPlayer("../../../music/se/shot.wav");
         private static SoundPlayer GRAZE_SE      = new SoundPlayer("../../../music/se/graze.wav");
+        private static SoundPlayer RELIVE_SE     = new SoundPlayer("../../../music/se/relive.wav");
 
         public static void PlayEnemyHitSE()
         {
@@ -49,6 +50,9 @@ namespace ShootingGame
         {
             GRAZE_SE.Play();
         }
-
+        public static void PlayReliveSE()
+        {
+            RELIVE_SE.Play();
+        }
     }
 }

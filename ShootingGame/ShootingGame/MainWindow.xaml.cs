@@ -46,7 +46,7 @@ namespace ShootingGame
 
         public static int score = 0;
         public static int rank;
-        const int GRAZE_BONUS = 500;
+        const int GRAZE_BONUS = 50;
 
         const int FPS = 60;
 
@@ -55,9 +55,9 @@ namespace ShootingGame
 
 
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT
+        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false };
 
         private Joystick _joy;
 
@@ -98,6 +98,9 @@ namespace ShootingGame
 
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
+
+        // 残機設定, ゲーム難易度用 
+        int mode;
 
 
         protected override int VisualChildrenCount => visuals.Count;
@@ -236,6 +239,8 @@ namespace ShootingGame
             LoadStageData(WindowMode.STAGE1);
 
             stagePosition = 0;
+
+            mode = 0;
 
             updateTimer.Start();
 
@@ -553,6 +558,9 @@ namespace ShootingGame
 
         private void StartLoop()
         {
+            if (isKeyPresseds[8]) mode = 0;
+            if (isKeyPresseds[9]) mode = 1;
+
             if (isKeyPresseds[4]) {
                 if (message.Equals("DEBUG"))
                 {
@@ -581,7 +589,8 @@ namespace ShootingGame
                     grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
                     message = "";
                 }
-             
+                if(mode == 0) player.lives = 3;
+                else if (mode == 1) player.lives = 1;
                 SetUpStage(windowMode);
             }
         }
@@ -758,6 +767,8 @@ namespace ShootingGame
             if (player.Hp <= 0)
             {
                 player.lives--;
+                UtilitySE.PlayReliveSE();
+                player.StartAnimation();
                 if (player.lives == 0)
                 {
                     windowMode = WindowMode.GAMEOVER;
@@ -993,6 +1004,18 @@ namespace ShootingGame
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
             }
+
+            // 残機設定の描画処理
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 80, 32, 32));
+            drawingContext.DrawText(new FormattedText(
+                                         $"×{(mode == 0 ? 3 : 1)}"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.White
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
@@ -1301,6 +1324,12 @@ namespace ShootingGame
                 case System.Windows.Input.Key.I:
                     player.status[StatusEffects.INVINCIBLE] = 9999;
                     break;
+                case System.Windows.Input.Key.LeftShift:
+                    isKeyPresseds[8] = true;
+                    break;
+                case System.Windows.Input.Key.LeftCtrl:
+                    isKeyPresseds[9] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -1332,6 +1361,12 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.RightShift:
                     isKeyPresseds[7] = false;
+                    break;
+                case System.Windows.Input.Key.LeftShift:
+                    isKeyPresseds[8] = false;
+                    break;
+                case System.Windows.Input.Key.LeftCtrl:
+                    isKeyPresseds[9] = false;
                     break;
                 default:
                     break;
