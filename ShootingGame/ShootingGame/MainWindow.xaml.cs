@@ -355,17 +355,7 @@ namespace ShootingGame
                 bool isMe = (item.score == score && item.name == player.name);
                 Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
 
-                string rankStr;
-                if (item.rank > 9)
-                {
-                    rankStr = $"{item.rank}";
-                }
-                else
-                {
-                    rankStr = $"0{item.rank}";
-                }
-
-                string lineText = $"{rankStr}.  {item.name,-10}, {item.score,8} pts";
+                string lineText = $"{item.rank,3}.  {item.name,-9}, {item.score,8} pts";
 
                 var formattedText = new FormattedText(
                     lineText,
