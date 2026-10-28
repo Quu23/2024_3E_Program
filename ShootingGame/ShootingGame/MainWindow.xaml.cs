@@ -1129,10 +1129,14 @@ namespace ShootingGame
             drawingContext.DrawImage(weaponIconSource[3], weaponIconRect);
             if (player.orbCount < 5)drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, weaponIconRect);
 
+            if (player.status[StatusEffects.SUMI] > 0)
+            {
+                drawingContext.DrawImage(Images.SUMI_IMAGE, new Rect(0, 0, 1000, 1000));
+                drawingContext.DrawImage(Images.SUMI_IMAGE, new Rect(SystemParameters.FullPrimaryScreenWidth-1000, 100, 1000, 1000));
+            }
 
 
-
-            if (player.isAuto)
+                if (player.isAuto)
             {
                 drawingContext.DrawText(new FormattedText($"AUTO"
                                     , CultureInfo.GetCultureInfo("en")
@@ -1267,6 +1271,8 @@ namespace ShootingGame
                 case StatusEffects.SCORE_BOOST:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 case StatusEffects.REVERSE_CONTROLS:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
+                case StatusEffects.SUMI:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();

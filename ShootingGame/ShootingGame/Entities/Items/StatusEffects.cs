@@ -14,7 +14,7 @@
         INVINCIBLE             =  4,
         DESTROY_MODE           =  5,
         REVERSE_CONTROLS       =  6,
-        SUMI=8,
+        SUMI                   =  8,
 
     }
 }

@@ -6,7 +6,7 @@ namespace ShootingGame.Entities.Items
 
     class Octputh : TransientItem
     {
-        public Octputh(int x, int y) : base(x, y, 32, 10, Images.SPEED_UP_ITEM_IMAGE, StatusEffects.SUMI, 100)
+        public Octputh(int x, int y) : base(x, y, 32, 10, Images.OCTPATH_ITEM_IMAGE, StatusEffects.SUMI, 100)
         {
         }
 

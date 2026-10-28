@@ -33,6 +33,7 @@ namespace ShootingGame
         public static readonly Uri DESTROY_ITEM_URI        = new Uri("../../../img/Destroy_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SCORE_BOOSTER_ITEM_URI  = new Uri("../../../img/Score_Booster_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SAMPLE_ITEM_URI         = new Uri("../../../img/Sample_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri OCTPATH_ITEM_URI        = new Uri("../../../img/Octpath_Item.png", UriKind.RelativeOrAbsolute);
 
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
@@ -84,6 +85,9 @@ namespace ShootingGame
 
         public static readonly Uri PROHIBITED_ICON_URI = new Uri("../../../img/Prohibited.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri LIFE_ICON_URI       = new Uri("../../../img/Icon_life.png", UriKind.RelativeOrAbsolute);
+
+        //墨画像
+        public static readonly Uri SUMI_URI = new Uri("../../../img/sumi.png", UriKind.RelativeOrAbsolute);
 
 
 
