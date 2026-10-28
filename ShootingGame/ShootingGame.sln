@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShootingGame", "ShootingGame\ShootingGame.csproj", "{CBC8D6C7-31B2-4FD9-BA23-4E3DE162B432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShootingGame", "ShootingGame\ShootingGame.csproj", "{CBC8D6C7-31B2-4FD9-BA23-4E3DE162B432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScoreServer", "ScoreServer\ScoreServer.csproj", "{B8F0EA35-8744-4BCA-B426-523B418D1F07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CBC8D6C7-31B2-4FD9-BA23-4E3DE162B432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC8D6C7-31B2-4FD9-BA23-4E3DE162B432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC8D6C7-31B2-4FD9-BA23-4E3DE162B432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8F0EA35-8744-4BCA-B426-523B418D1F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F0EA35-8744-4BCA-B426-523B418D1F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F0EA35-8744-4BCA-B426-523B418D1F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F0EA35-8744-4BCA-B426-523B418D1F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
