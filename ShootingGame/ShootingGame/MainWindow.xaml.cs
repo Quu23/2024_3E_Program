@@ -609,22 +609,22 @@ namespace ShootingGame
         
         private void GameoverLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
             if (isKeyPresseds[5])
             {
-                LoadRankingData();
-                SaveRankingDate(ranking);
-                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
 
         private void GameclearLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
             if (isKeyPresseds[5])
             {
-                LoadRankingData();
-                SaveRankingDate(ranking);
-                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
