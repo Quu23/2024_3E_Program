@@ -31,8 +31,10 @@ namespace ShootingGame.Entities.Planes
         public bool isAuto;
         private long timeForAuto; // AUTO時に行動を決めるためのタイマー
 
-        public int lives; //残機数
+        public int lives; //残機数 0->3, 1->1
         public const int MAX_LIVES = 3; //最大残機数
+
+        public int animationCounter; //残機減らしたときのアニメーションのためのカウンター
 
         public Player(string name) : base(/*x=*/700, /*y=*/700, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
@@ -57,6 +59,7 @@ namespace ShootingGame.Entities.Planes
                 { SCORE_BOOST             ,0},
                 { INVINCIBLE              ,0},
                 { DESTROY_MODE            ,0},
+                { REVERSE_CONTROLS        ,0},
             };
 
             normalStatus = [
@@ -67,6 +70,8 @@ namespace ShootingGame.Entities.Planes
             timeForAuto = 0;
 
             lives = MAX_LIVES;
+
+            animationCounter = 0;
         }
 
         /// <summary>
@@ -146,9 +151,27 @@ namespace ShootingGame.Entities.Planes
             return false;
         }
 
+        public void StartAnimation()
+        {
+            animationCounter = 20;
+        }
+
         public override void Action()
         {
             if (BulletCoolTime > 0) BulletCoolTime -= DecreaceBulletCoolTime;
+
+            if(animationCounter > 0)
+            {
+                animationCounter--;
+                if (animationCounter % 2 == 0 && animationCounter != 0)
+                {
+                    this.Img = null;
+                }
+                else
+                {
+                    this.Img = Images.PLAYER_IMAGE;
+                }
+            }
 
             if (MainWindow.isKeyPresseds[5]) RotateWeapon();
 
@@ -262,28 +285,44 @@ namespace ShootingGame.Entities.Planes
                 return;
             }
 
-            if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1])
+            if (X > App.window.moveableLeftSidePosition && MainWindow.isKeyPresseds[1] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 X -= Speed;
+            }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[1]) 
+            {
+                X += Speed;
             }
             if (X < App.window.moveableLeftSidePosition) X = App.window.moveableLeftSidePosition;
 
             // xはエンティティの左上の座標だから、右に行くときは「x+幅」、つまりエンティティの右端が画面の端かどうかで判断。
-            if (X + Radius * 2 < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3])
+            if (X + Radius * 2 < App.window.moveableRightSidePosition && MainWindow.isKeyPresseds[3] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 X += Speed;
             }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[3])
+            {
+                X -= Speed;
+            }
             if (X + Radius * 2 > App.window.moveableRightSidePosition) X = (int)(App.window.moveableRightSidePosition - Radius * 2);
 
-            if (Y > 0 && MainWindow.isKeyPresseds[0])
+            if (Y > 0 && MainWindow.isKeyPresseds[0] && 0 == status[StatusEffects.REVERSE_CONTROLS])
             {
                 Y -= Speed;
             }
-            if (Y < 0) Y = 0;
-
-            if (Y + Radius * 2 < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2])
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[0])
             {
                 Y += Speed;
+            }
+            if (Y < 0) Y = 0;
+
+            if (Y + Radius * 2 < SystemParameters.PrimaryScreenHeight && MainWindow.isKeyPresseds[2] && 0 == status[StatusEffects.REVERSE_CONTROLS])
+            {
+                Y += Speed;
+            }
+            else if (0 < status[StatusEffects.REVERSE_CONTROLS] && MainWindow.isKeyPresseds[2])
+            {
+                Y -= Speed;
             }
             if (Y + Radius * 2 > SystemParameters.PrimaryScreenHeight) Y = (int)(SystemParameters.PrimaryScreenHeight - Radius * 2);
         }
