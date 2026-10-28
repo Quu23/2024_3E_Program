@@ -14,6 +14,7 @@ using System.Diagnostics;
 
 using SharpDX.DirectInput;
 using ShootingGame.Entities.Planes.Enemies.Boss;
+using System.Buffers.Binary;
 
 
 namespace ShootingGame
@@ -826,7 +827,20 @@ namespace ShootingGame
                         {
                             if (tmp_enemy is Boss)
                             {
-                                UtilitySE.PlayBossDeadSE();
+                                UtilitySE.PlayBossDeadSE();]
+
+                                if (tmp_enemy is Boss1)
+                                {
+                                    score += player.lives * 30000;
+                                }
+                                else if (tmp_enemy is Boss2)
+                                {
+                                    score += player.lives * 100000;
+                                }
+                                else if (tmp_enemy is Boss3)
+                                {
+                                    score += player.lives * 1000000;
+                                }
                             }
                             else
                             {
