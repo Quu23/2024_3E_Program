@@ -314,34 +314,53 @@ namespace ShootingGame
                 }
             }
             Rect windowRect = ShowRanking(drawingContext);
-            Point textOrigin = new Point(windowRect.Left + 35, windowRect.Top + 30);
-            WriteResult(drawingContext, displayList, textOrigin);
+
+            // Rect の標準プロパティ (Width, Height, Left, Top) を使用
+            double paddingX = windowRect.Width * 0.08;
+            double paddingY = windowRect.Height * 0.08;
+            Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
+            double availableHeight = windowRect.Height - (paddingY * 2);
+            WriteResult(drawingContext, displayList, textOrigin, availableHeight);
         }
         private Rect ShowRanking(DrawingContext drawingContext)
         {
-            Rect windowRect = new Rect(
-                new Point(SystemParameters.FullPrimaryScreenWidth / 5.5, SystemParameters.FullPrimaryScreenHeight / 4.5),
-                new Size(SystemParameters.FullPrimaryScreenWidth / 1.5, SystemParameters.FullPrimaryScreenHeight / 1.64)
-            );
+            double width = ActualWidth > 0 ? ActualWidth : SystemParameters.PrimaryScreenWidth;
+            double height = ActualHeight > 0 ? ActualHeight : SystemParameters.PrimaryScreenHeight;
+
+            double w = width * 0.60;  // 枠の幅
+            double h = height * 0.65; // 枠の高さ
+            double x = (width - w) / 2.0;  // X座標
+            double y = (height - h) / 2.0; // Y座標
+
+            Rect windowRect = new Rect(x, y, w, h);
 
             drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect);
             return windowRect;
         }
 
-        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin)
+        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
         {
-            const double fontSize = 30;
-            const double lineSpacing = 50;
+            double lineSpacing = availableHeight / 10.5;
+            double fontSize = Math.Min(28, lineSpacing * 0.75);
 
             for (int i = 0; i < displayList.Count; i++)
             {
                 var item = displayList[i];
 
-                // 自分のデータなら白、他人は黄色にブラッシング切り替え
                 bool isMe = (item.score == score && item.name == player.name);
                 Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
 
-                string lineText = $"{item.rank,2}.  {item.name,-12}  {item.score,8} pts";
+                string rankStr;
+                if (item.rank > 9)
+                {
+                    rankStr = $"{item.rank}";
+                }
+                else
+                {
+                    rankStr = $"0{item.rank}";
+                }
+
+                string lineText = $"{rankStr}.  {item.name,-10}, {item.score,8} pts";
 
                 var formattedText = new FormattedText(
                     lineText,
