@@ -47,7 +47,7 @@ namespace ShootingGame
 
         public static int score = 0;
         public static int rank;
-        const int GRAZE_BONUS = 50;
+        const int GRAZE_BONUS = 1;
 
         const int FPS = 60;
 
@@ -809,7 +809,7 @@ namespace ShootingGame
                 }
                 else if(tmp_bullet.Type != EnemyTypes.PLAYER && grazeEntityForPlayer.IsHit(tmp_bullet))
                 {
-                    score += GRAZE_BONUS;
+                    score += GRAZE_BONUS * player.increaseRateOfScore / 2;
                     UtilitySE.PlayGrazeSE();
                 }
 
@@ -870,7 +870,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }else if (!(tmp_enemy is Boss)&&grazeEntityForPlayer.IsHit(tmp_enemy)){
-                    score += GRAZE_BONUS;
+                    score += GRAZE_BONUS * player.increaseRateOfScore / 2;
                     UtilitySE.PlayGrazeSE();
                 }
                 if (tmp_enemy.IsOutOfWindow())
@@ -953,6 +953,17 @@ namespace ShootingGame
 
         private void DrawStartWindow(DrawingContext drawingContext)
         {
+            // 残機設定の描画処理
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 80, 32, 32));
+            drawingContext.DrawText(new FormattedText(
+                                         $"×{(mode == 0 ? 3 : 1)}"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.White
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+
             if (isKeyPresseds[7])
             {
                 string topranking = "";
@@ -1008,17 +1019,6 @@ namespace ShootingGame
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
             }
-
-            // 残機設定の描画処理
-            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 80, 32, 32));
-            drawingContext.DrawText(new FormattedText(
-                                         $"×{(mode == 0 ? 3 : 1)}"
-                                        , CultureInfo.GetCultureInfo("en")
-                                        , FlowDirection.LeftToRight
-                                        , FONT_TYPEFACE
-                                        , 30
-                                        , Brushes.White
-                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
 
         }
 
@@ -1150,7 +1150,7 @@ namespace ShootingGame
             }
 
 
-                if (player.isAuto)
+            if (player.isAuto)
             {
                 drawingContext.DrawText(new FormattedText($"AUTO"
                                     , CultureInfo.GetCultureInfo("en")
