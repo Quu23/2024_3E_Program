@@ -46,7 +46,7 @@ namespace ShootingGame
 
         public static int score = 0;
         public static int rank;
-        const int GRAZE_BONUS = 500;
+        const int GRAZE_BONUS = 50;
 
         const int FPS = 60;
 
@@ -55,9 +55,9 @@ namespace ShootingGame
 
 
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT
+        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false };
 
         private Joystick _joy;
 
@@ -98,6 +98,9 @@ namespace ShootingGame
 
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
+
+        // 残機設定, ゲーム難易度用 
+        int mode;
 
 
         protected override int VisualChildrenCount => visuals.Count;
@@ -237,6 +240,8 @@ namespace ShootingGame
 
             stagePosition = 0;
 
+            mode = 0;
+
             updateTimer.Start();
 
         }
@@ -244,6 +249,7 @@ namespace ShootingGame
         private void LoadRankingData()
         {
             string path = @"../../../data/score_board.txt";
+            ranking.Clear();
 
             // ファイル読み込み＆文字化け防止
             var lines = File.ReadAllLines(path, Encoding.GetEncoding("UTF-8"));
@@ -258,10 +264,113 @@ namespace ShootingGame
 
                 ranking.Add((temp2, temp3, temp[2]));
             }
+
+            for (int i = 0; i < ranking.Count - 1; i++)
+            {
+                for (int j = i + 1; j < ranking.Count; j++)
+                {if (ranking[i].Item2 < ranking[j].Item2)
+                    {
+                        var temp = ranking[i];
+                        ranking[i] = ranking[j];
+                        ranking[j] = temp;
+                    }
+                }
+            }
         }
 
-      
-        // 次のステージに移行する際の処理をまとめたメソッド。ステージデータの読み込み、BGMの再生、背景画像の設定を行う。
+        private void DrawResultWindow(DrawingContext drawingContext)
+        {
+            List<(int rank, int score, string name)> displayList = new List<(int rank, int score, string name)>();
+
+            int topCount = Math.Min(9, ranking.Count);
+            for (int i = 0; i < topCount; i++)
+            {
+                displayList.Add(ranking[i]);
+            }
+            // トップ9の中に自分が含まれているかチェック
+            bool isMeInTop9 = false;
+            foreach (var item in displayList)
+            {
+                if (item.score == score && item.name == player.name)
+                {
+                    isMeInTop9 = true;
+                    break;
+                }
+            }
+
+            if (isMeInTop9)
+            {
+                // 自分がトップ9にいる場合、10件目のデータがあればそのまま追加
+                if (ranking.Count >= 10)
+                {
+                    displayList.Add(ranking[9]);
+                }
+            }
+            else
+            {
+                // 自分がトップ9にいない場合、全体のデータから自分を探して10件目に追加
+                foreach (var item in ranking)
+                {
+                    if (item.Item2 == score && item.Item3 == player.name)
+                    {
+                        displayList.Add(item);
+                        break; // 最初に見つかった自分のスコアを追加して抜ける
+                    }
+                }
+            }
+            Rect windowRect = ShowRanking(drawingContext);
+
+            // Rect の標準プロパティ (Width, Height, Left, Top) を使用
+            double paddingX = windowRect.Width * 0.08;
+            double paddingY = windowRect.Height * 0.08;
+            Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
+            double availableHeight = windowRect.Height - (paddingY * 2);
+            WriteResult(drawingContext, displayList, textOrigin, availableHeight);
+        }
+        private Rect ShowRanking(DrawingContext drawingContext)
+        {
+            double width = ActualWidth > 0 ? ActualWidth : SystemParameters.FullPrimaryScreenWidth;
+            double height = ActualHeight > 0 ? ActualHeight : SystemParameters.FullPrimaryScreenHeight;
+
+            double w = width * 0.60;  // 枠の幅
+            double h = height * 0.65; // 枠の高さ
+            double x = (width - w) / 2.0;  // X座標
+            double y = (height - h) / 2.0; // Y座標
+
+            Rect windowRect = new Rect(x, y, w, h);
+
+            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect);
+            return windowRect;
+        }
+
+        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
+        {
+            double lineSpacing = availableHeight / 10.5;
+            double fontSize = Math.Min(28, lineSpacing * 0.75);
+
+            for (int i = 0; i < displayList.Count; i++)
+            {
+                var item = displayList[i];
+
+                bool isMe = (item.score == score && item.name == player.name);
+                Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
+
+                string lineText = $"{item.rank,3}.  {item.name,-9}, {item.score,8} pts";
+
+                var formattedText = new FormattedText(
+                    lineText,
+                    CultureInfo.GetCultureInfo("en"),
+                    FlowDirection.LeftToRight,
+                    FONT_TYPEFACE,
+                    fontSize,
+                    textBrush,
+                    12.5
+                );
+
+                Point linePosition = new Point(origin.X, origin.Y + (i * lineSpacing));
+                drawingContext.DrawText(formattedText, linePosition);
+            }
+        }
 
         private void SetUpStage(WindowMode nextMode)
         {
@@ -422,6 +531,9 @@ namespace ShootingGame
                 case WindowMode.GAMECLEAR:
                     GameclearLoop();
                     break;
+                case WindowMode.RESULT:
+                    ResultLoop();
+                    break;
                 case WindowMode.LANKING:
                     break;
                 case WindowMode.DEBUG:
@@ -436,6 +548,9 @@ namespace ShootingGame
 
         private void StartLoop()
         {
+            if (isKeyPresseds[8]) mode = 0;
+            if (isKeyPresseds[9]) mode = 1;
+
             if (isKeyPresseds[4]) {
                 if (message.Equals("DEBUG"))
                 {
@@ -464,7 +579,8 @@ namespace ShootingGame
                     grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
                     message = "";
                 }
-             
+                if(mode == 0) player.lives = 3;
+                else if (mode == 1) player.lives = 1;
                 SetUpStage(windowMode);
             }
         }
@@ -490,67 +606,35 @@ namespace ShootingGame
             BasicGameLogic();
         }
 
+        
         private void GameoverLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
             if (isKeyPresseds[5])
             {
-                windowMode = WindowMode.START;
-                backgroundImage = Images.START_BACKGROUND_IMAGE;
-
-                ranking = new List<(int, int, string)>();
-                LoadRankingData();
-                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
-                {
-                    if (x.Item2 > y.Item2) return -1;
-                    if (x.Item2 < y.Item2) return 1;
-                    return 0;
-                }));
-
-                SaveRankingDate(ranking);
-
-                stageData.Clear();
-                LoadStageData(WindowMode.STAGE1);
-
-                player = new Player("unknown");
-                grazeEntityForPlayer = new GrazeEntity(player.X, player.Y, player);
-
-                score = 0;
-                stagePosition = 0;
-
-                enemies.Clear();
-                items.Clear();
-                bullets.Clear();
-
-                musicPlayer.Open(UtilityUris.BGM2_URI);
-
-                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
-                {
-                    musicPlayer.Position = TimeSpan.Zero;
-                };
-                musicPlayer.IsMuted = isMusicMuted;
-                musicPlayer.Play();
-
-                backgroundAnimationCounter = 0;
+                windowMode = WindowMode.RESULT;
             }
         }
 
         private void GameclearLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
+            if (isKeyPresseds[5])
+            {
+                windowMode = WindowMode.RESULT;
+            }
+        }
+
+        private void ResultLoop()
+        {
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
-
-                ranking = new List<(int, int, string)>();
-                LoadRankingData();
-                ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
-                {
-                    if (x.Item2 > y.Item2) return -1;
-                    if (x.Item2 < y.Item2) return 1;
-                    return 0;
-                }));
-
-                SaveRankingDate(ranking);
 
                 stageData.Clear();
                 LoadStageData(WindowMode.STAGE1);
@@ -566,12 +650,6 @@ namespace ShootingGame
                 bullets.Clear();
 
                 musicPlayer.Open(UtilityUris.BGM2_URI);
-
-                musicPlayer.MediaEnded += (object? sender, EventArgs e) =>
-                {
-                    musicPlayer.Position = TimeSpan.Zero;
-                };
-                musicPlayer.IsMuted = isMusicMuted;
                 musicPlayer.Play();
 
                 backgroundAnimationCounter = 0;
@@ -675,21 +753,34 @@ namespace ShootingGame
             //とりあえず必要経験経験値=現在のレベル^3 + 5　にしている。
             if (player.Exp >= player.Level * player.Level * player.Level + 5 ||/*デバック用*/ isKeyPresseds[5] && isKeyPresseds[6]) player.LevelUp();
 
-            //playerが死んだら即終了。ゲームオーバー画面作るならここを修正。
+            //playerのHP0のときの処理
             if (player.Hp <= 0)
             {
                 player.lives--;
-                windowMode = WindowMode.GAMEOVER;
+                UtilitySE.PlayReliveSE();
+                player.StartAnimation();
+                if (player.lives == 0)
+                {
+                    windowMode = WindowMode.GAMEOVER;
 
                 scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 90
+                                    , 50
                                     , Brushes.White
                                     , 12.5);
 
-                WriteScore();
+                    WriteScore();
+                }
+                else
+                {
+                    player.X= (int)(SystemParameters.FullPrimaryScreenWidth / 2);
+                    player.Y = (int)(SystemParameters.FullPrimaryScreenHeight * 3 / 4);
+                    player.HeelFullOfHp();
+                    player.status[StatusEffects.INVINCIBLE] = 30;
+                }
+                
             }
 
             player.Action();
@@ -836,6 +927,9 @@ namespace ShootingGame
                     case WindowMode.GAMECLEAR:
                         DrawGameclearWindow(drawingContext);
                         break;
+                    case WindowMode.RESULT:
+                        DrawResultWindow(drawingContext);
+                        break;
                     case WindowMode.LANKING:
                         break;
                 }
@@ -900,6 +994,18 @@ namespace ShootingGame
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 40));
             }
+
+            // 残機設定の描画処理
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7, modeSelectionTextRect.Y - 80, 32, 32));
+            drawingContext.DrawText(new FormattedText(
+                                         $"×{(mode == 0 ? 3 : 1)}"
+                                        , CultureInfo.GetCultureInfo("en")
+                                        , FlowDirection.LeftToRight
+                                        , FONT_TYPEFACE
+                                        , 30
+                                        , Brushes.White
+                                        , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+
         }
 
         private void DrawGameWindow(DrawingContext drawingContext)
@@ -1078,7 +1184,7 @@ namespace ShootingGame
         private void DrawGameoverWindow(DrawingContext drawingContext)
         {
             drawingContext.DrawImage(Images.GAMEOVER_IMAGE, titleRect);
-            double fixedLeft = Width / 2 - 600;
+            double fixedLeft = Width / 2 - 300;
             scoreText.TextAlignment = System.Windows.TextAlignment.Left;
             drawingContext.DrawText(scoreText, new Point(fixedLeft, modeSelectionTextRect.Y));
         }
@@ -1209,6 +1315,12 @@ namespace ShootingGame
                 case System.Windows.Input.Key.I:
                     player.status[StatusEffects.INVINCIBLE] = 9999;
                     break;
+                case System.Windows.Input.Key.LeftShift:
+                    isKeyPresseds[8] = true;
+                    break;
+                case System.Windows.Input.Key.LeftCtrl:
+                    isKeyPresseds[9] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -1240,6 +1352,12 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.RightShift:
                     isKeyPresseds[7] = false;
+                    break;
+                case System.Windows.Input.Key.LeftShift:
+                    isKeyPresseds[8] = false;
+                    break;
+                case System.Windows.Input.Key.LeftCtrl:
+                    isKeyPresseds[9] = false;
                     break;
                 default:
                     break;

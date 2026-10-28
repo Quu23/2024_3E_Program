@@ -1,9 +1,9 @@
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 
 namespace ShootingGame.Entities.Planes
 {
     /// <summary>
-    /// ���@��G�@�Ȃǂ�܂߂����ۓI�Ȑ퓬�@�N���X
+    /// 自機や敵機などを含めた抽象的な戦闘機クラス
     /// </summary>
     abstract public class Plane : Entity
     {
@@ -29,7 +29,7 @@ namespace ShootingGame.Entities.Planes
         }
 
         /// <summary>
-        /// �e��o���Ƃ��p�ɁA�e�̉摜�̃T�C�Y�Ƃ���l�������^�񒆂�X���W��Ԃ��B
+        /// 弾を出すとき用に、弾の画像のサイズとかを考慮した真ん中のX座標を返す。
         /// </summary>
         public int CenterXForShotBullet
         {
@@ -68,9 +68,9 @@ namespace ShootingGame.Entities.Planes
         }
 
         /// <summary>
-        /// �����̔�s�@�̒e�𐶐����郁�\�b�h�B
+        /// 自分の飛行機の弾を生成するメソッド。
         /// </summary>
-        /// <returns>��������Bullet�̃��X�g��Ԃ��B�����bullets��add����`�Ŏg���B</returns>
+        /// <returns>生成したBulletのリストを返す。これをbulletsにaddする形で使う。</returns>
         protected abstract List<Bullet> ShotBullet();
     }
 }
