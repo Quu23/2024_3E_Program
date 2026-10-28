@@ -329,8 +329,8 @@ namespace ShootingGame
         }
         private Rect ShowRanking(DrawingContext drawingContext)
         {
-            double width = ActualWidth > 0 ? ActualWidth : SystemParameters.PrimaryScreenWidth;
-            double height = ActualHeight > 0 ? ActualHeight : SystemParameters.PrimaryScreenHeight;
+            double width = ActualWidth > 0 ? ActualWidth : SystemParameters.FullPrimaryScreenWidth;
+            double height = ActualHeight > 0 ? ActualHeight : SystemParameters.FullPrimaryScreenHeight;
 
             double w = width * 0.60;  // 枠の幅
             double h = height * 0.65; // 枠の高さ
@@ -609,22 +609,22 @@ namespace ShootingGame
         
         private void GameoverLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
             if (isKeyPresseds[5])
             {
-                LoadRankingData();
-                SaveRankingDate(ranking);
-                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
 
         private void GameclearLoop()
         {
+            LoadRankingData();
+            SaveRankingDate(ranking);
+            LoadRankingData();
             if (isKeyPresseds[5])
             {
-                LoadRankingData();
-                SaveRankingDate(ranking);
-                LoadRankingData();
                 windowMode = WindowMode.RESULT;
             }
         }
