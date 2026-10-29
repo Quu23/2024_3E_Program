@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Items
 {
     internal class BombItem : TransientItem
     {
-        public BombItem(int x, int y) : base(x, y, 16, 10, Images.SPEED_UP_ITEM_IMAGE, StatusEffects.BOMB_MODE, 50)
+        public BombItem(int x, int y) : base(x, y, 16, 10, Images.BOMB_ITEM_IMAGE, StatusEffects.BOMB_MODE, 50)
         {
         }
 
