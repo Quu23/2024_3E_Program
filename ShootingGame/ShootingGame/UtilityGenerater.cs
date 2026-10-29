@@ -76,6 +76,8 @@ namespace ShootingGame
                     return new Octpath(x, y);
                 case ItemTypes.BOMB_ITEM:
                     return new BombItem(x, y);
+                case ItemTypes.REVERSE_ITEM:
+                    return new ReverseItem(x, y);
                 default:
                     throw new ArgumentException($"存在しないItemTypeです。itemType={itemType}");
             }

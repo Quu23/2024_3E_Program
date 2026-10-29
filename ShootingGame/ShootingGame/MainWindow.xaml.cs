@@ -580,7 +580,7 @@ namespace ShootingGame
                     message = "";
                 }
 
-                windowMode = WindowMode.STAGE2;
+                windowMode = WindowMode.STAGE1;
                 if (message.Length > 0)
                 {
                     player = new Player(message);
