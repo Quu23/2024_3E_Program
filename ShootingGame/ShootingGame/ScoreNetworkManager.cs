@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Json;
 
@@ -51,6 +52,7 @@ namespace ShootingGame
             catch (Exception ex)
             {
                 // サーバーが起動していない. LANが抜けているなどではnull で知らせる.
+                Debug.WriteLine("GET失敗の原因: " + ex.Message);
                 return null;
             }
         }

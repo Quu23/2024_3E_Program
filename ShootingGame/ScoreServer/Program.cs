@@ -16,7 +16,7 @@ const string filePath = "scoreboard.txt";
 SemaphoreSlim fileLock = new SemaphoreSlim(1, 1);
 
 // 【GET】ランキングデータをそのまま返す（手動RELOAD用）
-app.MapGet("/", async () =>
+app.MapGet("/score", async () =>
 {
     await fileLock.WaitAsync();
     try
@@ -36,7 +36,7 @@ app.MapGet("/", async () =>
 });
 
 // 【POST】ゲームオーバー/クリア時に名前とスコアを受け取り、マージ・ソートして保存
-app.MapPost("/score", async (ScoreRequest request) =>
+app.MapPost("/score", async (ScoreData request) =>
 {
     if (string.IsNullOrWhiteSpace(request.Name) || request.Score < 0)
     {
