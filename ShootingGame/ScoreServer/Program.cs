@@ -1,15 +1,6 @@
-namespace ScoreServer
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
 
-            app.MapGet("/score", (string name) => "Hello " + name);
+app.MapGet("/", () => "Hello World!");
 
-            app.Run("http://*:5000");
-        }
-    }
-}
+app.Run("http://localhost:5000");
