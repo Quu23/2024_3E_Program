@@ -11,9 +11,10 @@ namespace ShootingGame
 
         //ゲームタイトルなど
         public static readonly Uri START_BACKGROUND_URI  = new Uri("../../../img/start.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri BACKGROUND1_URI       = new Uri("../../../img/background0.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri BACKGROUND2_URI       = new Uri("../../../img/background_2.png" , UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND1_URI       = new Uri("../../../img/background1.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND2_URI       = new Uri("../../../img/background2.png" , UriKind.RelativeOrAbsolute);
         public static readonly Uri BACKGROUND3_URI       = new Uri("../../../img/background3.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BACKGROUND4_URI       = new Uri("../../../img/background4.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri TITLE_URI             = new Uri("../../../img/Title.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MODE_SELECT_TEXT_URI  = new Uri("../../../img/Mode_Selection.png",UriKind.RelativeOrAbsolute);
         public static readonly Uri GAMEOVER_URI          = new Uri("../../../img/Gameover.png", UriKind.RelativeOrAbsolute);
@@ -33,6 +34,7 @@ namespace ShootingGame
         public static readonly Uri DESTROY_ITEM_URI        = new Uri("../../../img/Destroy_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SCORE_BOOSTER_ITEM_URI  = new Uri("../../../img/Score_Booster_Item.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SAMPLE_ITEM_URI         = new Uri("../../../img/Sample_Item.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri OCTPATH_ITEM_URI        = new Uri("../../../img/Octpath_Item.png", UriKind.RelativeOrAbsolute);
 
         //playerとbullet
         public static readonly Uri PLAYER_URI            = new Uri("../../../img/Player.png", UriKind.RelativeOrAbsolute);
@@ -84,6 +86,9 @@ namespace ShootingGame
 
         public static readonly Uri PROHIBITED_ICON_URI = new Uri("../../../img/Prohibited.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri LIFE_ICON_URI       = new Uri("../../../img/Icon_life.png", UriKind.RelativeOrAbsolute);
+
+        //墨画像
+        public static readonly Uri SUMI_URI = new Uri("../../../img/sumi.png", UriKind.RelativeOrAbsolute);
 
 
 

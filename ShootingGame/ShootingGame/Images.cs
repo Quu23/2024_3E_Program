@@ -15,6 +15,7 @@ namespace ShootingGame
         public static readonly BitmapImage BACKGROUND1_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND1_URI);
         public static readonly BitmapImage BACKGROUND2_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND2_URI);  
         public static readonly BitmapImage BACKGROUND3_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND3_URI);
+        public static readonly BitmapImage BACKGROUND4_IMAGE        = new BitmapImage(UtilityUris.BACKGROUND4_URI);
         public static readonly BitmapImage TITLE_IMAGE              = new BitmapImage(UtilityUris.TITLE_URI);
         public static readonly BitmapImage MODE_SELECT_TEXT_IMAGE   = new BitmapImage(UtilityUris.MODE_SELECT_TEXT_URI);
         public static readonly BitmapImage GAMEOVER_IMAGE           = new BitmapImage(UtilityUris.GAMEOVER_URI);
@@ -34,6 +35,7 @@ namespace ShootingGame
         public static readonly BitmapImage DESTROY_ITEM_IMAGE        = new BitmapImage(UtilityUris.DESTROY_ITEM_URI);
         public static readonly BitmapImage SCORE_BOOSTER_ITEM_IMAGE  = new BitmapImage(UtilityUris.SCORE_BOOSTER_ITEM_URI);
         public static readonly BitmapImage SAMPLE_ITEM_IMAGE         = new BitmapImage(UtilityUris.SAMPLE_ITEM_URI);
+        public static readonly BitmapImage OCTPATH_ITEM_IMAGE        = new BitmapImage(UtilityUris.OCTPATH_ITEM_URI);
 
         //プレイヤー
         public static readonly BitmapImage PLAYER_IMAGE             = new BitmapImage(UtilityUris.PLAYER_URI);
@@ -95,6 +97,9 @@ namespace ShootingGame
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
         public static readonly BitmapImage DESTOROY_ICON_IMAGE       = new BitmapImage(UtilityUris.DESTOROY_ICON_URI);
+
+        //墨画像
+        public static readonly BitmapImage SUMI_IMAGE = new BitmapImage(UtilityUris.SUMI_URI);
 
         //武器アイコン
         public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);

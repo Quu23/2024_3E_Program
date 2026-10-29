@@ -3,30 +3,21 @@ using ShootingGame.Entities.Planes.Enemies;
 
 namespace ShootingGame.Entities.Items
 {
-    class SampleItem : Item
+    class SampleItem : TransientItem
     {
         // コンストラクタ. ここにSampleItemがインスタンス化されたときの処理をかく
-        public SampleItem(int x, int y) : base(x, y, 16, 6, Images.HEALING_ITEM_IMAGE)
+        public SampleItem(int x, int y) : base(x, y, 16, 5, Images.OCTPATH_ITEM_IMAGE, StatusEffects.SUMI, 100)
         {
-
         }
 
-        public override void MakeEffect(Player player)
+        protected override void Effect(Player player)
         {
-            if (player.Hp < player.MAX_HP - 2)
-            {
-                player.Hp += 2;
-            }
-            else
-            {
-                player.HeelFullOfHp();
-            }
+            
         }
 
         protected override void Move()
         {
             Y += Speed;
         }
-
     }
 }
