@@ -2,7 +2,7 @@
 {
     class WallEnemy : Enemy
     {
-        public WallEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 3, Images.STRAIGHT_ENEMY_IMAGE, /*LV=*/level, /*hp=*/99999999 + level, Bullet.RADIUS_FOR_MEDIUM, 0)
+        public WallEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 3, Images.WALL_ENEMY_IMAGE, /*LV=*/level, /*hp=*/99999999 + level, Bullet.RADIUS_FOR_MEDIUM, 0)
         {
         }
 

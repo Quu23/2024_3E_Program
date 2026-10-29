@@ -53,7 +53,7 @@ namespace ShootingGame.Entities.Planes
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　         効果時間
                 { SPEED_UP                ,0},
-                { SPEED_DOWN              ,0},
+                { SPEED_DOWN             ,0},
                 { SHOT_RATE_UP            ,0},
                 { SHOT_RATE_DOWN          ,0},
                 { SCORE_BOOST             ,0},
@@ -346,8 +346,7 @@ namespace ShootingGame.Entities.Planes
             }
             else if (status[BOMB_MODE] > 0)
             {
-                Bullet bombBullet = new BombBullet(CenterX, Y - 50, 5, 0, 9999);
-                ;
+                Bullet bombBullet = new BombBullet(CenterX - 32, Y - 50, 5, 0, 9999);
                 bullets.Add(bombBullet);
                 status[BOMB_MODE] = 0;
             } 
@@ -522,9 +521,10 @@ namespace ShootingGame.Entities.Planes
 
         int bombCounter;
 
-        public BombBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, damage, EnemyTypes.PLAYER)
+        public BombBullet(int x, int y, int speed, int degree, int damage) : base(x, y, 32, speed, degree, damage, EnemyTypes.PLAYER)
         {
             bombCounter = 50;
+            Img = Images.PLAYER_BULLET_BOMB_IMAGE;
         }
 
         public override void Action()
@@ -536,17 +536,11 @@ namespace ShootingGame.Entities.Planes
             }
             else
             {
-                App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
                 for (int i = 0; i < 360; i++)
                 {
                     App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 18) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }
-
-
                 App.window.bullets.Remove(this);
-
-
-
             }
         }
     }
