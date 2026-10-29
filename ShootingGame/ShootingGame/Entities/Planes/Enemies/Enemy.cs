@@ -42,7 +42,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
             SortedDictionary<int, ItemTypes> weightsProb = GetWeightedProbsOfDropItem;
 
-            dropProb = 50;
+            dropProb = 20;
 
             foreach (var item in weightsProb)
             {

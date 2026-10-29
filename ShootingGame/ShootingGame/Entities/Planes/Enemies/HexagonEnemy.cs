@@ -2,7 +2,7 @@
 {
     class HexagonEnemy : Enemy
     {
-        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 3, Images.HEXAGON_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_BIG, 400)
+        public HexagonEnemy(int x, int y, int level) : base(x, y, /*r=*/20, /*speed=*/ 3, Images.HEXAGON_ENEMY_IMAGE, /*LV=*/level, /*hp=*/3, /*bulletRadius=*/Bullet.RADIUS_FOR_BIG, 300)
         {
         }
 

@@ -17,7 +17,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
         }
 
-        private SplitEnemy(int x, int y,int level, int radius) : base(x, y, radius, 3, Images.SPLIT_ENEMY_IMAGE, level, 1 , Bullet.RADIUS_FOR_MEDIUM, 100)
+        private SplitEnemy(int x, int y,int level, int radius) : base(x, y, radius, 3, Images.SPLIT_ENEMY_IMAGE, level, 1 , Bullet.RADIUS_FOR_MEDIUM, 200)
         {
             if (radius <= 10) bulletRadius = Bullet.RADIUS_FOR_SMALL;
         }
