@@ -94,4 +94,4 @@ app.MapPost("/score", async (ScoreRequest request) =>
 app.Run("http://0.0.0.0:5000");
 
 // POSTリクエスト用のデータモデル
-public record ScoreRequest(string Name, int Score);
+public record ScoreRequest(int Rank, string Name, int Score);

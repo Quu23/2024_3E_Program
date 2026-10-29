@@ -19,6 +19,8 @@ using System.Buffers.Binary;
 
 namespace ShootingGame
 {
+    public record ScoreRequest(int Rank, string Name, int Score);
+
     /// <summary>
     /// 画面を管理し、描画処理も行う。ゲームロジックもここに記入。
     /// </summary>
