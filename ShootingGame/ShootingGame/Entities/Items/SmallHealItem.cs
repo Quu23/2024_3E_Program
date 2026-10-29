@@ -5,7 +5,7 @@ namespace ShootingGame.Entities.Items
 {
     class SmallHealItem : Item
     {
-        public SmallHealItem(int x, int y) : base(x, y, 16, 6, Images.HEALING_ITEM_IMAGE)
+        public SmallHealItem(int x, int y) : base(x, y, 16, 6, Images.SMALL_HEAL_ITEM_IMAGE)
         {
 
         }

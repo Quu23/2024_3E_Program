@@ -9,7 +9,7 @@ namespace ShootingGame.Entities.Items
 {
     class ReverseItem : TransientItem
     {
-        public ReverseItem(int x, int y) : base(x, y, 16, 5, Images.SAMPLE_ITEM_IMAGE, StatusEffects.REVERSE_CONTROLS, 100)
+        public ReverseItem(int x, int y) : base(x, y, 16, 5, Images.REVERSE_ITEM_IMAGE, StatusEffects.REVERSE_CONTROLS, 100)
         {
         }
 

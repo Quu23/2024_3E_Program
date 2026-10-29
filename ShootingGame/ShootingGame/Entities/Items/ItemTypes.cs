@@ -12,7 +12,10 @@
         SHOT_RATE_UP_ITEM,
         SPEED_DOWN_ITEM,
         SPEED_UP_ITEM,
+        REVERSE_ITEM,
         OCTPATH,
         BOMB_ITEM,
+        SMALL_HEAL_ITEM,
+        FULL_HEAL_ITEM,
     }
 }

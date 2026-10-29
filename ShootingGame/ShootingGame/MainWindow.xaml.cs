@@ -601,8 +601,8 @@ namespace ShootingGame
                 //Boss b = (Boss)enemies[0];
                 //enemies.AddRange(b.GetFollowers());
 
-                enemies.Add(new StraightEnemy(player.X, 0,1));
-                enemies.Add(new SampleEnemy(player.X - 100, 0, 1));
+                enemies.Add(new WarpEnemy(player.X, 0,1));
+                enemies.Add(new StraightEnemy(player.X - 100, 0, 1));
 
             }
 
@@ -1297,11 +1297,11 @@ namespace ShootingGame
                 case StatusEffects.SCORE_BOOST:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 case StatusEffects.REVERSE_CONTROLS:
-                    return Images.SCORE_BOOST_ICON_IMAGE;
+                    return Images.REVERSE_ICON_IMAGE;
                 case StatusEffects.SUMI:
-                    return Images.SCORE_BOOST_ICON_IMAGE;
+                    return Images.SUMI_IMAGE;
                 case StatusEffects.BOMB_MODE:
-                    return Images.SCORE_BOOST_ICON_IMAGE;
+                    return Images.BOMB_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();
             }

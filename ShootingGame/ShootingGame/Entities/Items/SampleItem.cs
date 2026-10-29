@@ -6,7 +6,7 @@ namespace ShootingGame.Entities.Items
     class SampleItem : TransientItem
     {
         // コンストラクタ. ここにSampleItemがインスタンス化されたときの処理をかく
-        public SampleItem(int x, int y) : base(x, y, 16, 5, Images.OCTPATH_ITEM_IMAGE, StatusEffects.BOMB_MODE, 100)
+        public SampleItem(int x, int y) : base(x, y, 16, 5, Images.SAMPLE_ITEM_IMAGE, StatusEffects.BOMB_MODE, 100)
         {
         }
 

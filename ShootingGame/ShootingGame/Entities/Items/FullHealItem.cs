@@ -5,7 +5,7 @@ namespace ShootingGame.Entities.Items
 {
     class FullHealItem : Item
     {
-        public FullHealItem(int x, int y) : base(x, y, 16, 6, Images.HEALING_ITEM_IMAGE)
+        public FullHealItem(int x, int y) : base(x, y, 16, 6, Images.FULL_HEAL_ITEM_IMAGE)
         {
 
         }

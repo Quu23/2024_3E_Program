@@ -14,7 +14,7 @@ namespace ShootingGame.Entities.Planes.Enemies
         {  
             get => new SortedDictionary<int, ItemTypes>(Comparer<int>.Create((int x, int y) =>
             {
-                if (x > y) return -1;
+                if (x >= y) return -1;
                 if (x < y) return 1;
                 return 0;
             })) { 
@@ -24,11 +24,14 @@ namespace ShootingGame.Entities.Planes.Enemies
                 {  5, CLEAR_ENEMIES_ITEM},
                 {  1,       DESTROY_ITEM},
                 { 10,            EXP_ORB},
-                { 70,    LARGE_HEAL_ITEM},
+                { 75,    SMALL_HEAL_ITEM },
+                { 10,    LARGE_HEAL_ITEM},
+                {  5,    FULL_HEAL_ITEM},
                 {  7,    INVINCIBLE_ITEM},
                 { 20, SCORE_BOOSTER_ITEM},
                 { 30,  SHOT_RATE_UP_ITEM},
                 { 25,      SPEED_UP_ITEM},
+                { 15,         BOMB_ITEM},
             };
         }
 
