@@ -30,12 +30,17 @@ namespace ShootingGame
         public static readonly BitmapImage SPEED_UP_ITEM_IMAGE       = new BitmapImage(UtilityUris.SPEED_UP_ITEM_URI);
         public static readonly BitmapImage SPEED_DOWN_ITEM_IMAGE     = new BitmapImage(UtilityUris.SPEED_DOWN_ITEM_URI);
         public static readonly BitmapImage HEALING_ITEM_IMAGE        = new BitmapImage(UtilityUris.HEALIING_ITEM_URI);
+        public static readonly BitmapImage FULL_HEAL_ITEM_IMAGE      = new BitmapImage(UtilityUris.FULL_HEAL_ITEM_URI);
+        public static readonly BitmapImage LARGE_HEAL_ITEM_IMAGE     = new BitmapImage(UtilityUris.LARGE_HEAL_ITEM_URI);
+        public static readonly BitmapImage SMALL_HEAL_ITEM_IMAGE = new BitmapImage(UtilityUris.SMALL_HEAL_ITEM_URI);
         public static readonly BitmapImage INVINCIBLE_ITEM_IMAGE     = new BitmapImage(UtilityUris.INVINCIBLE_ITEM_URI);
         public static readonly BitmapImage CLEAR_ENEMIES_ITEM_IMAGE  = new BitmapImage(UtilityUris.CLEAR_ENEMIES_ITEM_URI);
         public static readonly BitmapImage DESTROY_ITEM_IMAGE        = new BitmapImage(UtilityUris.DESTROY_ITEM_URI);
         public static readonly BitmapImage SCORE_BOOSTER_ITEM_IMAGE  = new BitmapImage(UtilityUris.SCORE_BOOSTER_ITEM_URI);
         public static readonly BitmapImage SAMPLE_ITEM_IMAGE         = new BitmapImage(UtilityUris.SAMPLE_ITEM_URI);
         public static readonly BitmapImage OCTPATH_ITEM_IMAGE        = new BitmapImage(UtilityUris.OCTPATH_ITEM_URI);
+        public static readonly BitmapImage BOMB_ITEM_IMAGE           = new BitmapImage(UtilityUris.BOMB_ITEM_URI);
+        public static readonly BitmapImage REVERSE_ITEM_IMAGE        = new BitmapImage(UtilityUris.REVERSE_ITEM_URI);
 
         //プレイヤー
         public static readonly BitmapImage PLAYER_IMAGE             = new BitmapImage(UtilityUris.PLAYER_URI);
@@ -70,6 +75,7 @@ namespace ShootingGame
         public static readonly BitmapImage LASER_ENEMY_IMAGE        = new BitmapImage(UtilityUris.LASER_ENEMY_URI);
         public static readonly BitmapImage SAMPLE_ENEMY_IMAGE       = new BitmapImage(UtilityUris.SAMPLE_ENEMY_URI);
         public static readonly BitmapImage WARP_ENEMY_IMAGE         = new BitmapImage(UtilityUris.WARP_ENEMY_URI);
+        public static readonly BitmapImage WALL_ENEMY_IMAGE         = new BitmapImage(UtilityUris.WALL_ENEMY_URI);
 
         public static readonly BitmapImage BOSS1_IMAGE = new BitmapImage(UtilityUris.BOSS1_URI);
         public static readonly BitmapImage BOSS2_IMAGE = new BitmapImage(UtilityUris.BOSS2_URI);
@@ -98,9 +104,7 @@ namespace ShootingGame
         public static readonly BitmapImage INCINCIBLE_ICON_IMAGE     = new BitmapImage(UtilityUris.INCINCIBLE_ICON_URI);
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
         public static readonly BitmapImage DESTOROY_ICON_IMAGE       = new BitmapImage(UtilityUris.DESTOROY_ICON_URI);
-
-        //墨画像
-        public static readonly BitmapImage SUMI_IMAGE = new BitmapImage(UtilityUris.SUMI_URI);
+        public static readonly BitmapImage REVERSE_ICON_IMAGE        = new BitmapImage(UtilityUris.REVERSE_ICON_URI);
 
         //武器アイコン
         public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
@@ -110,6 +114,10 @@ namespace ShootingGame
 
         public static readonly BitmapImage PROHIBITED_ICON_IMAGE = new BitmapImage(UtilityUris.PROHIBITED_ICON_URI);
         public static readonly BitmapImage LIFE_ICON_IMAGE = new BitmapImage(UtilityUris.LIFE_ICON_URI);
+
+
+        //墨画像
+        public static readonly BitmapImage SUMI_IMAGE = new BitmapImage(UtilityUris.SUMI_URI);
 
     }
 }
