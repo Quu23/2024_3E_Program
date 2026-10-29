@@ -16,11 +16,8 @@ using SharpDX.DirectInput;
 using ShootingGame.Entities.Planes.Enemies.Boss;
 using System.Buffers.Binary;
 
-
 namespace ShootingGame
 {
-    public record ScoreRequest(int Rank, string Name, int Score);
-
     /// <summary>
     /// 画面を管理し、描画処理も行う。ゲームロジックもここに記入。
     /// </summary>
@@ -458,25 +455,25 @@ namespace ShootingGame
             stageLastPosition = stageData[0].Item1;
         }
 
-        private void WriteScore()
-        {
-            // 書き込むファイルの絶対パス
-            string path = @"../../../data/score_board.txt";
-            rank = 0;
+        //private void WriteScore()
+        //{
+        //    // 書き込むファイルの絶対パス
+        //    string path = @"../../../data/score_board.txt";
+        //    rank = 0;
 
-            // ファイルを開く＆文字化け防止
-            // 第二引数が「true」 → 追加書き込みOK
-            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
-            using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
-            {
-                // score_board.txt に書き込み
-                file.WriteLine($"{rank},{score},{player.name}");
-            }
+        //    // ファイルを開く＆文字化け防止
+        //    // 第二引数が「true」 → 追加書き込みOK
+        //    // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+        //    using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
+        //    {
+        //        // score_board.txt に書き込み
+        //        file.WriteLine($"{rank},{score},{player.name}");
+        //    }
             
 
-            // 書き込んだファイルを読み込む
-            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
-        }
+        //    // 書き込んだファイルを読み込む
+        //    Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
+        //}
 
         private void SaveRankingDate(List<(int, int, string)> ranking)
         {
@@ -746,7 +743,6 @@ namespace ShootingGame
                                                     , Brushes.Yellow
                                                     , 12.5);
 
-                        WriteScore();
                     }
 
                     return;
@@ -766,15 +762,13 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.GAMEOVER;
 
-                scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
+                    scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
                                     , 50
                                     , Brushes.White
                                     , 12.5);
-
-                    WriteScore();
                 }
                 else
                 {
