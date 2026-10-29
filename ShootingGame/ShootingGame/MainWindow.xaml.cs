@@ -601,8 +601,8 @@ namespace ShootingGame
                 //Boss b = (Boss)enemies[0];
                 //enemies.AddRange(b.GetFollowers());
 
-                enemies.Add(new StraightEnemy(player.X, 0,1));
-                enemies.Add(new SampleEnemy(player.X - 100, 0, 1));
+                enemies.Add(new WarpEnemy(player.X, 0,1));
+                enemies.Add(new StraightEnemy(player.X - 100, 0, 1));
 
             }
 
