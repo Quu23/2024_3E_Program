@@ -601,7 +601,7 @@ namespace ShootingGame
 
             if (items.Count <= 0)
             {
-                items.Add(new DestroyItem(player.X, 0));
+                items.Add(new SampleItem(player.X, 0));
             }
 
             BasicGameLogic();
@@ -1287,6 +1287,8 @@ namespace ShootingGame
                 case StatusEffects.REVERSE_CONTROLS:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 case StatusEffects.SUMI:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
+                case StatusEffects.BOMB_MODE:
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();

@@ -346,8 +346,8 @@ namespace ShootingGame.Entities.Planes
             }
             else if (status[BOMB_MODE] > 0)
             {
-                Bullet bombBullet = new BombBullet(CenterX, Y - 50, 1, 0, 9999);
-                bombBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;
+                Bullet bombBullet = new BombBullet(CenterX, Y - 50, 5, 0, 9999);
+                ;
                 bullets.Add(bombBullet);
             } 
             else 
@@ -529,23 +529,24 @@ namespace ShootingGame.Entities.Planes
         public override void Action()
         {
             base.Action();
-            if (bombCounter > 0 )
+            if (bombCounter > 0)
             {
-                bombCounter-=1;
+                bombCounter -= 1;
             }
             else
             {
                 App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
-                for (int i = 0; i < 999; i++)
+                for (int i = 0; i < 360; i++)
                 {
-                    App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, (360/999)*i, 4, Enemies.EnemyTypes.PLAYER));
+                    App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 360) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }
 
 
-                 App.window.bullets.Remove(this);
+                App.window.bullets.Remove(this);
 
 
 
             }
+        }
     }
 }
