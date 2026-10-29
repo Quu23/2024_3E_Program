@@ -57,6 +57,7 @@ namespace ShootingGame.Entities.Planes
                 { SCORE_BOOST             ,0},
                 { INVINCIBLE              ,0},
                 { DESTROY_MODE            ,0},
+                { BOMB_MODE               ,0},
             };
 
             normalStatus = [
@@ -299,11 +300,17 @@ namespace ShootingGame.Entities.Planes
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
             {
-                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER); 
-                destroyBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;  
+                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER);
+                destroyBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;
                 bullets.Add(destroyBullet);
             }
-            else
+            else if (status[BOMB_MODE] > 0)
+            {
+                Bullet bombBullet = new BombBullet(CenterX, Y - 50, 1, 0, 9999);
+                bombBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;
+                bullets.Add(bombBullet);
+            } 
+            else 
             {
                 SetBullets(bullets);
             }   
@@ -467,5 +474,38 @@ namespace ShootingGame.Entities.Planes
 
             base.Action();
         }
+    }
+
+    internal class BombBullet : Bullet
+    {
+
+        int bombCounter;
+
+        public BombBullet(int x, int y, int speed, int degree, int damage) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, damage, EnemyTypes.PLAYER)
+        {
+            bombCounter = 50;
+        }
+
+        public override void Action()
+        {
+            base.Action();
+            if (bombCounter > 0 )
+            {
+                bombCounter-=1;
+            }
+            else
+            {
+                App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
+                for (int i = 0; i < 999; i++)
+                {
+                    App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, (360/999)*i, 4, Enemies.EnemyTypes.PLAYER));
+                }
+
+
+                 App.window.bullets.Remove(this);
+
+
+
+            }
     }
 }

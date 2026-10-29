@@ -13,5 +13,6 @@
         SCORE_BOOST            =  3,
         INVINCIBLE             =  4,
         DESTROY_MODE           =  5,
+        BOMB_MODE              =  7,
     }
 }
