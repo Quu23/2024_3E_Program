@@ -265,17 +265,12 @@ namespace ShootingGame
                 ranking.Add((temp2, temp3, temp[2]));
             }
 
-            for (int i = 0; i < ranking.Count - 1; i++)
+            ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
-                for (int j = i + 1; j < ranking.Count; j++)
-                {if (ranking[i].Item2 < ranking[j].Item2)
-                    {
-                        var temp = ranking[i];
-                        ranking[i] = ranking[j];
-                        ranking[j] = temp;
-                    }
-                }
-            }
+                if (x.Item2 > y.Item2) return -1;
+                if (x.Item2 < y.Item2) return 1;
+                return 0;
+            }));
         }
 
         private void DrawResultWindow(DrawingContext drawingContext)
@@ -455,25 +450,25 @@ namespace ShootingGame
             stageLastPosition = stageData[0].Item1;
         }
 
-        //private void WriteScore()
-        //{
-        //    // 書き込むファイルの絶対パス
-        //    string path = @"../../../data/score_board.txt";
-        //    rank = 0;
+        private void WritePlayerScore()
+        {
+            // 書き込むファイルの絶対パス
+            string path = @"../../../data/score_board.txt";
+            rank = 0;
 
-        //    // ファイルを開く＆文字化け防止
-        //    // 第二引数が「true」 → 追加書き込みOK
-        //    // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
-        //    using(StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
-        //    {
-        //        // score_board.txt に書き込み
-        //        file.WriteLine($"{rank},{score},{player.name}");
-        //    }
-            
+            // ファイルを開く＆文字化け防止
+            // 第二引数が「true」 → 追加書き込みOK
+            // 　　　　　「false」→ 追加書き込みせず、上書きして書き込む
+            using (StreamWriter file = new StreamWriter(path, true, Encoding.GetEncoding("UTF-8")))
+            {
+                // score_board.txt に書き込み
+                file.WriteLine($"{rank},{score},{player.name}");
+            }
 
-        //    // 書き込んだファイルを読み込む
-        //    Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
-        //}
+
+            // 書き込んだファイルを読み込む
+            Console.WriteLine(File.ReadAllText(path, Encoding.GetEncoding("UTF-8")));
+        }
 
         private void SaveRankingDate(List<(int, int, string)> ranking)
         {
@@ -733,7 +728,7 @@ namespace ShootingGame
                     {
                         SetUpStage(windowMode);
                     }
-                    else if(windowMode == WindowMode.GAMECLEAR)
+                    else if (windowMode == WindowMode.GAMECLEAR)
                     {
                         scoreText = new FormattedText($"SCORE:{score}"
                                                     , CultureInfo.GetCultureInfo("en")
@@ -742,9 +737,8 @@ namespace ShootingGame
                                                     , 100
                                                     , Brushes.Yellow
                                                     , 12.5);
-
+                        WritePlayerScore();
                     }
-
                     return;
                 }
             }
