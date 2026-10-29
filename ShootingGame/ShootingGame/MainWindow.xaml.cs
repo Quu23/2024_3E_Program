@@ -269,32 +269,20 @@ namespace ShootingGame
 
                 ranking.Add((temp2, temp3, temp[2]));
             }
-
-            for (int i = 0; i < ranking.Count - 1; i++)
-            {
-                for (int j = i + 1; j < ranking.Count; j++)
-                {if (ranking[i].Item2 < ranking[j].Item2)
-                    {
-                        var temp = ranking[i];
-                        ranking[i] = ranking[j];
-                        ranking[j] = temp;
-                    }
-                }
-            }
         }
-
-        private void DrawResultWindow(DrawingContext drawingContext)
+        private List<(int rank, int score, string name)> displayRanking = new List<(int rank, int score, string name)>();
+        private void PrepareDisplayRanking()
         {
-            List<(int rank, int score, string name)> displayList = new List<(int rank, int score, string name)>();
+            displayRanking.Clear();
 
             int topCount = Math.Min(9, ranking.Count);
             for (int i = 0; i < topCount; i++)
             {
-                displayList.Add(ranking[i]);
+                displayRanking.Add(ranking[i]);
             }
             // トップ9の中に自分が含まれているかチェック
             bool isMeInTop9 = false;
-            foreach (var item in displayList)
+            foreach (var item in displayRanking)
             {
                 if (item.score == score && item.name == player.name)
                 {
@@ -308,7 +296,7 @@ namespace ShootingGame
                 // 自分がトップ9にいる場合、10件目のデータがあればそのまま追加
                 if (ranking.Count >= 10)
                 {
-                    displayList.Add(ranking[9]);
+                    displayRanking.Add(ranking[9]);
                 }
             }
             else
@@ -318,19 +306,21 @@ namespace ShootingGame
                 {
                     if (item.Item2 == score && item.Item3 == player.name)
                     {
-                        displayList.Add(item);
+                        displayRanking.Add(item);
                         break; // 最初に見つかった自分のスコアを追加して抜ける
                     }
                 }
             }
-            Rect windowRect = ShowRanking(drawingContext);
+        }
 
-            // Rect の標準プロパティ (Width, Height, Left, Top) を使用
-            double paddingX = windowRect.Width * 0.08;
-            double paddingY = windowRect.Height * 0.08;
-            Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
-            double availableHeight = windowRect.Height - (paddingY * 2);
-            WriteResult(drawingContext, displayList, textOrigin, availableHeight);
+        private void DrawResultWindow(DrawingContext drawingContext)
+        {               Rect windowRect = ShowRanking(drawingContext);
+                        // Rect の標準プロパティ (Width, Height, Left, Top) を使用
+                        double paddingX = windowRect.Width * 0.08;
+                        double paddingY = windowRect.Height * 0.08;
+                        Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
+                        double availableHeight = windowRect.Height - (paddingY * 2);
+                        DrawResult(drawingContext,displayRanking, textOrigin, availableHeight);
         }
         private Rect ShowRanking(DrawingContext drawingContext)
         {
@@ -348,7 +338,7 @@ namespace ShootingGame
             return windowRect;
         }
 
-        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
+        private void DrawResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
         {
             double lineSpacing = availableHeight / 10.5;
             double fontSize = Math.Min(28, lineSpacing * 0.75);
@@ -614,26 +604,54 @@ namespace ShootingGame
             BasicGameLogic();
         }
 
-        
+
         private void GameoverLoop()
         {
             LoadRankingData();
-            SaveRankingDate(ranking);
-            LoadRankingData();
-            if (isKeyPresseds[5])
+            for (int i = 0; i < ranking.Count - 1; i++)
             {
-                windowMode = WindowMode.RESULT;
+                for (int j = i + 1; j < ranking.Count; j++)
+                {
+                    if (ranking[i].Item2 < ranking[j].Item2)
+                    {
+                        var temp = ranking[i];
+                        ranking[i] = ranking[j];
+                        ranking[j] = temp;
+                    }
+                }
+                SaveRankingDate(ranking);
+                LoadRankingData();
+                PrepareDisplayRanking();
+
+                if (isKeyPresseds[5])
+                {
+                    windowMode = WindowMode.RESULT;
+                }
             }
         }
 
         private void GameclearLoop()
         {
             LoadRankingData();
-            SaveRankingDate(ranking);
-            LoadRankingData();
-            if (isKeyPresseds[5])
+            for (int i = 0; i < ranking.Count - 1; i++)
             {
-                windowMode = WindowMode.RESULT;
+                for (int j = i + 1; j < ranking.Count; j++)
+                {
+                    if (ranking[i].Item2 < ranking[j].Item2)
+                    {
+                        var temp = ranking[i];
+                        ranking[i] = ranking[j];
+                        ranking[j] = temp;
+                    }
+                }
+                SaveRankingDate(ranking);
+                LoadRankingData();
+                PrepareDisplayRanking();
+
+                if (isKeyPresseds[5])
+                {
+                    windowMode = WindowMode.RESULT;
+                }
             }
         }
 
