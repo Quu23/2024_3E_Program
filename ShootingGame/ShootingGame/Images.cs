@@ -106,6 +106,7 @@ namespace ShootingGame
         public static readonly BitmapImage SCORE_BOOST_ICON_IMAGE    = new BitmapImage(UtilityUris.SCORE_BOOST_ICON_URI);
         public static readonly BitmapImage DESTOROY_ICON_IMAGE       = new BitmapImage(UtilityUris.DESTOROY_ICON_URI);
         public static readonly BitmapImage REVERSE_ICON_IMAGE        = new BitmapImage(UtilityUris.REVERSE_ICON_URI);
+        public static readonly BitmapImage BOMB_ICON_IMAGE           = new BitmapImage(UtilityUris.BOMB_ICON_URI);
 
         //武器アイコン
         public static readonly BitmapImage DEFAULT_ICON_IMAGE = new BitmapImage(UtilityUris.DEFAULT_ICON_URI);
