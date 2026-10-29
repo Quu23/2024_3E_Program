@@ -4,9 +4,9 @@ using ShootingGame.Entities.Planes;
 namespace ShootingGame.Entities.Items
 {
 
-    class Octputh : TransientItem
+    class Octpath : TransientItem
     {
-        public Octputh(int x, int y) : base(x, y, 32, 10, Images.OCTPATH_ITEM_IMAGE, StatusEffects.SUMI, 100)
+        public Octpath(int x, int y) : base(x, y, 32, 10, Images.OCTPATH_ITEM_IMAGE, StatusEffects.SUMI, 100)
         {
         }
 

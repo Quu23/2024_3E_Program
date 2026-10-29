@@ -35,6 +35,10 @@ namespace ShootingGame
                     return new CycloneEnemy(x, y, level);
                 case EnemyTypes.LASER_ENEMY:
                     return new LaserEnemy(x, y, level);
+                case EnemyTypes.WALL_ENEMY:
+                    return new WallEnemy(x, y, level);
+                case EnemyTypes.WARP_ENEMY:
+                    return new WarpEnemy(x, y, level);  
                 default:
                     throw new ArgumentException($"存在しないEnemyTypeです。enemyType={enemyType}");
             }
@@ -64,6 +68,10 @@ namespace ShootingGame
                     return new SpeedDownItem(x, y);
                 case ItemTypes.SPEED_UP_ITEM:
                     return new SpeedUpItem(x, y);
+                case ItemTypes.OCTPATH:
+                    return new Octpath(x, y);
+                case ItemTypes.BOMB_ITEM:
+                    return new BombItem(x, y);
                 default:
                     throw new ArgumentException($"存在しないItemTypeです。itemType={itemType}");
             }
