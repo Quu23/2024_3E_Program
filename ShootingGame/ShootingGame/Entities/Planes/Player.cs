@@ -349,6 +349,7 @@ namespace ShootingGame.Entities.Planes
                 Bullet bombBullet = new BombBullet(CenterX, Y - 50, 5, 0, 9999);
                 ;
                 bullets.Add(bombBullet);
+                status[BOMB_MODE] = 0;
             } 
             else 
             {
@@ -538,7 +539,7 @@ namespace ShootingGame.Entities.Planes
                 App.window.bullets.Add(new Bullet(X, Y, 16, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
                 for (int i = 0; i < 360; i++)
                 {
-                    App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 360) * i, 4, Enemies.EnemyTypes.PLAYER));
+                    App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 18) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }
 
 
