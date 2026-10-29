@@ -314,15 +314,6 @@ namespace ShootingGame
         }
 
         private void DrawResultWindow(DrawingContext drawingContext)
-        {               Rect windowRect = ShowRanking(drawingContext);
-                        // Rect の標準プロパティ (Width, Height, Left, Top) を使用
-                        double paddingX = windowRect.Width * 0.08;
-                        double paddingY = windowRect.Height * 0.08;
-                        Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
-                        double availableHeight = windowRect.Height - (paddingY * 2);
-                        DrawResult(drawingContext,displayRanking, textOrigin, availableHeight);
-        }
-        private Rect ShowRanking(DrawingContext drawingContext)
         {
             double width = ActualWidth > 0 ? ActualWidth : SystemParameters.FullPrimaryScreenWidth;
             double height = ActualHeight > 0 ? ActualHeight : SystemParameters.FullPrimaryScreenHeight;
@@ -333,19 +324,18 @@ namespace ShootingGame
             double y = (height - h) / 2.0; // Y座標
 
             Rect windowRect = new Rect(x, y, w, h);
-
-            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect);
-            return windowRect;
-        }
-
-        private void DrawResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
-        {
+            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect); 
+            
+            double paddingX = windowRect.Width * 0.08;
+            double paddingY = windowRect.Height * 0.08;
+            Point origin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
+            double availableHeight = windowRect.Height - (paddingY * 2);
             double lineSpacing = availableHeight / 10.5;
             double fontSize = Math.Min(28, lineSpacing * 0.75);
 
-            for (int i = 0; i < displayList.Count; i++)
+            for (int i = 0; i < displayRanking.Count; i++)
             {
-                var item = displayList[i];
+                var item = displayRanking[i];
 
                 bool isMe = (item.score == score && item.name == player.name);
                 Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
