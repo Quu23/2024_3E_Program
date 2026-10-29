@@ -12,5 +12,7 @@
         SHOT_RATE_UP_ITEM,
         SPEED_DOWN_ITEM,
         SPEED_UP_ITEM,
+        OCTPATH,
+        BOMB_ITEM,
     }
 }

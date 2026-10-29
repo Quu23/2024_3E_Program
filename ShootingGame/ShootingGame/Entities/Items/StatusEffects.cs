@@ -16,5 +16,6 @@
         REVERSE_CONTROLS       =  6,
         SUMI                   =  8,
 
+        BOMB_MODE              =  7,
     }
 }

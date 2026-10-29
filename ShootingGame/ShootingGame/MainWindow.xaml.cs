@@ -56,9 +56,9 @@ namespace ShootingGame
 
 
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL
+        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL F1 F2 
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false };
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false, false, false};
 
         private Joystick _joy;
 
@@ -100,9 +100,12 @@ namespace ShootingGame
         readonly DateTime GAME_START_TIME;
         TimeSpan spf;
 
-        // 残機設定, ゲーム難易度用 
+        // 残機設定用 0: 3機, 1: 1機
         int mode;
-
+        // 難易度用
+        int difficulty;
+        const int NORMAL_DIFFICULTY = 1;
+        const int HARD_DIFFICULTY = 10;
 
         protected override int VisualChildrenCount => visuals.Count;
 
@@ -242,6 +245,7 @@ namespace ShootingGame
             stagePosition = 0;
 
             mode = 0;
+            difficulty = 1;
 
             updateTimer.Start();
 
@@ -552,6 +556,9 @@ namespace ShootingGame
             if (isKeyPresseds[8]) mode = 0;
             if (isKeyPresseds[9]) mode = 1;
 
+            if (isKeyPresseds[10]) difficulty = NORMAL_DIFFICULTY;
+            if (isKeyPresseds[11]) difficulty = HARD_DIFFICULTY;
+
             if (isKeyPresseds[4]) {
                 if (message.Equals("DEBUG"))
                 {
@@ -673,7 +680,7 @@ namespace ShootingGame
 
                     if (pair.Item2 == 0)
                     {
-                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, Math.Abs((int)windowMode)));
+                        enemies.Add(UtilityGenerater.GenerateEnemy((EnemyTypes)pair.Item3, pair.Item4, 0, Math.Abs((int)windowMode) * difficulty));
                     }
                     else
                     {
@@ -963,6 +970,11 @@ namespace ShootingGame
                                         , 30
                                         , Brushes.White
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+            // HARDなら
+            if(difficulty == HARD_DIFFICULTY)
+            {
+                drawingContext.DrawImage(Images.PROHIBITED_ICON_IMAGE, new Rect(0, 0, 32, 32));
+            }
 
             if (isKeyPresseds[7])
             {
@@ -1288,6 +1300,8 @@ namespace ShootingGame
                     return Images.SCORE_BOOST_ICON_IMAGE;
                 case StatusEffects.SUMI:
                     return Images.SCORE_BOOST_ICON_IMAGE;
+                case StatusEffects.BOMB_MODE:
+                    return Images.SCORE_BOOST_ICON_IMAGE;
                 default:
                     throw new NotImplementedException();
             }
@@ -1341,6 +1355,12 @@ namespace ShootingGame
                 case System.Windows.Input.Key.LeftCtrl:
                     isKeyPresseds[9] = true;
                     break;
+                case System.Windows.Input.Key.F1:
+                    isKeyPresseds[10] = true;
+                    break;
+                case System.Windows.Input.Key.F2:
+                    isKeyPresseds[11] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -1378,6 +1398,12 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.LeftCtrl:
                     isKeyPresseds[9] = false;
+                    break;
+                case System.Windows.Input.Key.F1:
+                    isKeyPresseds[10] = false;
+                    break;
+                case System.Windows.Input.Key.F2:
+                    isKeyPresseds[11] = false;
                     break;
                 default:
                     break;
