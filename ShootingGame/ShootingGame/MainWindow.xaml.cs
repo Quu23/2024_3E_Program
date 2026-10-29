@@ -102,6 +102,9 @@ namespace ShootingGame
         // 残機設定, ゲーム難易度用 
         int mode;
 
+        // 通信処理用
+        private ScoreNetworkManager scoreNetworkManager;
+
 
         protected override int VisualChildrenCount => visuals.Count;
 
@@ -122,6 +125,8 @@ namespace ShootingGame
             };
             unmoveableAreaPen = new Pen(Brushes.Yellow, 1);
 
+            // 通信処理用のインスタンスを作成
+            scoreNetworkManager = new ScoreNetworkManager();
 
             windowMode = WindowMode.START;
 
@@ -226,8 +231,19 @@ namespace ShootingGame
             //データ読み込み
 
             //SortedDictonaryは小さい順に並べるので、SCOREが大きいほど前（順序でいえば小さい）になる。
-            ranking = new List<(int, int,string)>();
-            LoadRankingData();
+            var tmp = scoreNetworkManager.GetRanking();
+
+            // サーバーからランキングデータを取得できなかった場合は、ローカルのスコアボードファイルから読み込む
+            if (tmp == null)
+            {
+                ranking = new List<(int, int, string)>();
+                LoadRankingData();
+            }
+            else
+            {
+                ranking = TransformListFromRecordToTuple(tmp);
+            }
+
             ranking.Sort(Comparer<(int, int, string)>.Create(((int, int, string) x, (int, int, string) y) =>
             {
                 if (x.Item2 > y.Item2) return -1;
@@ -604,9 +620,32 @@ namespace ShootingGame
         
         private void GameoverLoop()
         {
-            LoadRankingData();
-            SaveRankingDate(ranking);
-            LoadRankingData();
+            // player dataをsend
+            if(scoreNetworkManager.SendScore(0, player.name, score))
+            {
+                //成功したらranking取得
+                var tmp = scoreNetworkManager.GetRanking();
+                if(tmp != null)
+                {
+                    ranking = TransformListFromRecordToTuple(tmp);
+                }
+                else
+                {
+                    // 失敗したらローカルのスコアボードファイルから読み込む
+                    LoadRankingData();
+                    SaveRankingDate(ranking);
+                    LoadRankingData();
+                }
+            }
+            else
+            {
+                // 失敗したらローカルのスコアボードファイルから読み込む
+                LoadRankingData();
+                SaveRankingDate(ranking);
+                LoadRankingData();
+            }
+
+
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.RESULT;
@@ -615,9 +654,32 @@ namespace ShootingGame
 
         private void GameclearLoop()
         {
-            LoadRankingData();
-            SaveRankingDate(ranking);
-            LoadRankingData();
+
+            // player dataをsend
+            if (scoreNetworkManager.SendScore(0, player.name, score))
+            {
+                //成功したらranking取得
+                var tmp = scoreNetworkManager.GetRanking();
+                if (tmp != null)
+                {
+                    ranking = TransformListFromRecordToTuple(tmp);
+                }
+                else
+                {
+                    // 失敗したらローカルのスコアボードファイルから読み込む
+                    LoadRankingData();
+                    SaveRankingDate(ranking);
+                    LoadRankingData();
+                }
+            }
+            else
+            {
+                // 失敗したらローカルのスコアボードファイルから読み込む
+                LoadRankingData();
+                SaveRankingDate(ranking);
+                LoadRankingData();
+            }
+
             if (isKeyPresseds[5])
             {
                 windowMode = WindowMode.RESULT;
@@ -1459,5 +1521,9 @@ namespace ShootingGame
 
         }
 
+        private List<(int, int, string)> TransformListFromRecordToTuple(List<ScoreData> records)
+        {
+            return records.Select(r => (r.Rank, r.Score, r.Name)).ToList();
+        }
     }
 }
