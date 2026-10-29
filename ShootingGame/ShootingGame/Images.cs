@@ -69,6 +69,7 @@ namespace ShootingGame
         public static readonly BitmapImage CYCLONE_ENEMY_IMAGE      = new BitmapImage(UtilityUris.CYCLONE_ENEMY_URI);
         public static readonly BitmapImage LASER_ENEMY_IMAGE        = new BitmapImage(UtilityUris.LASER_ENEMY_URI);
         public static readonly BitmapImage SAMPLE_ENEMY_IMAGE       = new BitmapImage(UtilityUris.SAMPLE_ENEMY_URI);
+        public static readonly BitmapImage WARP_ENEMY_IMAGE         = new BitmapImage(UtilityUris.WARP_ENEMY_URI);
 
         public static readonly BitmapImage BOSS1_IMAGE = new BitmapImage(UtilityUris.BOSS1_URI);
         public static readonly BitmapImage BOSS2_IMAGE = new BitmapImage(UtilityUris.BOSS2_URI);

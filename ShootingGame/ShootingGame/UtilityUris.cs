@@ -44,10 +44,10 @@ namespace ShootingGame
         public static readonly Uri P_BULLET_DESTROY_URI  = new Uri("../../../img/Player_Destroy_Bullet.png", UriKind.RelativeOrAbsolute);
 
         //enemy
-        public static readonly Uri STRAIGHT_ENEMY_URI    = new Uri("../../../img/StraightEnemy.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SNAKE_ENEMY_URI       = new Uri("../../../img/SnakeEnemy.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SHOTGUN_ENEMY_URI     = new Uri("../../../img/ShotgunEnemy.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri TRUN_BACK_ENEMY_URI   = new Uri("../../../img/Trunback_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri STRAIGHT_ENEMY_URI    = new Uri("../../../img/Straight_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SNAKE_ENEMY_URI       = new Uri("../../../img/Snake_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOTGUN_ENEMY_URI     = new Uri("../../../img/Shotgun_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri TRUN_BACK_ENEMY_URI   = new Uri("../../../img/Turnback_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri HEXAGON_ENEMY_URI     = new Uri("../../../img/Hexagon_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri GOLDEN_ENEMY_URI      = new Uri("../../../img/Golden_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri MISSILE_ENEMY_URI     = new Uri("../../../img/Missile_Enemy.png", UriKind.RelativeOrAbsolute);
@@ -57,6 +57,7 @@ namespace ShootingGame
         public static readonly Uri CYCLONE_ENEMY_URI     = new Uri("../../../img/Cyclone_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri LASER_ENEMY_URI       = new Uri("../../../img/Laser_Enemy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri SAMPLE_ENEMY_URI      = new Uri("../../../img/Sample_Enemy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri WARP_ENEMY_URI        = new Uri("../../../img/Warp_Enemy.png", UriKind.RelativeOrAbsolute);
 
         public static readonly Uri BOSS1_URI = new Uri("../../../img/Boss1.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri BOSS2_URI = new Uri("../../../img/Boss2.png", UriKind.RelativeOrAbsolute);
