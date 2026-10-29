@@ -77,13 +77,14 @@ namespace ShootingGame
         public static readonly Uri E_BULLET_BIG_URI      = new Uri("../../../img/Enemy_Bullet_BIG.png", UriKind.RelativeOrAbsolute);
 
         //状態異常等のアイコン
-        public static readonly Uri SPEED_UP_ICON_URI       = new Uri("../../../img/Icon_Speedup.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SPEED_DOWN_ICON_URI     = new Uri("../../../img/Icon_Speeddown.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SHOT_RATE_UP_ICON_URI   = new Uri("../../../img/Icon_Rateup.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Ratedown.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SPEED_UP_ICON_URI       = new Uri("../../../img/Icon_Speed_Up.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SPEED_DOWN_ICON_URI     = new Uri("../../../img/Icon_Speed_Down.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOT_RATE_UP_ICON_URI   = new Uri("../../../img/Icon_Shot_Rate_Up.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SHOT_RATE_DOWN_ICON_URI = new Uri("../../../img/Icon_Shot_Rate_Down.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri INCINCIBLE_ICON_URI     = new Uri("../../../img/Icon_Invincible.png", UriKind.RelativeOrAbsolute);
-        public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Scoreboost.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Score_Boost.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri DESTOROY_ICON_URI       = new Uri("../../../img/Icon_Destroy.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri REVERSE_ICON_URI        = new Uri("../../../img/Icon_Reverse.png", UriKind.RelativeOrAbsolute);
 
         //武器アイコン
         public static readonly Uri DEFAULT_ICON_URI = new Uri("../../../img/Icon_Default.png",UriKind.RelativeOrAbsolute);
