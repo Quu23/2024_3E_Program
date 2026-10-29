@@ -85,6 +85,7 @@ namespace ShootingGame
         public static readonly Uri SCORE_BOOST_ICON_URI    = new Uri("../../../img/Icon_Score_Boost.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri DESTOROY_ICON_URI       = new Uri("../../../img/Icon_Destroy.png", UriKind.RelativeOrAbsolute);
         public static readonly Uri REVERSE_ICON_URI        = new Uri("../../../img/Icon_Reverse.png", UriKind.RelativeOrAbsolute);
+        public static readonly Uri BOMB_ICON_URI           = new Uri("../../../img/Icon_Bomb.png", UriKind.RelativeOrAbsolute);
 
         //武器アイコン
         public static readonly Uri DEFAULT_ICON_URI = new Uri("../../../img/Icon_Default.png",UriKind.RelativeOrAbsolute);
