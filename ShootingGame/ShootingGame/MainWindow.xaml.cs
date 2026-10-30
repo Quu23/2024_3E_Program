@@ -705,6 +705,14 @@ namespace ShootingGame
         {
             if (windowMode > 0) stagePosition += 1;
 
+            // 確キル For DAISUKE
+            if (isKeyPresseds[10]) player.Hp = 0;
+            // 敵投入 For DAISUKE
+            if (isKeyPresseds[11]) 
+            {
+                enemies.Add(UtilityGenerater.GenerateEnemy(EnemyTypes.MISSILE_ENEMY, (int)(SystemParameters.FullPrimaryScreenWidth / 2), 0, 0));
+            }
+
             if (stagePosition > stageLastPosition + 200 && enemies.Count == 0)
             {
                 windowMode = (WindowMode)(-1 * (int)windowMode);
@@ -883,7 +891,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                else if (!(tmp_enemy is Boss) && grazeEntityForPlayer.IsHit(tmp_enemy))
+                else if (!(tmp_enemy is Boss || tmp_enemy is WallEnemy) && grazeEntityForPlayer.IsHit(tmp_enemy))
                 {
                     score += GRAZE_BONUS * player.increaseRateOfScore / 2;
                     UtilitySE.PlayGrazeSE();
@@ -1020,10 +1028,6 @@ namespace ShootingGame
                                         , 30
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.5, modeSelectionTextRect.Y / 1.7));
-            }
-            else if (isKeyPresseds[2])
-            {
-                drawingContext.DrawImage(Images.STUFF_CREDIT_IMAGE, new Rect(0, 0, Width, Height));
             }
             else
             {
@@ -1358,7 +1362,7 @@ namespace ShootingGame
                     isKeyPresseds[7] = true;
                     break;
                 case System.Windows.Input.Key.I:
-                    player.status[StatusEffects.INVINCIBLE] = 9999;
+                    player.status[StatusEffects.INVINCIBLE] = 99;
                     break;
                 case System.Windows.Input.Key.LeftShift:
                     isKeyPresseds[8] = true;
