@@ -883,7 +883,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                else if (!(tmp_enemy is Boss) && grazeEntityForPlayer.IsHit(tmp_enemy))
+                else if (!(tmp_enemy is Boss || tmp_enemy is WallEnemy) && grazeEntityForPlayer.IsHit(tmp_enemy))
                 {
                     score += GRAZE_BONUS * player.increaseRateOfScore / 2;
                     UtilitySE.PlayGrazeSE();
