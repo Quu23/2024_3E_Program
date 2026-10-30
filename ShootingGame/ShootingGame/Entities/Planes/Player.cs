@@ -446,7 +446,7 @@ namespace ShootingGame.Entities.Planes
     {
         private int homingTimer;
 
-        public HomingBullet(int x, int y, int speed, int degree) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, 1, EnemyTypes.PLAYER)
+        public HomingBullet(int x, int y, int speed, int degree) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, 3, EnemyTypes.PLAYER)
         {
             homingTimer = 100;
         }
@@ -536,7 +536,7 @@ namespace ShootingGame.Entities.Planes
             }
             else
             {
-                for (int i = 0; i < 360; i++)
+                for (int i = 0; i < 18; i++)
                 {
                     App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 18) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }

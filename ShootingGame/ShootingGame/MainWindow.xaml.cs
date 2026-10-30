@@ -71,7 +71,7 @@ namespace ShootingGame
         public List<Item> items = new List<Item>();
 
         private MediaPlayer musicPlayer;
-        private bool isMusicMuted = true;
+        private bool isMusicMuted = false;
 
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
