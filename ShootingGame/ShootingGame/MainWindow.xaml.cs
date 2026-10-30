@@ -218,7 +218,7 @@ namespace ShootingGame
 
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(30, 0);
+            scorePoint  = new Point(50, 10);
             statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
             statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 64  , /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 1), 64, 64);
@@ -1075,6 +1075,8 @@ namespace ShootingGame
                 if (isKeyPresseds[6]) DrawHitRange(drawingContext, item);
             }
 
+
+            drawingContext.DrawImage(Images.SCORE_BOOSTER_ITEM_IMAGE, new Rect(scorePoint.X - 32, scorePoint.Y - 5, 32, 32));
             drawingContext.DrawText(new FormattedText($"SCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
