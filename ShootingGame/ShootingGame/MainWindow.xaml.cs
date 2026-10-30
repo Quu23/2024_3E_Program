@@ -36,6 +36,7 @@ namespace ShootingGame
 
         //private SortedList<int, string> ranking;
         private List<(int, int, string)> ranking;
+        private List<(int rank, int score, string name)> displayRanking = new List<(int, int, string)>();
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -292,48 +293,6 @@ namespace ShootingGame
                 if (x.Item2 < y.Item2) return 1;
                 return 0;
             }));
-        }
-
-        private void DrawResultWindow(DrawingContext drawingContext)
-        {
-            displayRanking.Clear();
-
-            int topCount = Math.Min(9, ranking.Count);
-            for (int i = 0; i < topCount; i++)
-            {
-                displayRanking.Add(ranking[i]);
-            }
-            // トップ9の中に自分が含まれているかチェック
-            bool isMeInTop9 = false;
-            foreach (var item in displayRanking)
-            {
-                if (item.score == score && item.name == player.name)
-                {
-                    isMeInTop9 = true;
-                    break;
-                }
-            }
-
-            if (isMeInTop9)
-            {
-                // 自分がトップ9にいる場合、10件目のデータがあればそのまま追加
-                if (ranking.Count >= 10)
-                {
-                    displayRanking.Add(ranking[9]);
-                }
-            }
-            else
-            {
-                // 自分がトップ9にいない場合、全体のデータから自分を探して10件目に追加
-                foreach (var item in ranking)
-                {
-                    if (item.Item2 == score && item.Item3 == player.name)
-                    {
-                        displayRanking.Add(item);
-                        break; // 最初に見つかった自分のスコアを追加して抜ける
-                    }
-                }
-            }
         }
 
         private void DrawResultWindow(DrawingContext drawingContext)
