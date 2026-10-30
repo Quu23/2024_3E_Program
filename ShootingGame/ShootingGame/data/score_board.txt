@@ -1,3 +1,8 @@
 ﻿1,511550,unknown
 2,106250,unknown
-3,10850,unknown
+3,95150,SORA
+4,10850,unknown
+5,10000,unknown
+6,4700,unknown
+7,3700,RION
+8,600,D
