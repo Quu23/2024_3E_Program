@@ -1021,10 +1021,6 @@ namespace ShootingGame
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.5, modeSelectionTextRect.Y / 1.7));
             }
-            else if (isKeyPresseds[2])
-            {
-                drawingContext.DrawImage(Images.STUFF_CREDIT_IMAGE, new Rect(0, 0, Width, Height));
-            }
             else
             {
                 drawingContext.DrawImage(Images.TITLE_IMAGE, titleRect);
