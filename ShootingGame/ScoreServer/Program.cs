@@ -21,13 +21,27 @@ app.MapGet("/score", async () =>
     await fileLock.WaitAsync();
     try
     {
+        var scoreList = new List<ScoreData>();
+
         if (!File.Exists(filePath))
         {
             return Results.NotFound("Scoreboard file not found.");
         }
+        var lines = await File.ReadAllLinesAsync(filePath, Encoding.UTF8);
+        foreach (var line in lines)
+        {
+            var parts = line.Split(',');
+            if (parts.Length >= 3)
+            {
+                int rank = int.Parse(parts[0]);
+                int score = int.Parse(parts[1]);
+                string name = parts[2];
 
-        var textContent = await File.ReadAllTextAsync(filePath, Encoding.UTF8);
-        return Results.Text(textContent, contentType: "text/plain; charset=utf-8");
+                scoreList.Add(new ScoreData(rank, name, score));
+            }
+        }
+
+        return Results.Ok(scoreList);
     }
     finally
     {
