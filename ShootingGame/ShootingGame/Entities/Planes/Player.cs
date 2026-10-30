@@ -361,7 +361,7 @@ namespace ShootingGame.Entities.Planes
         {
             if (Weapon == 0)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 6, Enemies.EnemyTypes.PLAYER));
                 return;
             }
 
@@ -371,15 +371,15 @@ namespace ShootingGame.Entities.Planes
             {
                 //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
                 //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 3));
-                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 3));
+                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 5));
+                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 5));
                 return;
             }
 
             //shotgun
             if (Weapon == 2)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 2, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
 
                 for (int i = 1; i < 100; i += 5)
                 {
