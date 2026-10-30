@@ -19,7 +19,7 @@
         {
             return
             [
-                new(CenterXForShotBullet ,Y ,Bullet.RADIUS_FOR_MEDIUM, 10,180, Level ,EnemyTypes.SNAKE_ENEMY)
+                new(CenterXForShotBullet ,Y ,Bullet.RADIUS_FOR_MEDIUM, 10,180, Level + 2,EnemyTypes.SNAKE_ENEMY)
             ];
         }
 

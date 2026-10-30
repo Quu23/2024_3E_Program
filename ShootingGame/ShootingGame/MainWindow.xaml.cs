@@ -104,7 +104,7 @@ namespace ShootingGame
         int mode;
         // 難易度用
         int difficulty;
-        const int NORMAL_DIFFICULTY = 1;
+        const int NORMAL_DIFFICULTY =5;
         const int HARD_DIFFICULTY = 10;
 
         protected override int VisualChildrenCount => visuals.Count;

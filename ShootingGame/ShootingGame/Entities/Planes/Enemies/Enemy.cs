@@ -21,17 +21,21 @@ namespace ShootingGame.Entities.Planes.Enemies
             // 同じ重みはプログラムバグると思うからNG
 
             //  [重み]      [アイテム] 
-                {  5, CLEAR_ENEMIES_ITEM},
-                {  1,       DESTROY_ITEM},
-                { 10,            EXP_ORB},
-                { 75,    SMALL_HEAL_ITEM },
-                { 10,    LARGE_HEAL_ITEM},
-                {  5,    FULL_HEAL_ITEM},
-                {  7,    INVINCIBLE_ITEM},
-                { 20, SCORE_BOOSTER_ITEM},
-                { 30,  SHOT_RATE_UP_ITEM},
-                { 25,      SPEED_UP_ITEM},
-                { 15,         BOMB_ITEM},
+                { 15,  CLEAR_ENEMIES_ITEM},  //10
+                { 14,        DESTROY_ITEM},  //4
+                {121,             EXP_ORB},  //25
+                {180,     SMALL_HEAL_ITEM},  //100
+                { 91,     LARGE_HEAL_ITEM},  //60
+                { 19,      FULL_HEAL_ITEM},  //5
+                { 50,     INVINCIBLE_ITEM},  //30
+                {119,  SCORE_BOOSTER_ITEM},  //70
+                {110,   SHOT_RATE_UP_ITEM},  //50
+                { 80,       SPEED_UP_ITEM},  //45
+                { 49,           BOMB_ITEM},  //15
+                { 51,             OCTPATH},  //43
+                { 39,     SPEED_DOWN_ITEM},  //44
+                { 41, SHOT_RATE_DOWN_ITEM},  //49
+                { 21,        REVERSE_ITEM},  //29
             };
         }
 
@@ -45,7 +49,7 @@ namespace ShootingGame.Entities.Planes.Enemies
 
             SortedDictionary<int, ItemTypes> weightsProb = GetWeightedProbsOfDropItem;
 
-            dropProb = 20;
+            dropProb = 50;
 
             foreach (var item in weightsProb)
             {
