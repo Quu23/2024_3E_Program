@@ -91,7 +91,7 @@ app.MapPost("/score", async (ScoreData request) =>
 });
 
 // LAN内の他PCからアクセスできるよう "http://0.0.0.0:5000" に変更
-app.Run("http://0.0.0.0:5000");
+app.Run("http://*:5000");
 
 // POSTリクエスト用のデータモデル
 public record ScoreData(int Rank, string Name, int Score);
