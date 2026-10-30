@@ -518,6 +518,9 @@ namespace ShootingGame
             if (isKeyPresseds[8]) mode = 0;
             if (isKeyPresseds[9]) mode = 1;
 
+            if (isKeyPresseds[10]) difficulty = NORMAL_DIFFICULTY;
+            if (isKeyPresseds[11]) difficulty = HARD_DIFFICULTY;
+
             if (isKeyPresseds[4]) {
                 if (message.Equals("DEBUG"))
                 {
