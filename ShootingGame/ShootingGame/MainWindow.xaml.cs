@@ -570,7 +570,7 @@ namespace ShootingGame
 
             if (items.Count <= 0)
             {
-                items.Add(new SampleItem(player.X, 0));
+                items.Add(new DestroyItem(player.X, 0));
             }
 
             BasicGameLogic();
