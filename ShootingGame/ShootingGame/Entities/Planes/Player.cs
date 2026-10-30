@@ -340,7 +340,7 @@ namespace ShootingGame.Entities.Planes
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
             {
-                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER);
+                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 999999999, Enemies.EnemyTypes.PLAYER);
                 destroyBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;
                 bullets.Add(destroyBullet);
             }
