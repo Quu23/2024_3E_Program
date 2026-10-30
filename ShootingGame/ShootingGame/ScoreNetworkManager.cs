@@ -18,8 +18,8 @@ namespace ShootingGame
             Timeout = TimeSpan.FromSeconds(2.0)
         };
 
-        // PC2側は"http://192.168.0.10:5000/score"とかにする? ipconfigするのを忘れない.
-        private string serverUrl = "http://localhost:5000/score";
+        // PC2側は"http://192.168.10.2:5000/score"とかにする? ipconfigするのを忘れない.
+        private string serverUrl = "http://192.168.10.1:5000/score";
 
         // 通信成功ならtrue , 失敗ならfalseを返す. 例外は投げない.
         public bool SendScore(int rank, string name, int score)
