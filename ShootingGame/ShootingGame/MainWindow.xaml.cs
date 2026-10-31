@@ -1149,7 +1149,7 @@ namespace ShootingGame
 
             foreach (var kvp in player.status)
             {
-                if (kvp.Value > 0)
+                if (kvp.Value % 2 > 0 || kvp.Value > 30)
                 {
                     drawingContext.DrawImage(GetStatusIconImage(kvp.Key), statusIconRect);
                 }
