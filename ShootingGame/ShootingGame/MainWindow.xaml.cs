@@ -646,7 +646,7 @@ namespace ShootingGame
 
         private void ResultLoop()
         {
-            if (isKeyPresseds[5])
+            if (isKeyPresseds[8])
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
