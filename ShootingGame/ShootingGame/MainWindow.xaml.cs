@@ -850,6 +850,7 @@ namespace ShootingGame
                         {
                             if (tmp_enemy is Boss)
                             {
+                                player.lives++;
                                 UtilitySE.PlayBossDeadSE();
 
                                 if (tmp_enemy is Boss1)
