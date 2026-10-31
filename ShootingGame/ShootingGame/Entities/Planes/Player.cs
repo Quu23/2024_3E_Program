@@ -53,7 +53,7 @@ namespace ShootingGame.Entities.Planes
             status = new Dictionary<StatusEffects, int>() { 
                 // 効果　　　　　　         効果時間
                 { SPEED_UP                ,0},
-                { SPEED_DOWN             ,0},
+                { SPEED_DOWN              ,0},
                 { SHOT_RATE_UP            ,0},
                 { SHOT_RATE_DOWN          ,0},
                 { SCORE_BOOST             ,0},
