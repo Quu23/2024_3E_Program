@@ -1106,22 +1106,22 @@ namespace ShootingGame
                                     , Brushes.White
                                     , 12.5), statusPoint);
 
-            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 120, 16, 16));
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(moveableLeftSidePosition - 80, Height - 120, 32, 32));
             drawingContext.DrawText(new FormattedText($"  ×{player.lives}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 16
+                                    , 22
                                     , Brushes.White
-                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 120));
-            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 80, 16, 16));
+                                    , 12.5), new Point(moveableLeftSidePosition - 90, Height - 120));
+            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(moveableLeftSidePosition - 80, Height - 80, 32, 32));
             drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
-                                    , 16
+                                    , 22
                                     , Brushes.White
-                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 80));
+                                    , 12.5), new Point(moveableLeftSidePosition - 90, Height - 80));
             drawingContext.DrawText(new FormattedText($"{windowMode}", CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
