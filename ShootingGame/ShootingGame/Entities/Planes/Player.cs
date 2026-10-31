@@ -536,9 +536,9 @@ namespace ShootingGame.Entities.Planes
             }
             else
             {
-                for (int i = 0; i < 18; i++)
+                for (int i = 0; i < 180; i++)
                 {
-                    App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 18) * i, 4, Enemies.EnemyTypes.PLAYER));
+                    App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 180) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }
                 App.window.bullets.Remove(this);
             }
