@@ -55,9 +55,9 @@ namespace ShootingGame
 
 
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL F1 F2 
+        ///                                     W      A      S       D    Space   Enter  Tab  R_SHIFT L_SHIFT L_CTRL  F1    F2     F3
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false, false, false};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false, false, false, false};
 
         private Joystick _joy;
 
@@ -103,7 +103,8 @@ namespace ShootingGame
         int mode;
         // 難易度用
         int difficulty;
-        const int NORMAL_DIFFICULTY =5;
+        const int NORMAL_DIFFICULTY = 5;
+        const int EASY_DIFFICULTY = 1;
         const int HARD_DIFFICULTY = 10;
 
         // 通信処理用
@@ -568,8 +569,9 @@ namespace ShootingGame
             if (isKeyPresseds[8]) mode = 0;
             if (isKeyPresseds[9]) mode = 1;
 
-            if (isKeyPresseds[10]) difficulty = NORMAL_DIFFICULTY;
-            if (isKeyPresseds[11]) difficulty = HARD_DIFFICULTY;
+            if (isKeyPresseds[10]) difficulty = EASY_DIFFICULTY;
+            if (isKeyPresseds[11]) difficulty = NORMAL_DIFFICULTY;
+            if (isKeyPresseds[12]) difficulty = HARD_DIFFICULTY;
 
             if (isKeyPresseds[4])
             {
@@ -646,7 +648,7 @@ namespace ShootingGame
 
         private void ResultLoop()
         {
-            if (isKeyPresseds[5])
+            if (isKeyPresseds[8])
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
@@ -986,6 +988,13 @@ namespace ShootingGame
                                         , 30
                                         , Brushes.White
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+
+            // EASYなら
+            if (difficulty == EASY_DIFFICULTY)
+            {
+                drawingContext.DrawImage(Images.HEALING_ITEM_IMAGE, new Rect(0, 0, 32, 32));
+            }
+
             // HARDなら
             if(difficulty == HARD_DIFFICULTY)
             {
@@ -1376,6 +1385,9 @@ namespace ShootingGame
                 case System.Windows.Input.Key.F2:
                     isKeyPresseds[11] = true;
                     break;
+                case System.Windows.Input.Key.F3:
+                    isKeyPresseds[12] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -1419,6 +1431,9 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.F2:
                     isKeyPresseds[11] = false;
+                    break;
+                case System.Windows.Input.Key.F3:
+                    isKeyPresseds[12] = false;
                     break;
                 default:
                     break;
