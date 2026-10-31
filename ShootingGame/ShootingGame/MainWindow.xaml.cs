@@ -1127,7 +1127,7 @@ namespace ShootingGame
                                     , FONT_TYPEFACE
                                     , 16
                                     , Brushes.White
-                                    , 12.5), new Point(moveableLeftSidePosition - 100, Height - 40));
+                                    , 12.5), new Point(moveableLeftSidePosition - 16 * windowMode.ToString().Length, Height - 40));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
