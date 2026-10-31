@@ -35,6 +35,7 @@ namespace ShootingGame.Entities.Planes
         public const int MAX_LIVES = 3; //最大残機数
 
         public int animationCounter; //残機減らしたときのアニメーションのためのカウンター
+        public readonly int INVINCIBLE_FOR_DEAD = 100; //残機減らしたときの無敵時間
 
         public Player(string name) : base(/*x=*/700, /*y=*/700, /*r=*/20, /*speed=*/5, Images.PLAYER_IMAGE, /*LV=*/1, /*hp=*/10, /*bulletRadius=*/Bullet.RADIUS_FOR_MEDIUM, 60)
         {
@@ -153,9 +154,9 @@ namespace ShootingGame.Entities.Planes
             return false;
         }
 
-        public void StartAnimation()
+        public void StartDeadAnimation()
         {
-            animationCounter = 20;
+            animationCounter = INVINCIBLE_FOR_DEAD;
         }
 
         public override void Action()

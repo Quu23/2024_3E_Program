@@ -782,7 +782,7 @@ namespace ShootingGame
             {
                 player.lives--;
                 UtilitySE.PlayReliveSE();
-                player.StartAnimation();
+                player.StartDeadAnimation();
                 if (player.lives == 0)
                 {
                     windowMode = WindowMode.GAMEOVER;
@@ -802,7 +802,7 @@ namespace ShootingGame
                     player.X = (int)(SystemParameters.FullPrimaryScreenWidth / 2);
                     player.Y = (int)(SystemParameters.FullPrimaryScreenHeight * 3 / 4);
                     player.HeelFullOfHp();
-                    player.status[StatusEffects.INVINCIBLE] = 30;
+                    player.status[StatusEffects.INVINCIBLE] = player.INVINCIBLE_FOR_DEAD;
                 }
 
             }
