@@ -18,7 +18,7 @@ namespace ShootingGame.Entities.Planes.Enemies
             var bullets = new List<Bullet>()
             {
                 new LaserBullet(CenterXForShotBullet ,Y + Radius, LaserBullet.STRAIGHT_DEGREE,bulletRadius),
-                new Bullet(CenterXForShotBullet, Y+700,bulletRadius,80,LaserBullet.STRAIGHT_DEGREE,App.window.player.Hp/2,EnemyTypes.LASER_ENEMY)
+                new Bullet(CenterXForShotBullet, Y+700,bulletRadius,80,LaserBullet.STRAIGHT_DEGREE,App.window.player.Hp/3,EnemyTypes.LASER_ENEMY)
             };
             bullets[1].Img = null;
             return bullets;

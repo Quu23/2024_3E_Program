@@ -23,8 +23,8 @@ namespace ShootingGame.Entities.Planes.Enemies
             //  [重み]      [アイテム] 
                 { 15,  CLEAR_ENEMIES_ITEM},  //10
                 { 14,        DESTROY_ITEM},  //4
-                {121,             EXP_ORB},  //25
-                {180,     SMALL_HEAL_ITEM},  //100
+                {100,             EXP_ORB},  //25
+                {201,     SMALL_HEAL_ITEM},  //100
                 { 91,     LARGE_HEAL_ITEM},  //60
                 { 19,      FULL_HEAL_ITEM},  //5
                 { 50,     INVINCIBLE_ITEM},  //30
