@@ -224,10 +224,10 @@ namespace ShootingGame
 
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(50, 10);
+            scorePoint  = new Point(moveableLeftSidePosition + 220, 10);
             statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 64, /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 1), 64, 64);
+            statusIconRect = new Rect(hpBarRect.X - 80, /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 2) - 32, 64, 64);
 
             weaponIconRect = new Rect(0, 0, 32, 32);
 
@@ -760,7 +760,7 @@ namespace ShootingGame
                     }
                     else if (windowMode == WindowMode.GAMECLEAR)
                     {
-                        scoreText = new FormattedText($"SCORE:{score}"
+                        scoreText = new FormattedText($"NAME:{player.name}\nSCORE:{score}"
                                                     , CultureInfo.GetCultureInfo("en")
                                                     , FlowDirection.LeftToRight
                                                     , FONT_TYPEFACE
@@ -787,7 +787,7 @@ namespace ShootingGame
                 {
                     windowMode = WindowMode.GAMEOVER;
 
-                    scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
+                    scoreText = new FormattedText($"NAME:{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -1090,7 +1090,7 @@ namespace ShootingGame
 
 
             drawingContext.DrawImage(Images.SCORE_BOOSTER_ITEM_IMAGE, new Rect(scorePoint.X - 32, scorePoint.Y - 5, 32, 32));
-            drawingContext.DrawText(new FormattedText($"SCORE:{score}"
+            drawingContext.DrawText(new FormattedText($"SCORE\n{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -1105,22 +1105,29 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
-            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(10, Height - 80, 16, 16));
-            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}\n\n{windowMode}"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 16
-                                    , Brushes.White
-                                    , 12.5), new Point(0, Height - 80));
-            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(10, Height - 120, 16, 16));
+
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 120, 16, 16));
             drawingContext.DrawText(new FormattedText($"  ×{player.lives}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
                                     , 16
                                     , Brushes.White
-                                    , 12.5), new Point(0, Height - 120));
+                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 120));
+            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 80, 16, 16));
+            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 16
+                                    , Brushes.White
+                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 80));
+            drawingContext.DrawText(new FormattedText($"{windowMode}", CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 16
+                                    , Brushes.White
+                                    , 12.5), new Point(moveableLeftSidePosition - 100, Height - 40));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
@@ -1158,7 +1165,7 @@ namespace ShootingGame
                 weaponIconSource[i] = i == player.Weapon ? AdjustImageOpacity(weaponIconsImage[i], 1.00) : AdjustImageOpacity(weaponIconsImage[i], 0.50);
             }
 
-            weaponIconRect.X = moveableRightSidePosition + moveableLeftSidePosition / 4;
+            weaponIconRect.X = hpBarRect.X - 80;
             weaponIconRect.Y = hpBarRect.Y - 60;
 
             drawingContext.DrawImage(weaponIconSource[0], weaponIconRect);
