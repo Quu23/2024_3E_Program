@@ -55,9 +55,9 @@ namespace ShootingGame
 
 
         /// <summary>
-        ///                                     W      A      S      D    Space    Enter  Tab   R_SHIFT L_SHIFT L_CTRL F1 F2 
+        ///                                     W      A      S       D    Space   Enter  Tab  R_SHIFT L_SHIFT L_CTRL  F1    F2     F3
         /// </summary>
-        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false, false, false};
+        public static bool[] isKeyPresseds = { false, false, false, false, false, false, false, false, false, false, false, false, false};
 
         private Joystick _joy;
 
@@ -103,7 +103,8 @@ namespace ShootingGame
         int mode;
         // 難易度用
         int difficulty;
-        const int NORMAL_DIFFICULTY =5;
+        const int NORMAL_DIFFICULTY = 2;
+        const int EASY_DIFFICULTY = 1;
         const int HARD_DIFFICULTY = 10;
 
         // 通信処理用
@@ -223,10 +224,10 @@ namespace ShootingGame
 
             hpBarRect = new Rect(1600 / 1934.0 * SystemParameters.PrimaryScreenWidth, 1030 / 1094.0 * SystemParameters.PrimaryScreenHeight, player.GetMaxHp * 5, 10);
 
-            scorePoint  = new Point(50, 10);
+            scorePoint  = new Point(moveableLeftSidePosition + 220, 10);
             statusPoint = new Point(hpBarRect.X - 80, hpBarRect.Y - 10);
 
-            statusIconRect = new Rect(SystemParameters.PrimaryScreenWidth - 64, /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 1), 64, 64);
+            statusIconRect = new Rect(hpBarRect.X - 80, /*起点Y=*/SystemParameters.PrimaryScreenHeight - 64 * (player.status.Count + 2) - 32, 64, 64);
 
             weaponIconRect = new Rect(0, 0, 32, 32);
 
@@ -568,8 +569,9 @@ namespace ShootingGame
             if (isKeyPresseds[8]) mode = 0;
             if (isKeyPresseds[9]) mode = 1;
 
-            if (isKeyPresseds[10]) difficulty = NORMAL_DIFFICULTY;
-            if (isKeyPresseds[11]) difficulty = HARD_DIFFICULTY;
+            if (isKeyPresseds[10]) difficulty = EASY_DIFFICULTY;
+            if (isKeyPresseds[11]) difficulty = NORMAL_DIFFICULTY;
+            if (isKeyPresseds[12]) difficulty = HARD_DIFFICULTY;
 
             if (isKeyPresseds[4])
             {
@@ -646,7 +648,7 @@ namespace ShootingGame
 
         private void ResultLoop()
         {
-            if (isKeyPresseds[5])
+            if (isKeyPresseds[8])
             {
                 windowMode = WindowMode.START;
                 backgroundImage = Images.START_BACKGROUND_IMAGE;
@@ -758,7 +760,7 @@ namespace ShootingGame
                     }
                     else if (windowMode == WindowMode.GAMECLEAR)
                     {
-                        scoreText = new FormattedText($"SCORE:{score}"
+                        scoreText = new FormattedText($"NAME:{player.name}\nSCORE:{score}"
                                                     , CultureInfo.GetCultureInfo("en")
                                                     , FlowDirection.LeftToRight
                                                     , FONT_TYPEFACE
@@ -780,12 +782,12 @@ namespace ShootingGame
             {
                 player.lives--;
                 UtilitySE.PlayReliveSE();
-                player.StartAnimation();
+                player.StartDeadAnimation();
                 if (player.lives == 0)
                 {
                     windowMode = WindowMode.GAMEOVER;
 
-                    scoreText = new FormattedText($"NAME :{player.name}\nSCORE:{score}"
+                    scoreText = new FormattedText($"NAME:{player.name}\nSCORE:{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -800,7 +802,7 @@ namespace ShootingGame
                     player.X = (int)(SystemParameters.FullPrimaryScreenWidth / 2);
                     player.Y = (int)(SystemParameters.FullPrimaryScreenHeight * 3 / 4);
                     player.HeelFullOfHp();
-                    player.status[StatusEffects.INVINCIBLE] = 30;
+                    player.status[StatusEffects.INVINCIBLE] = player.INVINCIBLE_FOR_DEAD;
                 }
 
             }
@@ -986,6 +988,13 @@ namespace ShootingGame
                                         , 30
                                         , Brushes.White
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 2 - 30 * 7 + 32, modeSelectionTextRect.Y - 80));
+
+            // EASYなら
+            if (difficulty == EASY_DIFFICULTY)
+            {
+                drawingContext.DrawImage(Images.HEALING_ITEM_IMAGE, new Rect(0, 0, 32, 32));
+            }
+
             // HARDなら
             if(difficulty == HARD_DIFFICULTY)
             {
@@ -1081,7 +1090,7 @@ namespace ShootingGame
 
 
             drawingContext.DrawImage(Images.SCORE_BOOSTER_ITEM_IMAGE, new Rect(scorePoint.X - 32, scorePoint.Y - 5, 32, 32));
-            drawingContext.DrawText(new FormattedText($"SCORE:{score}"
+            drawingContext.DrawText(new FormattedText($"SCORE\n{score}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
@@ -1096,22 +1105,29 @@ namespace ShootingGame
                                     , 10
                                     , Brushes.White
                                     , 12.5), statusPoint);
-            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(10, Height - 80, 16, 16));
-            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}\n\n{windowMode}"
-                                    , CultureInfo.GetCultureInfo("en")
-                                    , FlowDirection.LeftToRight
-                                    , FONT_TYPEFACE
-                                    , 16
-                                    , Brushes.White
-                                    , 12.5), new Point(0, Height - 80));
-            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(10, Height - 120, 16, 16));
+
+            drawingContext.DrawImage(Images.LIFE_ICON_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 120, 16, 16));
             drawingContext.DrawText(new FormattedText($"  ×{player.lives}"
                                     , CultureInfo.GetCultureInfo("en")
                                     , FlowDirection.LeftToRight
                                     , FONT_TYPEFACE
                                     , 16
                                     , Brushes.White
-                                    , 12.5), new Point(0, Height - 120));
+                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 120));
+            drawingContext.DrawImage(Images.EXP_ORB_IMAGE, new Rect(moveableLeftSidePosition - 55, Height - 80, 16, 16));
+            drawingContext.DrawText(new FormattedText($"  ×{player.orbCount}"
+                                    , CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 16
+                                    , Brushes.White
+                                    , 12.5), new Point(moveableLeftSidePosition - 65, Height - 80));
+            drawingContext.DrawText(new FormattedText($"{windowMode}", CultureInfo.GetCultureInfo("en")
+                                    , FlowDirection.LeftToRight
+                                    , FONT_TYPEFACE
+                                    , 16
+                                    , Brushes.White
+                                    , 12.5), new Point(moveableLeftSidePosition - 100, Height - 40));
 
             hpBarRect.Width = player.GetMaxHp * 10;
             drawingContext.DrawRectangle(Brushes.White, null, hpBarRect);
@@ -1149,7 +1165,7 @@ namespace ShootingGame
                 weaponIconSource[i] = i == player.Weapon ? AdjustImageOpacity(weaponIconsImage[i], 1.00) : AdjustImageOpacity(weaponIconsImage[i], 0.50);
             }
 
-            weaponIconRect.X = moveableRightSidePosition + moveableLeftSidePosition / 4;
+            weaponIconRect.X = hpBarRect.X - 80;
             weaponIconRect.Y = hpBarRect.Y - 60;
 
             drawingContext.DrawImage(weaponIconSource[0], weaponIconRect);
@@ -1376,6 +1392,9 @@ namespace ShootingGame
                 case System.Windows.Input.Key.F2:
                     isKeyPresseds[11] = true;
                     break;
+                case System.Windows.Input.Key.F3:
+                    isKeyPresseds[12] = true;
+                    break;
             }
         }
         private void DepressedKey(object? sender, KeyEventArgs e)
@@ -1419,6 +1438,9 @@ namespace ShootingGame
                     break;
                 case System.Windows.Input.Key.F2:
                     isKeyPresseds[11] = false;
+                    break;
+                case System.Windows.Input.Key.F3:
+                    isKeyPresseds[12] = false;
                     break;
                 default:
                     break;
