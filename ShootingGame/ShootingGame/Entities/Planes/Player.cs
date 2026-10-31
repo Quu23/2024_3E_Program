@@ -340,7 +340,7 @@ namespace ShootingGame.Entities.Planes
             List<Bullet> bullets = new List<Bullet>();
             if (status[DESTROY_MODE] > 0)
             {
-                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 9999, Enemies.EnemyTypes.PLAYER);
+                Bullet destroyBullet = new Bullet(CenterX - 100, Y - 50, 100, 4, 0, 999999999, Enemies.EnemyTypes.PLAYER);
                 destroyBullet.Img = Images.PLAYER_BULLET_DESTROY_IMAGE;
                 bullets.Add(destroyBullet);
             }
@@ -361,7 +361,7 @@ namespace ShootingGame.Entities.Planes
         {
             if (Weapon == 0)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 6, Enemies.EnemyTypes.PLAYER));
                 return;
             }
 
@@ -371,15 +371,15 @@ namespace ShootingGame.Entities.Planes
             {
                 //bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.LEFT_DEGREE , Level));
                 //bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.RIGHT_DEGREE, Level));
-                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 3));
-                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 3));
+                bullets.Add(new BoundBullet(CenterXForShotBullet - Radius, Y, Speed + 10, BoundBullet.WIDE_RIGHT_DEGREE, 5));
+                bullets.Add(new BoundBullet(CenterXForShotBullet + Radius, Y, Speed + 10, BoundBullet.WIDE_LEFT_DEGREE, 5));
                 return;
             }
 
             //shotgun
             if (Weapon == 2)
             {
-                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 2, Enemies.EnemyTypes.PLAYER));
+                bullets.Add(new Bullet(CenterXForShotBullet, Y, bulletRadius, Speed + 5, 0, 4, Enemies.EnemyTypes.PLAYER));
 
                 for (int i = 1; i < 100; i += 5)
                 {
@@ -446,7 +446,7 @@ namespace ShootingGame.Entities.Planes
     {
         private int homingTimer;
 
-        public HomingBullet(int x, int y, int speed, int degree) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, 1, EnemyTypes.PLAYER)
+        public HomingBullet(int x, int y, int speed, int degree) : base(x, y, RADIUS_FOR_MEDIUM, speed, degree, 3, EnemyTypes.PLAYER)
         {
             homingTimer = 100;
         }
@@ -536,7 +536,7 @@ namespace ShootingGame.Entities.Planes
             }
             else
             {
-                for (int i = 0; i < 360; i++)
+                for (int i = 0; i < 18; i++)
                 {
                     App.window.bullets.Add(new Bullet(X, Y, 16, 10, (360 / 18) * i, 4, Enemies.EnemyTypes.PLAYER));
                 }

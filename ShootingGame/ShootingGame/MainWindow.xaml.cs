@@ -36,7 +36,6 @@ namespace ShootingGame
 
         //private SortedList<int, string> ranking;
         private List<(int, int, string)> ranking;
-        private List<(int rank, int score, string name)> displayRanking = new List<(int, int, string)>();
         /// <summary>
         /// pos,enemy or item,type,x
         /// </summary>
@@ -72,7 +71,7 @@ namespace ShootingGame
         public List<Item> items = new List<Item>();
 
         private MediaPlayer musicPlayer;
-        private bool isMusicMuted = true;
+        private bool isMusicMuted = false;
 
         //背景のアニメーション関係
         int backgroundAnimationCounter = 0;
@@ -262,7 +261,8 @@ namespace ShootingGame
             stagePosition = 0;
 
             mode = 0;
-            difficulty = 1;
+
+            difficulty = NORMAL_DIFFICULTY;
 
             updateTimer.Start();
 
@@ -297,6 +297,55 @@ namespace ShootingGame
 
         private void DrawResultWindow(DrawingContext drawingContext)
         {
+            List<(int rank, int score, string name)> displayList = new List<(int rank, int score, string name)>();
+
+            int topCount = Math.Min(9, ranking.Count);
+            for (int i = 0; i < topCount; i++)
+            {
+                displayList.Add(ranking[i]);
+            }
+            // トップ9の中に自分が含まれているかチェック
+            bool isMeInTop9 = false;
+            foreach (var item in displayList)
+            {
+                if (item.score == score && item.name == player.name)
+                {
+                    isMeInTop9 = true;
+                    break;
+                }
+            }
+
+            if (isMeInTop9)
+            {
+                // 自分がトップ9にいる場合、10件目のデータがあればそのまま追加
+                if (ranking.Count >= 10)
+                {
+                    displayList.Add(ranking[9]);
+                }
+            }
+            else
+            {
+                // 自分がトップ9にいない場合、全体のデータから自分を探して10件目に追加
+                foreach (var item in ranking)
+                {
+                    if (item.Item2 == score && item.Item3 == player.name)
+                    {
+                        displayList.Add(item);
+                        break; // 最初に見つかった自分のスコアを追加して抜ける
+                    }
+                }
+            }
+            Rect windowRect = ShowRanking(drawingContext);
+
+            // Rect の標準プロパティ (Width, Height, Left, Top) を使用
+            double paddingX = windowRect.Width * 0.08;
+            double paddingY = windowRect.Height * 0.08;
+            Point textOrigin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
+            double availableHeight = windowRect.Height - (paddingY * 2);
+            WriteResult(drawingContext, displayList, textOrigin, availableHeight);
+        }
+        private Rect ShowRanking(DrawingContext drawingContext)
+        {
             double width = ActualWidth > 0 ? ActualWidth : SystemParameters.FullPrimaryScreenWidth;
             double height = ActualHeight > 0 ? ActualHeight : SystemParameters.FullPrimaryScreenHeight;
 
@@ -306,18 +355,19 @@ namespace ShootingGame
             double y = (height - h) / 2.0; // Y座標
 
             Rect windowRect = new Rect(x, y, w, h);
-            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect); 
-            
-            double paddingX = windowRect.Width * 0.08;
-            double paddingY = windowRect.Height * 0.08;
-            Point origin = new Point(windowRect.Left + paddingX, windowRect.Top + paddingY);
-            double availableHeight = windowRect.Height - (paddingY * 2);
+
+            drawingContext.DrawRectangle(Brushes.Black, new Pen(Brushes.Yellow, 5), windowRect);
+            return windowRect;
+        }
+
+        private void WriteResult(DrawingContext drawingContext, List<(int rank, int score, string name)> displayList, Point origin, double availableHeight)
+        {
             double lineSpacing = availableHeight / 10.5;
             double fontSize = Math.Min(28, lineSpacing * 0.75);
 
-            for (int i = 0; i < displayRanking.Count; i++)
+            for (int i = 0; i < displayList.Count; i++)
             {
-                var item = displayRanking[i];
+                var item = displayList[i];
 
                 bool isMe = (item.score == score && item.name == player.name);
                 Brush textBrush = isMe ? Brushes.White : Brushes.Yellow;
@@ -518,7 +568,11 @@ namespace ShootingGame
             if (isKeyPresseds[8]) mode = 0;
             if (isKeyPresseds[9]) mode = 1;
 
-            if (isKeyPresseds[4]) {
+            if (isKeyPresseds[10]) difficulty = NORMAL_DIFFICULTY;
+            if (isKeyPresseds[11]) difficulty = HARD_DIFFICULTY;
+
+            if (isKeyPresseds[4])
+            {
                 if (message.Equals("DEBUG"))
                 {
                     windowMode = WindowMode.DEBUG;
@@ -650,6 +704,14 @@ namespace ShootingGame
         private void BasicGameLogic()
         {
             if (windowMode > 0) stagePosition += 1;
+
+            // 確キル For DAISUKE
+            if (isKeyPresseds[10]) player.Hp = 0;
+            // 敵投入 For DAISUKE
+            if (isKeyPresseds[11]) 
+            {
+                enemies.Add(UtilityGenerater.GenerateEnemy(EnemyTypes.MISSILE_ENEMY, (int)(SystemParameters.FullPrimaryScreenWidth / 2), 0, 0));
+            }
 
             if (stagePosition > stageLastPosition + 200 && enemies.Count == 0)
             {
@@ -829,7 +891,7 @@ namespace ShootingGame
                 {
                     player.Hp = 0;
                 }
-                else if (!(tmp_enemy is Boss) && grazeEntityForPlayer.IsHit(tmp_enemy))
+                else if (!(tmp_enemy is Boss || tmp_enemy is WallEnemy) && grazeEntityForPlayer.IsHit(tmp_enemy))
                 {
                     score += GRAZE_BONUS * player.increaseRateOfScore / 2;
                     UtilitySE.PlayGrazeSE();
@@ -966,10 +1028,6 @@ namespace ShootingGame
                                         , 30
                                         , Brushes.Yellow
                                         , 12.5), new Point(SystemParameters.FullPrimaryScreenWidth / 4.5, modeSelectionTextRect.Y / 1.7));
-            }
-            else if (isKeyPresseds[2])
-            {
-                drawingContext.DrawImage(Images.STUFF_CREDIT_IMAGE, new Rect(0, 0, Width, Height));
             }
             else
             {
@@ -1304,7 +1362,7 @@ namespace ShootingGame
                     isKeyPresseds[7] = true;
                     break;
                 case System.Windows.Input.Key.I:
-                    player.status[StatusEffects.INVINCIBLE] = 9999;
+                    player.status[StatusEffects.INVINCIBLE] = 99;
                     break;
                 case System.Windows.Input.Key.LeftShift:
                     isKeyPresseds[8] = true;
