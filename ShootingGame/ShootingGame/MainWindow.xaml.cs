@@ -103,7 +103,7 @@ namespace ShootingGame
         int mode;
         // 難易度用
         int difficulty;
-        const int NORMAL_DIFFICULTY = 5;
+        const int NORMAL_DIFFICULTY = 2;
         const int EASY_DIFFICULTY = 1;
         const int HARD_DIFFICULTY = 10;
 
@@ -782,7 +782,7 @@ namespace ShootingGame
             {
                 player.lives--;
                 UtilitySE.PlayReliveSE();
-                player.StartAnimation();
+                player.StartDeadAnimation();
                 if (player.lives == 0)
                 {
                     windowMode = WindowMode.GAMEOVER;
@@ -802,7 +802,7 @@ namespace ShootingGame
                     player.X = (int)(SystemParameters.FullPrimaryScreenWidth / 2);
                     player.Y = (int)(SystemParameters.FullPrimaryScreenHeight * 3 / 4);
                     player.HeelFullOfHp();
-                    player.status[StatusEffects.INVINCIBLE] = 30;
+                    player.status[StatusEffects.INVINCIBLE] = player.INVINCIBLE_FOR_DEAD;
                 }
 
             }
