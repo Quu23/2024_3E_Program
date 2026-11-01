@@ -12,9 +12,9 @@ namespace ShootingGame.Entities.Items
 
         public override void MakeEffect(Player player)
         {
-            if (player.Hp < player.MAX_HP - ( 5 + player.Level ))
+            if (player.Hp < player.MAX_HP - (5 + (player.Level / 2)))
             {
-                player.Hp += ( 5 + player.Level ) ;
+                player.Hp += (int)(5 + (player.Level / 2));
             }
             else
             {
